@@ -1020,70 +1020,66 @@ and that the resulting systems will contribute to a variety of applications.
 
 \begin{figure*}\small
 \emph{Columns:} 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
-4.~POS tag; 5.~\textbf{joint MWE+supersense tag}---\emph{this is the main system output}; 6.~offset of nearest previous token 
-in the same MWE, or \texttt{0} if not continuing an MWE; 7.~MWE attachment strength: \texttt{\_} (strong) or \texttt{\tat} (weak), 
-or blank if not continuing an MWE;
-8.~supersense label, if any; 9.~sentence ID, including (at training time) the domain of the corpus from which it was drawn.
-(Columns 6--8 are deterministic given column 5, 
-but including them separately helps simplify evaluation\slash analysis.)
+4.~Universal POS tag; 5.~\textbf{MWE tag}; 6.~offset of nearest previous token 
+in the same MWE, or \texttt{0} if not continuing an MWE (deterministic given column 5); 7.~(blank);
+8.~\textbf{supersense label}, if any; 9.~sentence ID, including (at training time) the identity of the source corpus.
 \begin{verbatim}
-1       The          the        DET      O       0                                         ewtb.r.055976.1
-2       staff        staff      NOUN     O       0               n.group                   ewtb.r.055976.1
-3       leaves       leave      VERB     B       0               v.cognition               ewtb.r.055976.1
-4       a            a          DET      b       0                                         ewtb.r.055976.1
-5       lot          lot        NOUN     i       4                                         ewtb.r.055976.1
-6       to           to         PART     I       3                                         ewtb.r.055976.1
-7       be           be         AUX      I       6                                         ewtb.r.055976.1
-8       desired      desire     VERB     I       7                                         ewtb.r.055976.1
-9       .            .          PUNCT    O       0                                         ewtb.r.055976.1
+1       The          the        DET      O       0                                   ewtb.r.055976.1
+2       staff        staff      NOUN     O       0               n.group             ewtb.r.055976.1
+3       leaves       leave      VERB     B       0               v.cognition         ewtb.r.055976.1
+4       a            a          DET      b       0                                   ewtb.r.055976.1
+5       lot          lot        NOUN     i       4                                   ewtb.r.055976.1
+6       to           to         PART     I       3                                   ewtb.r.055976.1
+7       be           be         AUX      I       6                                   ewtb.r.055976.1
+8       desired      desire     VERB     I       7                                   ewtb.r.055976.1
+9       .            .          PUNCT    O       0                                   ewtb.r.055976.1
 
-1       I            i          PRON     O       0                                         ewtb.r.329991.1
-2       googled      google     VERB     O       0               v.communication           ewtb.r.329991.1
-3       restaurants  restaurant NOUN     O       0               n.group                   ewtb.r.329991.1
-4       in           in         ADP      O       0                                         ewtb.r.329991.1
-5       the          the        DET      O       0                                         ewtb.r.329991.1
-6       area         area       NOUN     O       0               n.location                ewtb.r.329991.1
-7       and          and        CONJ     O       0                                         ewtb.r.329991.1
-8       Fuji         fuji       PROPN    B       0               n.group                   ewtb.r.329991.1
-9       Sushi        sushi      PROPN    I       8                                         ewtb.r.329991.1
-10      came         come       VERB     B       0               v.communication           ewtb.r.329991.1
-11      up           up         ADV      I       10                                        ewtb.r.329991.1
-12      and          and        CONJ     O       0                                         ewtb.r.329991.1
-13      reviews      review     NOUN     O       0               n.communication           ewtb.r.329991.1
-14      were         be         VERB     O       0               v.stative                 ewtb.r.329991.1
-15      great        great      ADJ      O       0                                         ewtb.r.329991.1
-16      so           so         ADV      O       0                                         ewtb.r.329991.1
-17      I            i          PRON     O       0                                         ewtb.r.329991.1
-18      made         make       VERB     B       0               v.communication           ewtb.r.329991.1
-19      a            a          DET      o       0                                         ewtb.r.329991.1
-20      carry        carry      VERB     b       0               v.possession              ewtb.r.329991.1
-21      out          out        ADP      i       20                                        ewtb.r.329991.1
-22      order        order      NOUN     I       18                                        ewtb.r.329991.1
-23      of           of         ADP      O       0                                         ewtb.r.329991.1
-24      :            :          PUNCT    O       0                                         ewtb.r.329991.1
-25      L            l          SYM      O       0                                         ewtb.r.329991.1
-26      17           17         NUM      O       0                                         ewtb.r.329991.1
-27      .            .          PUNCT    O       0                                         ewtb.r.329991.1
+1       I            i          PRON     O       0                                   ewtb.r.329991.1
+2       googled      google     VERB     O       0               v.communication     ewtb.r.329991.1
+3       restaurants  restaurant NOUN     O       0               n.group             ewtb.r.329991.1
+4       in           in         ADP      O       0                                   ewtb.r.329991.1
+5       the          the        DET      O       0                                   ewtb.r.329991.1
+6       area         area       NOUN     O       0               n.location          ewtb.r.329991.1
+7       and          and        CONJ     O       0                                   ewtb.r.329991.1
+8       Fuji         fuji       PROPN    B       0               n.group             ewtb.r.329991.1
+9       Sushi        sushi      PROPN    I       8                                   ewtb.r.329991.1
+10      came         come       VERB     B       0               v.communication     ewtb.r.329991.1
+11      up           up         ADV      I       10                                  ewtb.r.329991.1
+12      and          and        CONJ     O       0                                   ewtb.r.329991.1
+13      reviews      review     NOUN     O       0               n.communication     ewtb.r.329991.1
+14      were         be         VERB     O       0               v.stative           ewtb.r.329991.1
+15      great        great      ADJ      O       0                                   ewtb.r.329991.1
+16      so           so         ADV      O       0                                   ewtb.r.329991.1
+17      I            i          PRON     O       0                                   ewtb.r.329991.1
+18      made         make       VERB     B       0               v.communication     ewtb.r.329991.1
+19      a            a          DET      o       0                                   ewtb.r.329991.1
+20      carry        carry      VERB     b       0               v.possession        ewtb.r.329991.1
+21      out          out        ADP      i       20                                  ewtb.r.329991.1
+22      order        order      NOUN     I       18                                  ewtb.r.329991.1
+23      of           of         ADP      O       0                                   ewtb.r.329991.1
+24      :            :          PUNCT    O       0                                   ewtb.r.329991.1
+25      L            l          SYM      O       0                                   ewtb.r.329991.1
+26      17           17         NUM      O       0                                   ewtb.r.329991.1
+27      .            .          PUNCT    O       0                                   ewtb.r.329991.1
 
-1       Magic        magic      ADJ      B       0               n.group                   lowlands-2
-2       Key          key        NOUN     I       1                                         lowlands-2
-3       Security     security   NOUN     I       2                                         lowlands-2
-4       Locksmiths   locksmith  NOUN     I       3                                         lowlands-2
-5       Save         save       ADJ      O       0                                         lowlands-2
-6       ?            ?          PUNCT    O       0                                         lowlands-2
-7       NUMBER       NUMBER     NUM      O       0               n.attribute               lowlands-2
-8       on           on         ADP      O       0                                         lowlands-2
-9       all          all        DET      O       0                                         lowlands-2
-10      Booked       book       VERB     O       0               v.communication           lowlands-2
-11      Services     services   NOUN     O       0               n.act                     lowlands-2
-12      with         with       ADP      O       0                                         lowlands-2
-13      @USER        @USER      PROPN    O       0                                         lowlands-2
-14      URL          URL        X        O       0                                         lowlands-2
-15      @USER        @USER      PROPN    O       0                                         lowlands-2
+1       Magic        magic      ADJ      B       0               n.group             lowlands-2
+2       Key          key        NOUN     I       1                                   lowlands-2
+3       Security     security   NOUN     I       2                                   lowlands-2
+4       Locksmiths   locksmith  NOUN     I       3                                   lowlands-2
+5       Save         save       ADJ      O       0                                   lowlands-2
+6       ?            ?          PUNCT    O       0                                   lowlands-2
+7       NUMBER       NUMBER     NUM      O       0               n.attribute         lowlands-2
+8       on           on         ADP      O       0                                   lowlands-2
+9       all          all        DET      O       0                                   lowlands-2
+10      Booked       book       VERB     O       0               v.communication     lowlands-2
+11      Services     services   NOUN     O       0               n.act               lowlands-2
+12      with         with       ADP      O       0                                   lowlands-2
+13      @USER        @USER      PROPN    O       0                                   lowlands-2
+14      URL          URL        X        O       0                                   lowlands-2
+15      @USER        @USER      PROPN    O       0                                   lowlands-2
 \end{verbatim}
-\caption{Column schema and example annotations in the 9-column \texttt{.tags} format.
+\caption{Column schema and example annotations in the 9-column tabular format.
 There is one token per line; adjacent sentences are separated by a blank line.
-Lowercase supersense labels are for verbs and uppercase labels are for nouns.
 In the sentence IDs, \texttt{ewtb.r} stands for the \textsc{Reviews} section of the English Web Treebank.}
 \label{fig:tagsformat}
 \end{figure*}
