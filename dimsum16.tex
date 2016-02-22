@@ -1002,13 +1002,82 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 
 \section{Results}\label{sec:results}
 
+We received a total of nine non-duplicate submissions before the deadline expired. 
+%Of these four were submitted in the open track, four in the closed track, while only a single submission was made in the semi-open track. 
+Table \ref{tbl:main-results} shows the main results. A more detailed breakdown can be found in Table \ref{tbl:per-domain-results}. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system. Systems entering in the open condition where all resources are allowed are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition, which only allows the use of certain whitelisted resources, are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
+
+\begin{table}
+
+\begin{tabular}{rllrl}
+\toprule
+ \#   & System &           Team &  Score  & Res. \\
+\midrule
+    1 &   S214 &         ICL-HD &  0.5777 &   ++ \\
+      &   S249 &         UW-CSE &  0.5771 &   ++ \\
+      &   S248 &         UW-CSE &  0.5710 &      \\
+    2 &   S106 &          UFRGS &  0.5027 &      \\
+    3 &   S227 &  VectorWeavers &  0.4994 &   ++ \\
+    4 &   S255 &           BCED &  0.4713 &   ++ \\
+    5 &   S211 &           BCED &  0.4617 &    + \\
+      &   S254 &           BCED &  0.4579 &      \\
+    6 &   S108 &         WHUNlp &  0.2571 &      \\
+\bottomrule
+\end{tabular}
+
+\caption{Main results.}
+
+\label{tbl:main-results}
+	
+\end{table}
+
+
+\subsection{Significance and winning}
+
+The overall best scoring system on the combined measure is S214, at .5777. The competition is, however, close: S249 scored .5771 \%, and S248 obtained combined score of 57.10 \%. We performed significance testing using the  sensitive McNemar's test to check whether the predictions of the systems are significantly different from each other. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed scores are significantly different from each other, only whether the predictions are. 
+
+According to the McNemar's test, the predictions of the highest ranking system and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system is performing significantly worse than the top system. However, its performance is not different from the second place and so we decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant. 
+
+\subsection{Easy and hard decisions}
+
+[To be filled in]. 
+
+\begin{figure}
+%	\resizebox{ \columnwidth }{!}{
+		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
+%	}
+	\caption{Agreement in supersense decisions.}
+	\label{fig:supersense-predictions}
+\end{figure}
+
+\begin{figure}
+%	\resizebox{ \columnwidth }{!}{
+		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
+%	}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the wrong answer. On the right side in red is the corresponding figure where at most one system gave the right answer.}
+	\label{fig:easy-and-hard-supersenses}
+\end{figure}
+
+
+\subsection{Clusters of systems}
+
+[To be filled in]
+
+\begin{figure}
+	\resizebox{ \columnwidth }{!}{
+		\includegraphics{figs/system_pairwise_clusters_cropped.pdf}
+	}
+	\caption{System clusters. Each cell compares the predictions of two systems $i$ and $j$ with respect to a gold standard. The value in the $i$,$j$-th cell is the number of predictions that $i$ got right but $j$ did not.}
+	\label{fig:system-clusters}
+\end{figure}
+
+
 \begin{table}
 \begin{tabular}{lrrrr}
 \toprule
 {} &  Reviews &   TED &  Twitter &  All \\
 submission &          &       &          &             \\
 \midrule
-\multicolumn{5}{l}{\textbf{Supersenses}} \\
+\multicolumn{5}{l}{\textbf{Multiword expressions}} \\
 
 106        &    49.6\% & 56.8\% &    51.2\% &       51.5\% \\
 108        &    26.4\% & 33.4\% &    34.2\% &       31.0\% \\
@@ -1020,7 +1089,7 @@ submission &          &       &          &             \\
 254        &     7.0\% & 16.3\% &     6.3\% &        8.2\% \\
 255        &     8.7\% & 20.1\% &    15.5\% &       13.5\% \\[1.4ex]
 
-\multicolumn{5}{l}{\textbf{Multiword expressions}} \\
+\multicolumn{5}{l}{\textbf{Supersenses}} \\
 
 106        &    50.9\% & 49.6\% &    49.2\% &       50.0\% \\
 108        &    25.8\% & 24.7\% &    24.6\% &       25.1\% \\
@@ -1048,8 +1117,7 @@ submission &          &       &          &             \\
 \end{tabular}
 
 \caption{Per-domain evaluation results}	
-\label{tbl:per-domain}
-
+\label{tbl:per-domain-results}
 \end{table}
 
 
