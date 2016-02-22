@@ -419,14 +419,19 @@ For instance, \lex{make\ldots order} can be passivized just like canonical trans
 MWEs such as these (and many other flavors) have attracted a great deal of attention 
 within computational semantics; see \citet{baldwin-10} for a review.
 \Citet{schneider-14-corpus} introduced an English corpus resource annotated for heterogenous MWEs, 
-suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.\footnote{Most 
-previous MWE evaluations assumed 
+suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.
+Prior to that, 
+most MWE evaluations had assumed 
 particular languages and constructions \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
-though the corpus and identification system of \citet{vincze-11} targets several kinds of MWEs.}
-Importantly, the MWEs in the corpus are not required to be contiguous, 
-but may contain \textbf{gaps} (viz.: \lex{made\ldots order}) 
-and are qualitatively labeled as either \textbf{strong} (somewhat noncompositional---e.g., proper names and idioms) 
-or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}).
+though the corpus and identification system of \citet{vincze-11} targets several kinds of MWEs.
+
+Importantly, the MWEs in \citeposs{schneider-14-corpus} corpus are not required to be contiguous, 
+but may contain \textbf{gaps} (viz.: \lex{made\ldots order}). 
+Moreover, the MWEs are qualitatively labeled as either \textbf{strong} 
+(somewhat noncompositional---e.g., proper names and idioms) 
+or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}). 
+For simplicity, we do not include weak MWEs in the task data; 
+all annotated MWEs are implicitly strong.
 
 \textbf{Supersenses.}
 % \longversion{
@@ -523,27 +528,28 @@ There is, however, recent work on developing a taxonomy for English adjective su
 % There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
 % }
 
-\textbf{Relationship between MWEs and supersenses.}
-In our view, the representation of MWEs and supersenses ought to be tightly coupled: 
-idiomatic combinations (MWEs) are best supersense-tagged holistically, 
-and this supersense category will often not be one that is normally expected based on the individual words. 
-For example, \lex{spill the beans} in its literal interpretation 
-would receive supersenses \sst{v:contact} and \sst{n:food},
-whereas the idiomatic interpretation meaning `divulge a secret' is represented as 
-an MWE holistically tagged as \sst{v:communication}. 
-\Citet{schneider-15} develops this idea at length, and provides a web reviews dataset 
-with the integrated annotation. Here, we have expanded the paradigm to additional domains 
-and coordinated a controlled comparison of several systems. 
 
-\textbf{Summary.} 
-To date, many of the analysis problems in computational lexical semantics are niche topics. 
-Following \citet{schneider-15}, which integrates broad-coverage MWE identification together with supersense tagging (\cref{sec:rep}), 
-this shared task delivers a benchmark English dataset from several nontraditional domains (\cref{sec:data}); 
+\textbf{Relationship between MWEs and supersenses.}
+In our view, the representation of MWEs and supersenses ought to be tightly coupled:
+idiomatic combinations (MWEs) are best supersense-tagged holistically,
+and this supersense category will often not be one that is normally expected based on the individual words.
+For example, \lex{spill the beans} in its literal interpretation
+would receive supersenses \sst{v:contact} and \sst{n:food},
+whereas the idiomatic interpretation meaning `divulge a secret' is represented as
+an MWE holistically tagged as \sst{v:communication}.
+\Citet{schneider-15} develops this idea at length, and provides a web reviews dataset
+with the integrated annotation. Here, we have expanded the paradigm to additional domains
+and coordinated a controlled comparison of several systems.
+
+\textbf{Summary.}
+To date, many of the analysis problems in computational lexical semantics are niche topics.
+Following \citet{schneider-15}, which integrates broad-coverage MWE identification together with supersense tagging (\cref{sec:rep}),
+this shared task delivers a benchmark English dataset from several nontraditional domains (\cref{sec:data});
 establishes objective, controlled evaluation procedures (\cref{sec:eval});
-and compares \nss{diverse? }systems (\cref{sec:results}).\nss{results, in a nutshell} 
-Though our dataset is limited to English, the representation 
+and compares \nss{diverse? }systems (\cref{sec:results}).\nss{results, in a nutshell}
+Though our dataset is limited to English, the representation
 should in principle work for other languages.
-%and to foster cross-pollination between different subcommunities. 
+%and to foster cross-pollination between different subcommunities.
 
 % \nss{encourage creativity of solutions}
 % Semantic analysis is a powerful and promising topic, but it has been largely confined to news text, 
@@ -591,25 +597,26 @@ for many NLP applications beyond machine translation.
 %I highly~recommend_ Garage_Pros _to my friends .  
 %"labels": {"8": ["friends", "GROUP"], "3": ["recommend", "communication"], "4": ["Garage", "GROUP"]}, "_": [[3, 6], [4, 5]], "words": [["I", "PRP"], ["highly", "RB"], ["recommend", "VBP"], ["Garage", "NNP"], ["Pros", "NNPS"], ["to", "IN"], ["my", "PRP$"], ["friends", "NNS"], [".", "."]], "~": [[2, 3, 6]]}
 \begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
- \node[inner sep=0cm]                                  (n1) {\tagts{I}{O}{}};
- \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagts{highly}{B}{}};
- \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagts{recommend}{\color{red}Ĩ}{\color{red}\textsc{v:comm.}}};
- \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagts{Garage}{\color{blue}b}{\color{blue}\textsc{n:group}}};
- \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagts{Pros}{\color{blue}ī}{}};
- \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagts{to}{\color{red}Ī}{}};
-\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
+ \node[inner sep=0cm]                                  (n1) {\tagts{The}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagts{staff}{O}{\textsc{n.group}}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagts{leaves}{\color{red}B}{\color{red}\textsc{v.cognition}}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagts{a}{\color{blue}b}{}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagts{lot}{\color{blue}i}{}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagts{to}{\color{red}I}{}};
+%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
 \path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
  \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
- \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagts{my}{O}{}};
- \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagts{friends}{O}{\textsc{n:group}}};
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagts{be}{\color{red}I}{}};
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagts{desired}{\color{red}I}{}};
+\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
+\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
  \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagts{.}{O}{}};
 \end{tikzpicture}
 \caption{Illustration of the target representation. MWE positional markers are shown above the sentence 
 and noun and verb supersenses below the sentence. 
-Links illustrate the behavior of the MWE tags: 
-solid = strong link, dotted = weak link. 
-The supersense labeling must respect the strong MWEs; thus, \sst{v:comm(unication)} 
-and the first \sst{n:group} each apply to two-word units---\emph{to} and \emph{Pros} 
+Links illustrate the behavior of the MWE tags.
+The supersense labeling must respect the MWEs; thus, \sst{v.cognition} 
+applies to a four-word unit---\emph{to}, \emph{be}, and \emph{desired} 
 must not receive separate supersenses.}
 \label{fig:ex1}
 \end{figure}
