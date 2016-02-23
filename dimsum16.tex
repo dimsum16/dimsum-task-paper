@@ -387,6 +387,17 @@ This severely limits the applicability of SemCor-based NLP tools
 and restricts opportunities for linguistic studies of lexical semantics in corpora.
 
 The goal of this task is to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
+This is inspired by work by \citet{carpuat-05,resnik-06}, who's showed that word sense disambiguation could contribute to machine translation, and subsequent work \citep{chan-07,carpuat-07,lefever-10}, which found that leveraging WSD predictions in MT required 
+reformulating the task to exploit the internals of an MT system
+%translations in a second language replaced abstract word senses, 
+%and the single-word disambiguation targets were replaced by the multiword phrases used 
+%by translation systems 
+. 
+In light of the lessons of these approaches, this task moves away 
+from fine-grained sense inventories and lexicalized annotation, 
+while defining a more general representation that can be useful 
+for many NLP applications beyond machine translation.
+
 We use two lexical representations---multiword expressions 
 and supersenses---and a variety of non-standard genres.
 %before delving into the data, evaluation, and results.
@@ -399,41 +410,76 @@ and supersenses---and a variety of non-standard genres.
 % parsing, distributional word representations, language models, 
 % use of language resources such as WordNet, (other buzzwords?)}
 
+\paragraph{Summary}
+To date, many of the analysis problems in computational lexical semantics are limited in scope.
+In contrast, in this shared task (following \citet{schneider-15}) we integrate broad-coverage MWE identification with supersense tagging (\cref{sec:rep}).
+We provide a benchmark dataset including several nontraditional domains (\cref{sec:data});
+establish objective, controlled evaluation procedures (\cref{sec:eval});
+and compare \nss{diverse? }systems (\cref{sec:results}).\nss{results, in a nutshell}
+Though our dataset is limited to English, the representation is applicable to other languages.
+
+
+% \nss{encourage creativity of solutions}
+% Semantic analysis is a powerful and promising topic, but it has been largely confined to news text, 
+% i.e., standardized text written mostly in English. 
+% By including a relatively new and heterogeneous domain like Twitter in the data, 
+% we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
+% and open the community to wider applications. 
+
+% This task would capitalize on current enthusiasm for semantics in NLP, 
+% providing a testbed for a wide variety of technical approaches---these could include 
+% linguistic feature engineering; comparing sequence models to hierarchical parsing models, or their combination 
+% with joint decoding \citep{le_roux-14}; domain adaptation \citep{johannsen-14}; 
+% type supervision; word clustering\slash representation learning \citep{grave-13}; 
+% collocation extraction \citep{pecina-10,ramisch-12}; 
+% language modeling; or other methods that exploit additional resources.
+
+% This is a new task. 
+% We believe it will attract strong participation from researchers in lexical semantics, 
+% structured prediction, (semi)supervised learning, domain adaptation, and social media NLP. 
+% To gauge interest, we reached out informally to a number of leaders in the field, 
+% asking for feedback on the idea. Several of them have indicated that they consider this 
+% a worthwhile task and will consider participating if it is accepted.
+% As a rough estimate, we think it would attract participation from about 20~teams.
+% If it is accepted, we will publicize the task widely in order to recruit as much participation as possible.
+
+Beyond the results presented here (Section \ref{XXX}), we hope 
+to foster a cross-pollination between different sub-communities, 
+and that the data and findings from this task will serve as a framework for integrating lexical semantics in NLP applications. 
+
+
+\section{Background}
 \textbf{Multiword expressions.} 
 Most contemporary approaches to syntactic and semantic analysis
 treat space-separated words as the basic units of structure. 
 %It has even been suggested that dependency syntax, for example, 
 %offers a good approximation of semantic structure.
-But for sentences with noncompositional or idiosyncratic expressions, this fails to reflect 
-the basic units of meaning. For example, consider:
+However, this fails to reflect 
+the basic units of meaning for sentences with non-compositional or idiosyncratic expressions, such as:
 %\begin{enumerate}[leftmargin=*,labelsep=2em,label=(\arabic*),before=\raggedright]
 \begin{itemize}[labelindent=2em]
-\item[(1)] The staff leaves a lot to be desired .
-\item[(2)] \raggedright I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .
+\item[(1)] The staff {\color{red}leaves} {\color{blue}a lot} {\color{red}to be desired} .
+\item[(2)] \raggedright I googled restaurants in the area and {\color{red}Fuji Sushi} {\color{blue}came up} and reviews were great so I {\color{green}made a} {\color{purple}carry out} {\color{green}order} of : L 17 .
 \end{itemize}
 In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
 \lex{Fuji Sushi}, \lex{came up}, \lex{made\ldots order}, and \lex{carry out}
-are all \textbf{multiword expressions} (MWEs) 
-in that their combined meanings can be thought of as ``prepackaged'' 
-in a single lexical expression that happens to be written with spaces.\footnote{This is not to say that MWEs cannot have ``normal'' 
-syntactic structure; some are more fixed in their form while others are quite flexible. 
-For instance, \lex{make\ldots order} can be passivized just like canonical transitive verb phrases.}
-MWEs such as these (and many other flavors) have attracted a great deal of attention 
+are all \textbf{multiword expressions} (MWEs): their combined meanings can be thought of as ``prepackaged'' 
+in a single lexical expression that happens to be written with spaces.
+%\footnote{This is not to say that MWEs cannot have ``normal'' 
+%syntactic structure; some are more fixed in their form while others are quite flexible. 
+%For instance, \lex{make\ldots order} can be passivized just like canonical transitive verb phrases.}
+MWEs such as these have attracted a great deal of attention 
 within computational semantics; see \citet{baldwin-10} for a review.
 \Citet{schneider-14-corpus} introduced an English corpus resource annotated for heterogenous MWEs, 
 suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.
-Prior to that, 
-most MWE evaluations had assumed 
-particular languages and constructions \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
+Prior to that, most MWE evaluations had assumed  particular languages and constructions \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
 though the corpus and identification system of \citet{vincze-11} targets several kinds of MWEs.
 
 Importantly, the MWEs in \citeposs{schneider-14-corpus} corpus are not required to be contiguous, 
 but may contain \textbf{gaps} (viz.: \lex{made\ldots order}). 
-Moreover, the MWEs are qualitatively labeled as either \textbf{strong} 
+While it also contains qualitative labels, \textbf{strong} 
 (somewhat noncompositional---e.g., proper names and idioms) 
-or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}). 
-For simplicity, we do not include weak MWEs in the task data; 
-all annotated MWEs are implicitly strong.
+or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}), for simplicity, we only use string MWEs in this task.
 
 \textbf{Supersenses.}
 % \longversion{
@@ -456,7 +502,7 @@ all annotated MWEs are implicitly strong.
 % I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
 % and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
 % }
-As noted above, relying on a WordNet-like inventory of fine-grained, lexicalized senses 
+As noted above, relying on WordNet-like fine-grained, lexicalized senses 
 creates problems for scalability and extensibility to new domains and languages. 
 While named entity recognition (NER) does not suffer from these problems, its classes---a (usually small) number of delexicalized coarse-grained classes---are only designed to apply to named entities.
 They therefore provide far from complete coverage of lexical items in a corpus.
@@ -542,55 +588,6 @@ an MWE holistically tagged as \sst{v:communication}.
 with the integrated annotation. Here, we have expanded the paradigm to additional domains
 and coordinated a controlled comparison of several systems.
 
-\textbf{Summary}
-To date, many of the analysis problems in computational lexical semantics are niche topics.
-Following \citet{schneider-15}, which integrates broad-coverage MWE identification together with supersense tagging (\cref{sec:rep}),
-this shared task delivers a benchmark English dataset from several nontraditional domains (\cref{sec:data});
-establishes objective, controlled evaluation procedures (\cref{sec:eval});
-and compares \nss{diverse? }systems (\cref{sec:results}).\nss{results, in a nutshell}
-Though our dataset is limited to English, the representation
-should in principle work for other languages.
-%and to foster cross-pollination between different subcommunities.
-
-% \nss{encourage creativity of solutions}
-% Semantic analysis is a powerful and promising topic, but it has been largely confined to news text, 
-% i.e., standardized text written mostly in English. 
-% By including a relatively new and heterogeneous domain like Twitter in the data, 
-% we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
-% and open the community to wider applications. 
-
-% This task would capitalize on current enthusiasm for semantics in NLP, 
-% providing a testbed for a wide variety of technical approaches---these could include 
-% linguistic feature engineering; comparing sequence models to hierarchical parsing models, or their combination 
-% with joint decoding \citep{le_roux-14}; domain adaptation \citep{johannsen-14}; 
-% type supervision; word clustering\slash representation learning \citep{grave-13}; 
-% collocation extraction \citep{pecina-10,ramisch-12}; 
-% language modeling; or other methods that exploit additional resources.
-
-% This is a new task. 
-% We believe it will attract strong participation from researchers in lexical semantics, 
-% structured prediction, (semi)supervised learning, domain adaptation, and social media NLP. 
-% To gauge interest, we reached out informally to a number of leaders in the field, 
-% asking for feedback on the idea. Several of them have indicated that they consider this 
-% a worthwhile task and will consider participating if it is accepted.
-% As a rough estimate, we think it would attract participation from about 20~teams.
-% If it is accepted, we will publicize the task widely in order to recruit as much participation as possible.
-
-Beyond the results presented below, we hope 
-the data and findings from this task will foster cross-pollination between different subcommunities 
-and serve as a framework for integrating lexical semantics in NLP applications. 
-E.g., until recently, it was unclear whether word sense disambiguation could contribute to applications 
-such as machine translation \citep{carpuat-05,resnik-06}; 
-subsequent work found that leveraging WSD predictions in MT required 
-reformulating the task to exploit the internals of an MT system
-%translations in a second language replaced abstract word senses, 
-%and the single-word disambiguation targets were replaced by the multiword phrases used 
-%by translation systems 
-\citep{chan-07,carpuat-07,lefever-10}. 
-In light of the lessons of these approaches, this task moves away 
-from fine-grained sense inventories and lexicalized annotation, 
-while defining a more general representation that can be useful 
-for many NLP applications beyond machine translation.
 
 \section{Representation}\label{sec:rep}
 
@@ -1071,7 +1068,7 @@ According to the McNemar's test, the predictions of the highest ranking system a
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
 %	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the wrong answer. On the right side in red is the corresponding figure where at most one system gave the right answer.}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer.\dirk{this is an awesome graph! Could we order it either by the left or right column, though?}}
 	\label{fig:easy-and-hard-supersenses}
 \end{figure}
 
