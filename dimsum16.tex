@@ -459,7 +459,7 @@ the basic units of meaning for sentences with non-compositional or idiosyncratic
 %\begin{enumerate}[leftmargin=*,labelsep=2em,label=(\arabic*),before=\raggedright]
 \begin{itemize}[labelindent=2em]
 \item[(1)] The staff {\color{red}leaves} {\color{blue}a lot} {\color{red}to be desired} .
-\item[(2)] \raggedright I googled restaurants in the area and {\color{red}Fuji Sushi} {\color{blue}came up} and reviews were great so I {\color{green}made a} {\color{purple}carry out} {\color{green}order} of : L 17 .
+\item[(2)] \raggedright I googled restaurants in the area and {\color{red}Fuji Sushi} {\color{blue}came up} and reviews were great so I {\color{mdgreen}made a} {\color{orange}carry out} {\color{mdgreen}order} of : L 17 .
 \end{itemize}
 In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
 \lex{Fuji Sushi}, \lex{came up}, \lex{made\ldots order}, and \lex{carry out}
@@ -1021,8 +1021,7 @@ We received a total of nine non-duplicate submissions before the deadline expire
 %Of these four were submitted in the open track, four in the closed track, while only a single submission was made in the semi-open track. 
 Table \ref{tbl:main-results} shows the main results. A more detailed breakdown can be found in Table \ref{tbl:per-domain-results}. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system. Systems entering in the open condition where all resources are allowed are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition, which only allows the use of certain whitelisted resources, are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
 
-\begin{table}
-
+\begin{table}\small\centering
 \begin{tabular}{rllrl}
 \toprule
  \#   & System &           Team &  Score  & Res. \\
@@ -1060,7 +1059,7 @@ According to the McNemar's test, the predictions of the highest ranking system a
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
 %	}
-	\caption{Agreement in supersense decisions.}
+	\caption{Histogram of number of systems predicting the correct supersense.\nss{Changed caption. Could this be enhanced to show domains? I.e. divide each bar into 3 pieces.}}
 	\label{fig:supersense-predictions}
 \end{figure}
 
@@ -1089,49 +1088,49 @@ According to the McNemar's test, the predictions of the highest ranking system a
 \begin{table}\small\centering
 \begin{tabular}{lrrrr}
 \toprule
-{} &  Reviews &   TED &  Twitter &  All \\
-submission &          &       &          &             \\
+{} &  Reviews &   \multicolumn{1}{c}{TED} &  Twitter &  \multicolumn{1}{c}{All} \\
+Submission &          &       &          &             \\
 \midrule
 \multicolumn{5}{l}{\textbf{Multiword expressions}} \\
 
-106        &    49.6\% & 56.8\% &    51.2\% &       51.5\% \\
-108        &    26.4\% & 33.4\% &    34.2\% &       31.0\% \\
-211        &     9.1\% & 18.3\% &    15.8\% &       13.5\% \\
-214        &    53.4\% & 57.1\% &    59.5\% &       56.7\% \\
-227        &    36.2\% & 41.8\% &    39.3\% &       38.5\% \\
-248        &    54.0\% & 52.3\% &    54.5\% &       53.9\% \\
-249        &    54.8\% & 53.5\% &    61.1\% &       57.2\% \\
-254        &     7.0\% & 16.3\% &     6.3\% &        8.2\% \\
-255        &     8.7\% & 20.1\% &    15.5\% &       13.5\% \\[1.4ex]
+S106        &    49.6 & 56.8 &    51.2 &       51.5 \\
+S108        &    26.4 & 33.4 &    34.2 &       31.0 \\
+S211        &     9.1 & 18.3 &    15.8 &       13.5 \\
+S214        &    53.4 & 57.1 &    59.5 &       56.7 \\
+S227        &    36.2 & 41.8 &    39.3 &       38.5 \\
+S248        &    54.0 & 52.3 &    54.5 &       53.9 \\
+S249        &    54.8 & 53.5 &    61.1 &       57.2 \\
+S254        &     7.0 & 16.3 &     6.3 &        8.2 \\
+S255        &     8.7 & 20.1 &    15.5 &       13.5 \\[1.4ex]
 
 \multicolumn{5}{l}{\textbf{Supersenses}} \\
 
-106        &    50.9\% & 49.6\% &    49.2\% &       50.0\% \\
-108        &    25.8\% & 24.7\% &    24.6\% &       25.1\% \\
-211        &    52.0\% & 51.4\% &    50.0\% &       51.1\% \\
-214        &    57.7\% & 60.1\% &    56.0\% &       57.6\% \\
-227        &    51.4\% & 52.0\% &    51.7\% &       51.6\% \\
-248        &    57.2\% & 59.1\% &    56.8\% &       57.5\% \\
-249        &    57.0\% & 59.2\% &    57.5\% &       57.6\% \\
-254        &    52.7\% & 51.4\% &    49.7\% &       51.3\% \\
-255        &    52.0\% & 53.3\% &    51.1\% &       51.9\% \\[1.4ex]
+S106        &    50.9 & 49.6 &    49.2 &       50.0 \\
+S108        &    25.8 & 24.7 &    24.6 &       25.1 \\
+S211        &    52.0 & 51.4 &    50.0 &       51.1 \\
+S214        &    57.7 & 60.1 &    56.0 &       57.6 \\
+S227        &    51.4 & 52.0 &    51.7 &       51.6 \\
+S248        &    57.2 & 59.1 &    56.8 &       57.5 \\
+S249        &    57.0 & 59.2 &    57.5 &       57.6 \\
+S254        &    52.7 & 51.4 &    49.7 &       51.3 \\
+S255        &    52.0 & 53.3 &    51.1 &       51.9 \\[1.4ex]
 
 \multicolumn{5}{l}{\textbf{Combined score}} \\
 
-106        &    50.7\% & 50.6\% &    49.5\% &       50.2\% \\
-108        &    25.9\% & 25.4\% &    25.9\% &       25.8\% \\
-211        &    46.2\% & 47.9\% &    44.4\% &       45.9\% \\
-214        &    57.0\% & 59.7\% &    56.6\% &       57.4\% \\
-227        &    49.2\% & 50.8\% &    49.7\% &       49.8\% \\
-248        &    56.7\% & 58.3\% &    56.4\% &       56.9\% \\
-249        &    56.6\% & 58.3\% &    58.2\% &       57.6\% \\
-254        &    46.6\% & 47.8\% &    43.0\% &       45.5\% \\
-255        &    46.1\% & 49.8\% &    45.4\% &       46.6\% \\
+S106        &    50.7 & 50.6 &    49.5 &       50.2 \\
+S108        &    25.9 & 25.4 &    25.9 &       25.8 \\
+S211        &    46.2 & 47.9 &    44.4 &       45.9 \\
+S214        &    57.0 & 59.7 &    56.6 &       57.4 \\
+S227        &    49.2 & 50.8 &    49.7 &       49.8 \\
+S248        &    56.7 & 58.3 &    56.4 &       56.9 \\
+S249        &    56.6 & 58.3 &    58.2 &       57.6 \\
+S254        &    46.6 & 47.8 &    43.0 &       45.5 \\
+S255        &    46.1 & 49.8 &    45.4 &       46.6 \\
 
 \bottomrule
 \end{tabular}
 
-\caption{Per-domain evaluation results}	
+\caption{Per-domain evaluation results. Figures are $F_1$ percentages.\nss{show condition, bold statistical winners?}}	
 \label{tbl:per-domain-results}
 \end{table}
 
