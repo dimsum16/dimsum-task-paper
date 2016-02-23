@@ -813,17 +813,17 @@ offers a breakdown of the annotations.}
 
 \subsection{\textsc{Reviews}} 
 \paragraph{Training}
-The review part of the training data  consists of a 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-made up of 723~online user reviews for services (such as restaurants or beauticians).\longversion{\footnote{Each review is a separate document; 
-no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
-syntactic parse of each sentence.}}
-\citet{schneider-14-corpus} recently manually annotated the entire data  for heterogeneous MWEs 
-and noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses, and released it as the CMWE Corpus.
-These annotations will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} 
-(Google and LDC have granted us permission to redistribute the source text and gold POS tags from the EWTB reviews). 
+The review part of the training data consists of the STREUSLE corpus \citet{schneider-14-corpus,schneider-15},\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}
+comprising comprehensive multiword expression and supersense annotations on a 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+made up of 723~online user reviews for services (such as restaurants or beauticians).
+The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
+and Penn Treebank--style POS tags replaced with Universal POS tags. 
 
 \paragraph{Test}
-The test portion comprises  340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} (the website as a general resource was described in \citet{hovy-2015trustpilot}). The reviews were chosen to control for age, gender, and location, and contained gold POS tags. The data was further annotated for supersenses and MWE by 
+The test portion comprises 340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} 
+(the website as a general resource was described in \citet{hovy-2015trustpilot}). 
+The reviews were chosen to control for age, gender, and location, and contained gold POS tags. 
+The data was further annotated for supersenses and MWE by \nss{?}.
 
 \subsection{\textsc{Tweets}} 
 \paragraph{Training}
@@ -880,18 +880,6 @@ in a random order: to encourage robust systems,
 the domain of each sentence will not be marked at test time, 
 and the proportion of sentences from each domain is not guaranteed to be 
 the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
-
-\subsection{Splits}
-
-We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
-101~documents (500~sentences, 7,171~words) are held out as a test set, 
-leaving 3,312~sentences\slash 48,408~words for training\slash development.
-
-For \textsc{Tweets}, 
-%splits proposed in \citep{Derczynski:ea:13}
-we follow \citeposs{johannsen-14} splits\finalversion{: 
-\nss{sizes of splits}}.
-The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
 }
 
 
@@ -1067,7 +1055,7 @@ According to the McNemar's test, the predictions of the highest ranking system a
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
 %	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer.\dirk{this is an awesome graph! Could we order it either by the left or right column, though?}}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer.\dirk{this is an awesome graph! Could we order it either by the left or right column, though?}\nss{I think it's sorted by token frequency? Can that frequency be shown?}}
 	\label{fig:easy-and-hard-supersenses}
 \end{figure}
 
