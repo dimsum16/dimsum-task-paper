@@ -476,7 +476,7 @@ and Arabic Wikipedia \citep{schneider-13}.}
 In addition to providing human-interpretable high-level clustering information, 
 features based on supersenses have been exploited in downstream semantics tasks\longversion{ 
 such as preposition sense disambiguation, noun compound interpretation, and metaphor detection} 
-\citep{ye-07,tratz-10,tsvetkov-13}. 
+\citep{ye-07,hovy2010,tratz-10,hovy-2013identifying,tsvetkov-13}. 
 
 \begin{table}\centering\small
 \resizebox{ \columnwidth }{!}{
@@ -802,6 +802,9 @@ Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3}
 \label{fig:linkmeasure}
 \end{figure*}
 
+\subsection{Annotation Process}
+Data sets from various sources and existing pre-annotation. Add POS tags and baseline supersenses, corrected by annotator.
+
 \subsection{\textsc{Reviews}} 
 
 This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
@@ -820,6 +823,8 @@ Each sentence was annotated independently by at least 2~annotators; disagreement
 (\Cref{tbl:reviews} offers a more detailed breakdown.)}\shortversion{\Cref{tbl:reviews}  
 offers a breakdown of the annotations.}
 \longversion{15\% of MWEs contain a gap.\finalversion{\nss{proportion strong/weak}}} 
+\\
+We also used 600 sentences (11,279 tokens) from the online review site Trustpilot. The resource generally was described in \citet{hovy-2015trustpilot} and the data set in \citet{hovy-2015age}. The reviews were chosen to control for age, gender, and location, and contained gold POS tags. The data was further annotated for supersenses and MWE by 
 
 \subsection{\textsc{Tweets}} 
 
