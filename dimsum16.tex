@@ -349,16 +349,19 @@ College Park, Maryland, USA\\
 \global\naaclfinalfalse % turn on header/line numbers for review
 
 \begin{abstract}\nss{TODO: rewrite}
-We propose a SemEval~2016 Shared Task 
-of analyzing the lexical semantics of English sentences 
-in a broad-coverage fashion. 
-The task formulation consists of two closely related steps which can be performed jointly:
-(a)~chunking tokens within sentences into \textbf{multiword expressions}, and 
-(b)~assigning coarse \textbf{supersense} labels to all noun and verb expressions. 
-The evaluation will build upon recently annotated datasets in two social web genres.
-\longversion{We expect that the task formulation will foster engagement across 
-multiple subcommunities of computational semantics, 
-and facilitate empirical comparison of methodologically diverse systems.}
+Semantic analysis tasks to date have been hampered by two problems: sense granularity (too coarse or too fine) of individual words and, related to that, domain limitations.
+In this task, we address both problems, by choosing a goldilocks granularity sense distinction (supersenses) and combine it with multi-word expressions. We also use a wide variety of domains, to ensure board coverage.
+Nine systems were submitted to the task (in two settings), achieving between XX and XXX. This indicates that the task is still unresolved. An error analysis identifies several hard cases, and XXX.
+%We propose a SemEval~2016 Shared Task 
+%of analyzing the lexical semantics of English sentences 
+%in a broad-coverage fashion. 
+%The task formulation consists of two closely related steps which can be performed jointly:
+%(a)~chunking tokens within sentences into \textbf{multiword expressions}, and 
+%(b)~assigning coarse \textbf{supersense} labels to all noun and verb expressions. 
+%The evaluation will build upon recently annotated datasets in two social web genres.
+%\longversion{We expect that the task formulation will foster engagement across 
+%multiple subcommunities of computational semantics, 
+%and facilitate empirical comparison of methodologically diverse systems.}
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -528,9 +531,9 @@ There is, however, recent work on developing a taxonomy for English adjective su
 
 
 \textbf{Relationship between MWEs and supersenses.}
-In our view, the representation of MWEs and supersenses ought to be tightly coupled:
-idiomatic combinations (MWEs) are best supersense-tagged holistically,
-and this supersense category will often not be one that is normally expected based on the individual words.
+We believe that MWEs and supersenses should be tightly coupled:
+idiomatic combinations such as MWEs are best supersense-tagged holistically,
+since their supersense category will often not be one we would expected based on the individual words.
 For example, \lex{spill the beans} in its literal interpretation
 would receive supersenses \sst{v:contact} and \sst{n:food},
 whereas the idiomatic interpretation meaning `divulge a secret' is represented as
@@ -539,7 +542,7 @@ an MWE holistically tagged as \sst{v:communication}.
 with the integrated annotation. Here, we have expanded the paradigm to additional domains
 and coordinated a controlled comparison of several systems.
 
-\textbf{Summary.}
+\textbf{Summary}
 To date, many of the analysis problems in computational lexical semantics are niche topics.
 Following \citet{schneider-15}, which integrates broad-coverage MWE identification together with supersense tagging (\cref{sec:rep}),
 this shared task delivers a benchmark English dataset from several nontraditional domains (\cref{sec:data});
@@ -801,36 +804,36 @@ Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3}
 \end{figure*}
 
 \subsection{Annotation Process}
-Data sets from various sources and existing pre-annotation. Add POS tags and baseline supersenses, corrected by annotator.
+We use data sets from various sources, with varying degrees of existing pre-annotation. Unless already provided, we add POS tags and baseline supersenses (using the most-frequent WordNet sense), which are then manually corrected by a trained annotator, and additionally marked with MWEs. The annotator spend XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} before annotating the data sets. 
 
-\subsection{\textsc{Reviews}} 
-\paragraph{Training}
-This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
-no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
-syntactic parse of each sentence.}}
-It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus]{schneider-14-corpus}, 
-then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses.
-These annotations will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} 
-(Google and LDC have granted us permission
-to redistribute the source text and gold POS tags from the EWTB reviews). 
-
-Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
+Annotation of the review training data was done by linguists, who took pains to establish conventions and resolve disagreements.
 Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
 \longversion{Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
 (\Cref{tbl:reviews} offers a more detailed breakdown.)}\shortversion{\Cref{tbl:reviews}  
 offers a breakdown of the annotations.}
 \longversion{15\% of MWEs contain a gap.\finalversion{\nss{proportion strong/weak}}} 
 
+
+\subsection{\textsc{Reviews}} 
+\paragraph{Training}
+The review part of the training data  consists of a 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+made up of 723~online user reviews for services (such as restaurants or beauticians).\longversion{\footnote{Each review is a separate document; 
+no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
+syntactic parse of each sentence.}}
+\citet{schneider-14-corpus} recently manually annotated the entire data  for heterogeneous MWEs 
+and noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses, and released it as the CMWE Corpus.
+These annotations will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} 
+(Google and LDC have granted us permission to redistribute the source text and gold POS tags from the EWTB reviews). 
+
 \paragraph{Test}
-We also used 600 sentences (11,279 tokens) from the online review site Trustpilot. The resource generally was described in \citet{hovy-2015trustpilot} and the data set in \citet{hovy-2015age}. The reviews were chosen to control for age, gender, and location, and contained gold POS tags. The data was further annotated for supersenses and MWE by 
+The test portion comprises  340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} (the website as a general resource was described in \citet{hovy-2015trustpilot}). The reviews were chosen to control for age, gender, and location, and contained gold POS tags. The data was further annotated for supersenses and MWE by 
 
 \subsection{\textsc{Tweets}} 
-
-Two samples of Twitter messages (in total, 987, with 18,000 words) 
-were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
+\paragraph{Training}
+\citep{johannsen-14} recently annotated two samples of 987 Twitter messages (18,000 words) 
+with supersenses\longversion{: 
 (a)~the POS+NER-annotated data set of \citet{ritter-11}, 
-and %which we use for training, development, and evaluation, and 
+and 
 (b)~\citeposs{plank-14} sample of 200~tweets}.\footnote{The supersense-annotated tweets 
 are available at \url{https://github.com/coastalcph/supersense-data-twitter}.}
 %, which we use for additional, out-of-sample evaluation. 
@@ -850,16 +853,23 @@ many of the multiword chunks tagged with a \longversion{noun or verb }supersense
 % raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
 % The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
 %For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
-For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
-This will be the only new annotation required, and we anticipate that it will be feasible to complete it 
-well before the July~30, 2015 release of the training data.
+%For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
+%This will be the only new annotation required, and we anticipate that it will be feasible to complete it 
+%well before the July~30, 2015 release of the training data.
 % (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
 % (participants should be banned from using the CMWE data lest they train on the test set.)
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
 % be as specific as possible about timeline}
 
-\subsection{\textsc{TED Talks}}
+\paragraph{Test}
+Our test set consists of 500 tweets (6,627 tokens) taken from the TweeBank corpus \citep{kong-14}, which already contains gold-standard MWEs. We converted the POS tags from gold ARK TweetNLP POS + FUDG dependencies to UPOS and had an annotator supply supersenses.
 
+
+\subsection{\textsc{TED Talks}}
+\paragraph{Test}
+To test the broad-coverage aspect of the submitted systems, the test set contained a ``surprise'' domain. We opted for TED talks, i.e., the transcription of spoken language. We chose 100 sentences (2,187 tokens), a subset of the IWSLT data set\footnote{\url{http://ahclab.naist.jp/resource/tedtreebank/}}  \citet{neubig-2014naist}, and the 60 sentences (1,329 tokens) from the IWSLT test set \citep{cettolo-2012wit3}.
+
+We induced POS by conversion from the gold PTB trees (for the first part) and by annotation with a averaged structured perceptron model (Rungsted)\footnote{\url{https://github.com/coastalcph/rungsted}} from UD v1.2.
 
 
 \section{Evaluation}\label{sec:eval}
