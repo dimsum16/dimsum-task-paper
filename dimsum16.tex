@@ -168,6 +168,7 @@
 \newcommand{\nssmarker}{\ensuretext{\textcolor{magenta}{\ensuremath{^{\textsc{NS}}_{\textsc{S}}}}}}
 \newcommand{\nasmarker}{\ensuretext{\textcolor{red}{\ensuremath{^{\textsc{NA}}_{\textsc{S}}}}}}
 \newcommand{\dhmarker}{\ensuretext{\textcolor{red}{\ensuremath{^{\textsc{D}}_{\textsc{H}}}}}}
+\newcommand{\ajmarker}{\ensuretext{\textcolor{purple}{\ensuremath{^{\textsc{A}}_{\textsc{J}}}}}}
 \newcommand{\lkmarker}{\ensuretext{\textcolor{blue}{\ensuremath{^{\textsc{L}}_{\textsc{K}}}}}}
 \newcommand{\swswmarker}{\ensuretext{\textcolor{orange}{\ensuremath{^{\textsc{S}}_{\textsc{S}}}}}}
 \newcommand{\abmarker}{\ensuretext{\textcolor{purple}{\ensuremath{^{\textsc{A}}_{\textsc{B}}}}}}
@@ -175,7 +176,7 @@
 \newcommand{\arkcomment}[3]{\ensuretext{\textcolor{#3}{[#1 #2]}}}
 %\newcommand{\arkcomment}[3]{}
 \newcommand{\nss}[1]{\arkcomment{\nssmarker}{#1}{magenta}}
-\newcommand{\aj}[1]{\arkcomment{\cjdmarker}{#1}{green}}
+\newcommand{\aj}[1]{\arkcomment{\ajmarker}{#1}{purple}}
 \newcommand{\dirk}[1]{\arkcomment{\dhmarker}{#1}{red}}
 \newcommand{\lk}[1]{\arkcomment{\lkmarker}{#1}{blue}}
 \newcommand{\swsw}[1]{\arkcomment{\swswmarker}{#1}{orange}}
@@ -1006,7 +1007,6 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 \section{Results}\label{sec:results}
 
 We received a total of nine non-duplicate submissions before the deadline expired. 
-%Of these four were submitted in the open track, four in the closed track, while only a single submission was made in the semi-open track. 
 Table \ref{tbl:main-results} shows the main results. A more detailed breakdown can be found in Table \ref{tbl:per-domain-results}. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system. Systems entering in the open condition where all resources are allowed are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition, which only allows the use of certain whitelisted resources, are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
 
 \begin{table}\small\centering
@@ -1035,19 +1035,29 @@ Table \ref{tbl:main-results} shows the main results. A more detailed breakdown c
 
 \subsection{Ranking and significance}
 
-The overall best scoring system on the combined measure is S214, at .5777. The competition is, however, close: S249 scored .5771, and S248 obtained combined score of 57.10. We performed significance testing using the  sensitive McNemar's test to check whether the predictions of the systems are significantly different from each other. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed scores are significantly different from each other, only whether the predictions are. 
+The overall best scoring system on the combined measure is S214, at .5777. The competition is, however, close: S249 scored .5771, and S248 obtained combined score of .5710. We performed significance testing using the  sensitive McNemar's test to check whether the predictions of the systems are significantly different from each other. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed scores are significantly different from each other, only whether the predictions are. 
 
 According to the McNemar's test, the predictions of the highest ranking system and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system is performing significantly worse than the top system. However, its performance is not different from the second place and so we decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant. 
 
 \subsection{Easy and hard decisions}
 
-[To be filled in]. 
+Overall the results clearly show that the joint supersense and MWE tagging task is not currently resolved. Given the wide range of participating system and previous work, it seems a reasonable corollary that the task itself is not easy. On the other hand, it is not uniformly hard. In fact some decisions are relatively easy in the sense that most or all systems get them right, while some are hard so that none or very few systems produce the correct answer. Figure \ref{fig:supersense-predictions} explores this for the supersense-tagging subtask. The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. Hard instances account for about 25~\% of instances where the gold data has a label other than \texttt{O}, which puts an upper bound on any system combination. Even a hypothetical oracle system that chooses the best prediction for each instance from among all the systems would still not push the accuracy above about 75~\%.
+
+The distribution of easy and hard instances varies a lot between labels. As shown in Figure \ref{fig:easy-and-hard-supersenses} for supersenses, individual label types range between the fairly easy (e.g. \textsc{v.stative} and \textsc{v.communication}), and the more difficult (e.g. \textsc{n.attribute} and \textsc{v.contact}). The most common supersense \textsc{v.stative} is easy because it has relatively few distinct forms (the ten most common lemmas make up more than 77~\% of the instances), and the $P(\textit{supersense} | \textit{lemma})$ mapping is low entropy. Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
+
+Supersenses may be difficult for more than one reason. For instance, \textsc{v.contact}---e.g. \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. In contrast, person names, job titles etc. that should be tagged as \textsc{n.person} are rarely ambiguous with respect to supersense. The main challenge in that case is that the category is open-ended and not in general evident from syntactic structure.
+
+Finally, we examine the diversity of the submitted systems. Do they capture different aspects of the task, which would entail that a better system could be produced by combining the individual systems? We cannot estimate this from the result tables, since, combinatorially, there are many ways to obtain a given score.
+The $N \times N$ labeled matrix in Figure \ref{fig:system-clusters} shows how the $N$ systems relate to each other. Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ that were not correctly predicted by $b$. This is an asymmetrical measure of predictive similarity. A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. When the difference $|T_{a,b} - T_{b,a}|$ is small, the two systems make similar predictions. 
+
+We cluster the systems and observe that the resulting groups correspond to similarly ranked systems in Table \ref{tbl:main-results}. The clustering is displayed at the left side of the plot. Inside the cluster of systems with rank one, the asymmetrical predictive advantage ranges between 267 and 469. Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. The best combination system would thus likely be between two of the rank one systems. However, the gains are small, and overall the systems seem to extract the same knowledge, or subsets of the same knowledge, out of the training data. % Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
+
 
 \begin{figure}
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
 %	}
-	\caption{Histogram of number of systems predicting the correct supersense.\nss{Changed caption. Could this be enhanced to show domains? I.e. divide each bar into 3 pieces.}}
+	\caption{Number of systems predicting the correct supersense. Shown for predictions where the gold label is not \texttt{O}. \aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }}
 	\label{fig:supersense-predictions}
 \end{figure}
 
@@ -1055,14 +1065,11 @@ According to the McNemar's test, the predictions of the highest ranking system a
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
 %	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer.\dirk{this is an awesome graph! Could we order it either by the left or right column, though?}\nss{I think it's sorted by token frequency? Can that frequency be shown?}}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency. \dirk{this is an awesome graph! Could we order it either by the left or right column, though?}\nss{I think it's sorted by token frequency? Can that frequency be shown?} \aj{That's right. The frequency could be shown to the right of each bar, but it would likely require some fiddling with matplotlib. Not my favourite activity ;)}}
 	\label{fig:easy-and-hard-supersenses}
 \end{figure}
 
 
-\subsection{Clusters of systems}
-
-[To be filled in]
 
 \begin{figure}
 	\resizebox{ \columnwidth }{!}{
@@ -1081,39 +1088,39 @@ Submission &          &       &          &             \\
 \midrule
 \multicolumn{5}{l}{\textbf{Multiword expressions}} \\
 
-S106        &    49.6 & 56.8 &    51.2 &       51.5 \\
-S108        &    26.4 & 33.4 &    34.2 &       31.0 \\
-S211        &     9.1 & 18.3 &    15.8 &       13.5 \\
-S214        &    53.4 & 57.1 &    59.5 &       56.7 \\
-S227        &    36.2 & 41.8 &    39.3 &       38.5 \\
-S248        &    54.0 & 52.3 &    54.5 &       53.9 \\
-S249        &    54.8 & 53.5 &    61.1 &       57.2 \\
-S254        &     7.0 & 16.3 &     6.3 &        8.2 \\
-S255        &     8.7 & 20.1 &    15.5 &       13.5 \\[1.4ex]
+S106       &   0.4957 &  0.5676 &   0.5116 &      0.5148 \\
+S108       &   0.2639 &  0.3344 &   0.3418 &      0.3098 \\
+S211       &   0.0907 &  0.1828 &   0.1576 &      0.1346 \\
+S214       &   0.5337 &  0.5714 &   0.5949 &      0.5666 \\
+S227       &   0.3618 &  0.4176 &   0.3932 &      0.3849 \\
+S248       &   0.5396 &  0.5235 &   0.5448 &      0.5393 \\
+S249       &   0.5480 &  0.5348 &   0.6109 &      0.5724 \\
+S254       &   0.0705 &  0.1630 &   0.0634 &      0.0820 \\
+S255       &   0.0868 &  0.2011 &   0.1550 &      0.1348 \\[1.4ex]
 
 \multicolumn{5}{l}{\textbf{Supersenses}} \\
 
-S106        &    50.9 & 49.6 &    49.2 &       50.0 \\
-S108        &    25.8 & 24.7 &    24.6 &       25.1 \\
-S211        &    52.0 & 51.4 &    50.0 &       51.1 \\
-S214        &    57.7 & 60.1 &    56.0 &       57.6 \\
-S227        &    51.4 & 52.0 &    51.7 &       51.6 \\
-S248        &    57.2 & 59.1 &    56.8 &       57.5 \\
-S249        &    57.0 & 59.2 &    57.5 &       57.6 \\
-S254        &    52.7 & 51.4 &    49.7 &       51.3 \\
-S255        &    52.0 & 53.3 &    51.1 &       51.9 \\[1.4ex]
+S106       &   0.5093 &  0.4961 &   0.4920 &      0.4998 \\
+S108       &   0.2582 &  0.2468 &   0.2463 &      0.2514 \\
+S211       &   0.5200 &  0.5140 &   0.4995 &      0.5111 \\
+S214       &   0.5766 &  0.6006 &   0.5599 &      0.5755 \\
+S227       &   0.5136 &  0.5200 &   0.5170 &      0.5162 \\
+S248       &   0.5719 &  0.5911 &   0.5682 &      0.5747 \\
+S249       &   0.5700 &  0.5917 &   0.5746 &      0.5764 \\
+S254       &   0.5268 &  0.5144 &   0.4966 &      0.5129 \\
+S255       &   0.5198 &  0.5328 &   0.5111 &      0.5193 \\[1.4ex]
 
 \multicolumn{5}{l}{\textbf{Combined score}} \\
 
-S106        &    50.7 & 50.6 &    49.5 &       50.2 \\
-S108        &    25.9 & 25.4 &    25.9 &       25.8 \\
-S211        &    46.2 & 47.9 &    44.4 &       45.9 \\
-S214        &    57.0 & 59.7 &    56.6 &       57.4 \\
-S227        &    49.2 & 50.8 &    49.7 &       49.8 \\
-S248        &    56.7 & 58.3 &    56.4 &       56.9 \\
-S249        &    56.6 & 58.3 &    58.2 &       57.6 \\
-S254        &    46.6 & 47.8 &    43.0 &       45.5 \\
-S255        &    46.1 & 49.8 &    45.4 &       46.6 \\
+S106       &   0.5071 &  0.5057 &   0.4954 &      0.5022 \\
+S108       &   0.2586 &  0.2539 &   0.2587 &      0.2576 \\
+S211       &   0.4619 &  0.4790 &   0.4442 &      0.4586 \\
+S214       &   0.5698 &  0.5971 &   0.5663 &      0.5741 \\
+S227       &   0.4925 &  0.5082 &   0.4974 &      0.4977 \\
+S248       &   0.5666 &  0.5826 &   0.5638 &      0.5688 \\
+S249       &   0.5661 &  0.5833 &   0.5818 &      0.5757 \\
+S254       &   0.4657 &  0.4782 &   0.4299 &      0.4547 \\
+S255       &   0.4615 &  0.4981 &   0.4544 &      0.4664 \\
 
 \bottomrule
 \end{tabular}
