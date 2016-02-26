@@ -388,13 +388,12 @@ This severely limits the applicability of SemCor-based NLP tools
 and restricts opportunities for linguistic studies of lexical semantics in corpora.
 
 The goal of this task is to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
-This is inspired by work by \citet{carpuat-05,resnik-06}, who's showed that word sense disambiguation could contribute to machine translation, and subsequent work \citep{chan-07,carpuat-07,lefever-10}, which found that leveraging WSD predictions in MT required 
-reformulating the task to exploit the internals of an MT system
+While traditional word sense disambiguation initially did not improve machine translation\citet{carpuat-05,resnik-06}, subsequent work \citep{chan-07,carpuat-07,lefever-10} found that leveraging WSD predictions in MT required reformulating the task to exploit the internals of an MT system
 %translations in a second language replaced abstract word senses, 
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
 . 
-In light of the lessons of these approaches, this task moves away 
+In light of the lessons, this task moves away 
 from fine-grained sense inventories and lexicalized annotation, 
 while defining a more general representation that can be useful 
 for many NLP applications beyond machine translation.
@@ -883,41 +882,38 @@ and the proportion of sentences from each domain is not guaranteed to be
 the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
 }
 
-
-
-\textbf{Inputs.}
+\textbf{Open and closed conditions.}
 % \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
 % they will be encouraged to submit the closed condition results to the open condition as well.}
-The main goal of the task is to find creative new ways to improve the performance of lexical semantic analysis on various domains. 
-In keeping with conventions of past shared tasks at SemEval and other venues, 
-we will invite systems in multiple data conditions.
-These conditions will be judged separately, and teams are welcome to submit systems under more than one.
-The \textbf{open} condition will encourage participants to make 
+%The main goal of the task was to find creative new ways to improve the performance of lexical semantic analysis on various domains. 
+%In keeping with conventions of past shared tasks at SemEval and other venues, 
+We invited systems in multiple data conditions. %These conditions were judged separately, and teams were welcome to submit systems under more than one.
+The \textbf{open} condition encouraged participants to make 
 wide use of any and all available resources, including for 
 distant or direct supervision. 
-Two \textbf{closed} conditions will encourage controlled comparisons of algorithms 
-by limiting their training to specific resources: 
-a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
-and a \textbf{semi-supervised} closed condition will further allow use of a specific unannotated corpus.\footnote{%
-We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
-which is freely available for research use, as the unlabeled corpus for the semi-supervised closed condition.
-All conditions will have access to the annotated data we provide; 
+A \textbf{closed} condition encouraged controlled comparisons of algorithms 
+by limiting their training to specific resources distributed for the task. 
+
+%a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
+%and a \textbf{semi-supervised} closed condition will further allow use of a specific unannotated corpus.\footnote{%
+%We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
+%which is freely available for research use, as the unlabeled corpus for the semi-supervised closed condition.
+All conditions had access to the annotated data we provide; 
 a set of Brown clusters \citep{brown-92} computed from a large corpus; and the \longversion{English }WordNet lexicon. 
-The input at test time will include \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
-\shortversion{No sentence-level metadata will be provided at test time, 
-but the domain of the sentence will be marked in the training data.}}
+The input at test time included \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
+\shortversion{Sentence-level metadata was not provided at test time, 
+but the domain of the sentence was marked in the training data.}
 %(If the task proves popular, in a future incarnation we might consider additional conditions, 
 %such as an unsupervised condition.)
 
-\longversion{The sentences provided for this task are tokenized. 
-For evaluation to be possible, system predictions must respect the input tokenization.}
+%\longversion{The sentences provided for this task are tokenized. 
+%For evaluation to be possible, system predictions must respect the input tokenization.}
 
 \longversion{
-No sentence-level metadata will be provided in the input at test time.
-The training data will mark the domain from which the sentence was drawn 
-(\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
+No sentence-level metadata was provided in the input at test time.
+The training data marked the domain from which the sentence was drawn 
+(\textsc{Reviews} or \textsc{Tweets}); systems could make use of this information as they wish, 
 so long as it is not required as part of the input at test time.}
-
 
 % \nss{a few possibilities for conditions---
 % \begin{description}
@@ -931,10 +927,7 @@ so long as it is not required as part of the input at test time.}
 % and survey teams to ensure we only evaluate conditions that generate sufficient interest}
 
 \textbf{Scoring.}
-We will provide an evaluation script to check the format of system output and
-compute three kinds of scores.
-
-
+We provided an evaluation script to allow participants to check the format of system output and to compute all official scores.
 
 The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
 of the identified MWEs. Tokens not involved in a predicted or gold MWE
@@ -972,8 +965,7 @@ to compute an overall precision, recall, and $F_1$
 for competitive ranking of systems.\footnote{All measures are micro-averages, 
 computed over all tokens in the corpus 
 (rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
-All measures will be reported separately for each of the two evaluation domains, 
-and combined with the two domains weighted equally.}
+All measures are then combined with each of the three domains weighted equally.}
 
 % \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 % weight MWE links according to supersense match;
