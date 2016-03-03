@@ -351,7 +351,7 @@ College Park, Maryland, USA\\
 
 \begin{abstract}\nss{TODO: rewrite}
 Semantic analysis tasks to date have been hampered by two problems: sense granularity (too coarse or too fine) of individual words and, related to that, domain limitations.
-In this task, we address both problems, by choosing a goldilocks granularity sense distinction (supersenses) and combine it with multi-word expressions. We also use a wide variety of domains, to ensure board coverage.
+In this task, we address both problems, by choosing an intermediate sense granularity (supersenses) combined with multi-word expressions on a wide variety of domains.
 Nine systems were submitted to the task (in two settings), achieving between XX and XXX. This indicates that the task is still unresolved. An error analysis identifies several hard cases, and XXX.
 %We propose a SemEval~2016 Shared Task 
 %of analyzing the lexical semantics of English sentences 
@@ -367,7 +367,7 @@ Nine systems were submitted to the task (in two settings), achieving between XX 
 
 \section{Introduction}\label{sec:intro}
 
-Broad-coverage NLP techniques such as XXX\dirk{make clear what broad coverage is} have
+Broad-coverage NLP techniques such as XXX\dirk{Nathan, could you make clear what broad coverage is?} have
 become mainstream for several aspects of language---including morphology, syntax, 
 and some areas of semantics (notably, named entity recognition, %\nss{2002/2003}
 semantic role labeling, %\nss{2004/2005/2008/2009} 
@@ -375,28 +375,28 @@ and coreference resolution). %\nss{2011/2012}
 %, thanks in part to previous SemEval shared tasks, 
 Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
 to broad coverage. %\nss{need to say something about purely unsupervised distributional approaches?} 
-This might be attributable to the dominant paradigm of fine-grained word sense disambiguation 
-with lexical resources such as WordNet \citep{wordnet}.
-The inventories in these resources 
-are difficult to annotate in corpora, result in considerable data sparseness, 
-and do not readily generalize to out-of-vocabulary words.
-While the main corpus annotated with WordNet senses, 
-SemCor \citep{semcor}, does reflect several text genres, it would unfortunately be quite expensive
-to expand annotations to new genres, such as social web text 
+
+The dominant paradigm of fine-grained word sense disambiguation, WordNet \citep{wordnet}, 
+is difficult to annotate in corpora, results in considerable data sparseness, 
+and does not readily generalize to out-of-vocabulary words.
+While the main corpus with WordNet senses, 
+SemCor \citep{semcor}, does reflect some text genres, it is hard
+to expand its annotations to new genres, such as social web text 
 or transcribed speech.
 This severely limits the applicability of SemCor-based NLP tools 
 and restricts opportunities for linguistic studies of lexical semantics in corpora.
 
-The goal of this task is to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
-While traditional word sense disambiguation initially did not improve machine translation\citet{carpuat-05,resnik-06}, subsequent work \citep{chan-07,carpuat-07,lefever-10} found that leveraging WSD predictions in MT required reformulating the task to exploit the internals of an MT system
+Consequently,  \citet{carpuat-05,resnik-06} found that traditional, fine-grained word sense disambiguation did indeed \emph{not} improve machine translation. However, abstracting the senses and moving to multi-word does \citep{chan-07,carpuat-07,lefever-10}.
+
+%The goal of this task is therefore to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
 %translations in a second language replaced abstract word senses, 
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
 . 
-In light of the lessons, this task moves away 
-from fine-grained sense inventories and lexicalized annotation, 
-while defining a more general representation that can be useful 
-for many NLP applications beyond machine translation.
+In this task, we therefore move away 
+from fine-grained sense inventories and lexicalized annotation.
+We define a more general representation that can be useful 
+for many NLP applications beyond machine translation, to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
 
 We use two lexical representations---multiword expressions 
 and supersenses---and a variety of non-standard genres.
@@ -411,7 +411,7 @@ and supersenses---and a variety of non-standard genres.
 % use of language resources such as WordNet, (other buzzwords?)}
 
 \paragraph{Summary}
-To date, many of the analysis problems in computational lexical semantics are limited in scope.
+To date, many of the analysis problems in computational lexical semantics are limited in scope, due to granularity and coverage.
 In contrast, in this shared task (following \citet{schneider-15}) we integrate broad-coverage MWE identification with supersense tagging (\cref{sec:rep}).
 We provide a benchmark dataset including several nontraditional domains (\cref{sec:data});
 establish objective, controlled evaluation procedures (\cref{sec:eval});
