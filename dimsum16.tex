@@ -504,13 +504,16 @@ or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly r
 % }
 As noted above, relying on WordNet-like fine-grained, lexicalized senses 
 creates problems for scalability and extensibility to new domains and languages. 
-While named entity recognition (NER) does not suffer from these problems, its classes---a (usually small) number of delexicalized coarse-grained classes---are only designed to apply to named entities.
-They therefore provide far from complete coverage of lexical items in a corpus.
+Named entity recognition (NER) does not suffer from these problems, but its classes---a small number of coarse-grained classes---only apply to named entities, not verbs, adjectives, or common nouns.
+They therefore provide far from complete coverage in a corpus.
 
 Noun and verb \textbf{supersenses}
 offer a middle ground in granularity: they generalize 
-named entity classes to cover all nouns (with 26~classes) as well as verbs (15~classes). 
-The inventory, \cref{tbl:supersenses}, originates with the top-level organization of Princeton WordNet,
+named entity classes to cover all nouns (with 26~classes), but also cover verbs (15~classes), see \cref{tbl:supersenses}, and provide a human-interpretable high-level clustering. WordNet supersenses for adjectives and adverbs nominally exist, 
+but are based on morphosyntactic rather than semantic properties.  
+There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.
+
+The inventory originates from the top-level organization of WordNet,
 but can be applied directly to annotate new data---including out-of-vocabulary words 
 in English or other languages \citep{schneider-12,johannsen-14}. 
 Similar to NER, supersense tagging approaches have generally used statistical sequence models 
@@ -520,8 +523,8 @@ English-Italian MultiSemCor \citep{picca-08,picca-09,attardi-10},
 the Italian Syntactic-Semantic Treebank and Italian Wikipedia \citep{attardi-10,rossi-13}, 
 Chinese Cilin \citep{qiu-11},  
 and Arabic Wikipedia \citep{schneider-13}.}
-In addition to providing human-interpretable high-level clustering information, 
-features based on supersenses have been exploited in downstream semantics tasks\longversion{ 
+
+Features based on supersenses have also been exploited in downstream semantics tasks\longversion{ 
 such as preposition sense disambiguation, noun compound interpretation, and metaphor detection} 
 \citep{ye-07,hovy2010,tratz-10,hovy-2013identifying,tsvetkov-13}. 
 
@@ -545,10 +548,7 @@ n:location	&	v:body	&	v:weather\\
 n:motive	&	v:change	&	
 \end{tabular}
 }% resize
-\caption{The 41 noun and verb supersenses in WordNet.
-WordNet supersenses for adjectives and adverbs nominally exist, 
-but are based on morphosyntactic rather than semantic properties.  
-There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
+\caption{The 41 noun and verb supersenses in WordNet.}
 \label{tbl:supersenses}
 \end{table}
 
@@ -578,15 +578,15 @@ There is, however, recent work on developing a taxonomy for English adjective su
 
 \textbf{Relationship between MWEs and supersenses.}
 We believe that MWEs and supersenses should be tightly coupled:
-idiomatic combinations such as MWEs are best supersense-tagged holistically,
-since their supersense category will often not be one we would expected based on the individual words.
+idiomatic combinations such as MWEs are best labeled holistically,
+since their joint supersense category will often differ from that of the individual words.
 For example, \lex{spill the beans} in its literal interpretation
 would receive supersenses \sst{v:contact} and \sst{n:food},
-whereas the idiomatic interpretation meaning `divulge a secret' is represented as
+whereas the idiomatic interpretation, `divulge a secret', is represented as
 an MWE holistically tagged as \sst{v:communication}.
 \Citet{schneider-15} develops this idea at length, and provides a web reviews dataset
-with the integrated annotation. Here, we have expanded the paradigm to additional domains
-and coordinated a controlled comparison of several systems.
+with the integrated annotation. Here, we expand the paradigm to additional domains
+and compare the performance of several systems.
 
 
 \section{Representation}\label{sec:rep}
@@ -881,25 +881,28 @@ and the proportion of sentences from each domain is not guaranteed to be
 the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
 }
 
-\textbf{Open and closed conditions.}
+\textbf{Submission conditions.}
 % \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
 % they will be encouraged to submit the closed condition results to the open condition as well.}
 %The main goal of the task was to find creative new ways to improve the performance of lexical semantic analysis on various domains. 
 %In keeping with conventions of past shared tasks at SemEval and other venues, 
-We invited systems in multiple data conditions. %These conditions were judged separately, and teams were welcome to submit systems under more than one.
+We invited submissions in multiple data conditions. %These conditions were judged separately, and teams were welcome to submit systems under more than one.
 The \textbf{open} condition encouraged participants to make 
 wide use of any and all available resources, including for 
 distant or direct supervision. 
 A \textbf{closed} condition encouraged controlled comparisons of algorithms 
 by limiting their training to specific resources distributed for the task. 
+Lastly, we allowed for a \textbf{semi-closed} condition, in which XXX\dirk{...AJ?}
+
 
 %a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
 %and a \textbf{semi-supervised} closed condition will further allow use of a specific unannotated corpus.\footnote{%
 %We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
 %which is freely available for research use, as the unlabeled corpus for the semi-supervised closed condition.
-All conditions had access to the annotated data we provide; 
-a set of Brown clusters \citep{brown-92} computed from a large corpus; and the \longversion{English }WordNet lexicon. 
-The input at test time included \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
+All conditions had access to 1) the annotated data we provide; 
+2) a set of Brown clusters \citep{brown-92} computed from a large corpus; 
+and 3) the \longversion{English }WordNet lexicon. 
+The input at test time included POS tags. 
 \shortversion{Sentence-level metadata was not provided at test time, 
 but the domain of the sentence was marked in the training data.}
 %(If the task proves popular, in a future incarnation we might consider additional conditions, 
@@ -949,7 +952,7 @@ consecutive (but not necessarily adjacent) tokens in an expression \citep{schnei
 
 To isolate the \textbf{supersense} classification performance, 
 we compute $F_1$ of the supersense part of the joint tag.\longversion{
-Because the supersense of a strong MWE is marked on its first word, 
+Because the supersense of a strong MWE is marked on its \emph{first} word, 
 this will have the effect of penalizing errors on the left boundary of an MWE, 
 but it is less sensitive to the MWE analysis than the link-based measure.}
 
@@ -988,7 +991,7 @@ AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# &
 COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
 \end{tabular}
 }
-\caption{\nss{TODO}Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
+\caption{\nss{TODO}Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes, 
 because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
 is against supersense annotators' chunking decisions for noun and verb expressions.}
 \label{tbl:baselines}
@@ -997,8 +1000,8 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 
 \section{Results}\label{sec:results}
 
-We received a total of nine non-duplicate submissions before the deadline expired. 
-Table \ref{tbl:main-results} shows the main results. A more detailed breakdown can be found in Table \ref{tbl:per-domain-results}. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system. Systems entering in the open condition where all resources are allowed are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition, which only allows the use of certain whitelisted resources, are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
+We received a total of nine unique submissions before the deadline expired. 
+Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-results} a more detailed breakdown. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system: systems entering in the open condition (all resources allowed) are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition (only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
 
 \begin{table}\small\centering
 \begin{tabular}{rllrl}
@@ -1026,13 +1029,25 @@ Table \ref{tbl:main-results} shows the main results. A more detailed breakdown c
 
 \subsection{Ranking and significance}
 
-The overall best scoring system on the combined measure is S214, at .5777. The competition is, however, close: S249 scored .5771, and S248 obtained combined score of .5710. We performed significance testing using the  sensitive McNemar's test to check whether the predictions of the systems are significantly different from each other. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed scores are significantly different from each other, only whether the predictions are. 
+The overall best scoring system, at a combined measure of .5777, is S214. The competition, however, is close: S249 scored .5771, and S248 obtained a combined score of .5710.  To check whether the predictions of the systems are indeed significantly different from each other, we performed significance testing using McNemar's test. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed \emph{scores} are significantly different from each other, only whether the \emph{predictions} are. 
 
-According to the McNemar's test, the predictions of the highest ranking system and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system is performing significantly worse than the top system. However, its performance is not different from the second place and so we decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant. 
+According to McNemar's test, the predictions of the highest ranking and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system performs significantly worse than the top system, but is \emph{not} significantly different from the second place. We tehrefore decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant according to the test. 
 
 \subsection{Easy and hard decisions}
 
-\begin{figure}
+Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. Given the wide range of participating system and previous work, it is reasonable to assume that the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. In fact, some decisions are relatively easy, in the sense that most or all systems get them right, while others are hard, in that none or very few systems produce the correct answer. Figure \ref{fig:supersense-predictions} explores this for the supersense-tagging subtask. The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. Hard instances account for about 25~\% of instances where the gold data has a label other than \texttt{O}, which also puts an upper bound on any system combination. Even an oracle system allowed to choose the best prediction for each instance from among all the systems would still not push the accuracy above 75\%.
+
+The distribution of easy and hard instances varies a lot between labels, though. As shown in Figure \ref{fig:easy-and-hard-supersenses} for supersenses, individual labels range from the fairly easy (e.g. \textsc{v.stative} and \textsc{v.communication}) to the more difficult (e.g. \textsc{n.attribute} and \textsc{v.contact}). The most common supersense, \textsc{v.stative}, is easy, because it has few distinct lexical forms (the ten most common lemmas make up more than 77\% of the instances), and so the $P(\textit{supersense} | \textit{lemma})$ mapping has low entropy. Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
+
+Supersenses may be difficult for more than one reason. For instance, \textsc{v.contact}---e.g. \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. In contrast, person names, job titles etc. that should be tagged as \textsc{n.person} are rarely ambiguous with respect to supersense. The main challenge in that case is that the category is open-ended and not in general evident from syntactic structure.
+\\\\
+Finally, we examine wether the submitted approaches capture different aspects of the task. I.e., could we produce a better system by combining the individual systems? We cannot estimate this from the result tables, since, combinatorially, there are many ways to obtain a given score. However, we can estimate it from the prediction overlap between systems.
+The $N \times N$ labeled matrix in Figure \ref{fig:system-clusters} shows how the $N$ systems relate to each other. Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ that were not correctly predicted by $b$. This is an asymmetrical measure of predictive similarity. A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. When the difference $|T_{a,b} - T_{b,a}|$ is small, the two systems make similar predictions. 
+
+Clustering the systems in Figure \ref{fig:system-clusters} (shown on the left side of the plot) results in groups that correspond to the systems ranking in Table \ref{tbl:main-results}. Inside the cluster of systems ranked at 1, the asymmetrical predictive advantage ranges between 267 and 469. Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. The best combination system would thus likely be between two of the rank-1 systems. However, the gains are small, and overall the systems seem to extract the same knowledge, or subsets of the same knowledge, out of the training data. % Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
+
+
+\begin{figure}[ht]
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
 %	}
@@ -1049,7 +1064,7 @@ Overall the results clearly show that the joint supersense and MWE tagging task 
 %	\resizebox{ \columnwidth }{!}{
 		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
 %	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency. }% \dirk{this is an awesome graph! Could we order it either by the left or right column, though?}\nss{I think it's sorted by token frequency? Can that frequency be shown?} \aj{That's right. The frequency could be shown to the right of each bar, but it would likely require some fiddling with matplotlib. Not my favourite activity ;)}}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
 	\label{fig:easy-and-hard-supersenses}
 \end{figure}
 
