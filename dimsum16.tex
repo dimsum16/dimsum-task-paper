@@ -349,7 +349,7 @@ College Park, Maryland, USA\\
 \maketitle
 \global\naaclfinalfalse % turn on header/line numbers for review
 
-\begin{abstract}\nss{TODO: rewrite}
+\begin{abstract}
 Semantic analysis tasks to date have been hampered by two problems: sense granularity (too coarse or too fine) of individual words and, related to that, domain limitations.
 In this task, we address both problems, by choosing an intermediate sense granularity (supersenses) combined with multi-word expressions on a wide variety of domains.
 Nine systems were submitted in two settings. The best system scored .57 $F_1$ in a multi-domain evaluation setting, indicating that the task remains largely unresolved. An error analysis reveals that a large number of instances in the data set are either hard cases which no systems get right or easy cases that all systems correctly solve.
@@ -392,7 +392,7 @@ Consequently,  \citet{carpuat-05,resnik-06} found that traditional, fine-grained
 %translations in a second language replaced abstract word senses, 
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
-. 
+
 In this task, we therefore move away 
 from fine-grained sense inventories and lexicalized annotation.
 We define a more general representation that can be useful 
@@ -443,10 +443,6 @@ Though our dataset is limited to English, the representation is applicable to ot
 % As a rough estimate, we think it would attract participation from about 20~teams.
 % If it is accepted, we will publicize the task widely in order to recruit as much participation as possible.
 
-Beyond the results presented here (Section \ref{XXX}), we hope 
-to foster a cross-pollination between different sub-communities, 
-and that the data and findings from this task will serve as a framework for integrating lexical semantics in NLP applications. 
-
 
 \section{Background}
 \textbf{Multiword expressions.} 
@@ -472,14 +468,11 @@ MWEs such as these have attracted a great deal of attention
 within computational semantics; see \citet{baldwin-10} for a review.
 \Citet{schneider-14-corpus} introduced an English corpus resource annotated for heterogenous MWEs, 
 suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.
-Prior to that, most MWE evaluations had assumed  particular languages and constructions \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
+Prior to that, most MWE evaluations were focused on particular constructions such as noun compounds \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
 though the corpus and identification system of \citet{vincze-11} targets several kinds of MWEs.
 
 Importantly, the MWEs in \citeposs{schneider-14-corpus} corpus are not required to be contiguous, 
-but may contain \textbf{gaps} (viz.: \lex{made\ldots order}). 
-While it also contains qualitative labels, \textbf{strong} 
-(somewhat noncompositional---e.g., proper names and idioms) 
-or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}), for simplicity, we only use string MWEs in this task.
+but may contain \textbf{gaps} (viz.: \lex{made\ldots order}). The corpus also contains qualitative labels indicating the strength of MWEs, either \textbf{strong} (mostly non-compositional) or \textbf{weak} (compositional but idiomatic). For simplicity we only include strong MWEs in this task.
 
 \textbf{Supersenses.}
 % \longversion{
@@ -705,7 +698,7 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \label{tbl:reviews}
 \end{table*}
 
-\longversion{To facilitate (but not require) joint sequence modeling, 
+\longversion{To facilitate joint sequence modeling, 
 the lexical semantic}\shortversion{The} analysis for each sentence will be represented as 
 a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
 the MWE part above the sentence and the supersense part below\longversion{ the sentence}; 
@@ -729,13 +722,9 @@ but many such tokens do bear a noun or verb supersense.
 %so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.}
 
 This task uses a CoNLL-style main \textbf{file format}
-consisting of one line per token, each line having 9~tab-delimited columns, 
-as explained in \cref{fig:tagsformat} in the annex.
+consisting of one line per token, each line having 9~tab-delimited columns.
 Scripts to convert to and from the \texttt{.sst} format, which displays one sentence per line 
 and contains annotations in a JSON data structure, are provided as well.
-\longversion{All file formats are UTF-8 encoded.}
-
-
 
 \section{Data}\label{sec:data}
 
@@ -935,8 +924,7 @@ The \textbf{MWE} measure looks at precision, recall, and $F_1$
 of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
-and a gold MWE, these scores are computed based on \emph{links} between 
-consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+and a gold MWE, these scores are computed based on \emph{links} between tokens in an expression \citep{schneider-14}. The tokens must appear in order but do not need to be adjacent.
 \Cref{fig:linkmeasure} defines this measure in detail and illustrates the calculations for an example.
 %\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
 %of a sentence. 
@@ -1031,7 +1019,7 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
 
 The overall best scoring system, at a combined measure of .5777, is S214. The competition, however, is close: S249 scored .5771, and S248 obtained a combined score of .5710.  To check whether the predictions of the systems are indeed significantly different from each other, we performed significance testing using McNemar's test. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed \emph{scores} are significantly different from each other, only whether the \emph{predictions} are. 
 
-According to McNemar's test, the predictions of the highest ranking and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system performs significantly worse than the top system, but is \emph{not} significantly different from the second place. We tehrefore decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant according to the test. 
+According to McNemar's test, the predictions of the highest ranking and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system performs significantly worse than the top system, but is \emph{not} significantly different from the second place. We therefore decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant according to the test. 
 
 \subsection{Easy and hard decisions}
 
@@ -1100,14 +1088,10 @@ We cluster the systems and observe that the resulting groups correspond to simil
 
 
 \section{Conclusion}
-We propose a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
-To guard against domain bias, we provide data sets from two different genres, namely online reviews and tweets. 
-We expect that this task would draw participation from several subcommunities of NLP 
-and that the resulting systems will contribute to a variety of applications.
-%While the task is designed for English, we hope to extend it to other languages as well in future editions.
+We prosed a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. The granularity of the semantic tagging strikes a balance between the extremely difficult fine-grained distinctions in WSD and the easier but semantically impoverished classes in NER.  
+To guard against domain bias, we provided training data from two different genres, namely online reviews and tweets, as well as a test-only data set with subtitles. 
 
-
-
+The best scoring system obtained .57 $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, averaged over the three test domains. This level of performance suggests that the task is not yet resolved. Furthermore, our error analysis suggested that the submitted systems to a large degree extracted the same knowledge from the training data. Substantial improvements of performance would thus seem to require new and different approaches. 
 
 
 \begin{table}\small\centering
