@@ -278,6 +278,7 @@
 \newcommand{\tagt}[2]{\ensuremath{\underset{\textrm{\textlarger{\tg{#2}}}\strut}{\w{#1}\rule[-.3\baselineskip]{0pt}{0pt}}}} % tag text (a word or phrase) with an SST. (second arg is the tag)
 \newcommand{\tagtt}[3]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2}\\ #1 \\ \texttt{#3}\end{tabular}}
 \newcommand{\tagts}[3]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2\vphantom{\textlarger{Ĩ}}}\\ #1 \\ \sst{#3}\end{tabular}}
+\newcommand{\tagtss}[5]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2\vphantom{\textlarger{Ĩ}}}\\ \sst{#3}\vphantom{X} \\ \textbf{#1}\vphantom{lp} \\ \sst{#5}\vphantom{X} \\ \texttt{#4\vphantom{\textlarger{Ĩ}}}\end{tabular}}
 \newcommand{\tgt}[2]{\ensuremath{\underset{\text{\textlarger{#2}\strut}}{\text{#1\rule[-.3\baselineskip]{0pt}{\baselineskip}}}}} % tag text (a word or phrase, not underlined) with a label. (second arg is the label)
 \newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
 \newcommand{\AnnA}[0]{\mbox{\textbf{Ann-A}}} % annotator A
@@ -747,43 +748,39 @@ and annotated.
 \begin{framed}\small
 \emph{Precision:} The proportion of predicted links whose words 
 both belong to the same expression in the gold standard. \\
-\emph{Recall:} Same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
-is a slight simplification of the MUC coreference measure \citep{vilain-95}.}} %\\
+\emph{Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
 %\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
 %precision, recall, and $F_1$ computed on strong links only are averaged 
 %with the respective calculations computed on all links without regard to strength.
 \end{framed}\centering
 \begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
- \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
- \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtt{budge}{\color{red}B}{O}};
- \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtt{a}{\color{blue}b}{B}};
- \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtt{little}{\color{blue}ī}{Ī}};
- \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtt{on}{\color{red}Ī}{O}};
- \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtt{the}{O}{O}\tagtt{price}{O}{O}};
- \path[-,thick,red, bend left=30] (n2.north) edge (n5.north);
- \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
-\path[-,thick, bend right=45] (n3.south) edge (n4.south);
- \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
- %\node[inner sep=0cm,above right=0pt of n7.south east] (n8) %{\tagtt{means}{B}{O}};
- %\node[inner sep=0cm,above right=0pt of n8.south east] (n9) %{\tagtt{a}{\color{orange}Ĩ}{B}};
- %\node[inner sep=0cm,above right=0pt of n9.south east] (n10) %{\tagtt{lot}{\color{orange}Ī}{Ĩ}};
-  %\path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
-%\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
- %\node[inner sep=0cm,above right=0pt of n10.south east] (n11) %{\tagtt{to}{Ĩ}{o}};
- %\node[inner sep=0cm,above right=0pt of n11.south east] (n12) %{\tagtt{me}{Ĩ}{Ĩ}};
-  %\path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
-%\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
- % \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
- % \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
- %\node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
+ \node[inner sep=0cm]                                  (n1) {\tagtss{The}{O}{}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtss{staff}{O}{\textsc{n.group}}{\color{orange}B}{\color{orange}n.group}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtss{leaves}{\color{red}B}{\color{red}v.cognition}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtss{a}{\color{blue}b}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtss{lot}{\color{blue}i}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtss{to}{\color{red}I}{}{\color{orange}I}{}};
+%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
+\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
+ \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
+\path[-,thick,orange, bend right=20] (n2.south) edge (n3.south);
+\path[-,thick,orange, bend right=20] (n3.south) edge (n4.south);
+\path[-,thick,orange, bend right=20] (n4.south) edge (n5.south);
+\path[-,thick,orange, bend right=20] (n5.south) edge (n6.south);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtss{be}{\color{red}I}{}{\color{orange}I}{}};
+\path[-,thick,orange, bend right=20] (n6.south) edge (n7.south); 
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtss{desired}{\color{red}I}{}{O}{v.emotion}};
+\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
+\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtss{.}{O}{}{O}{}};
 \end{tikzpicture}
-\caption{A \textsc{Reviews} sentence with MWE annotations. 
-%Strong links are depicted with solid arcs, and weak links with dotted arcs. 
-Precision of the top annotation relative to the bottom one is $1/2$. %with weak links removed 
+\caption{A \textsc{Reviews} sentence with MWE and supersenses annotations. 
+MWE precision of the bottom annotation relative to the top one is $3/4$. %with weak links removed 
 %and $2/6$ with weak links strengthened to strong links
-(note that a link between words $w_1$ and $w_2$ is ``matched'' 
-if, in the other annotation, there is a path between $w_1$ and $w_2$). 
-The recall value is $1/1$. 
+(Note that a link between words $w_1$ and $w_2$ is ``matched'' 
+if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
+The MWE recall value is $2/5$. 
+Supersense precision and recall are both $1/2$.
 %Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
 }
 \label{fig:linkmeasure}
