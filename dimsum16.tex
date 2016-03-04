@@ -502,20 +502,20 @@ They therefore provide far from complete coverage in a corpus.
 
 Noun and verb \textbf{supersenses}
 offer a middle ground in granularity: they generalize 
-named entity classes to cover all nouns (with 26~classes), but also cover verbs (15~classes), see \cref{tbl:supersenses}, and provide a human-interpretable high-level clustering. WordNet supersenses for adjectives and adverbs nominally exist, 
+named entity classes to cover all nouns (with 26~classes), but also cover verbs (15~classes)---see \cref{tbl:supersenses}---and provide a human-interpretable high-level clustering. WordNet supersenses for adjectives and adverbs nominally exist, 
 but are based on morphosyntactic rather than semantic properties.  
-There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.
+There is, however, recent work on developing supersense taxonomies for English adjectives and prepositions \citep{tsvetkov-14,schneider-15-law}.
 
-The inventory originates from the top-level organization of WordNet,
+The inventory for nouns and verbs originates from the top-level organization of WordNet,
 but can be applied directly to annotate new data---including out-of-vocabulary words 
 in English or other languages \citep{schneider-12,johannsen-14}. 
 Similar to NER, supersense tagging approaches have generally used statistical sequence models 
-and have been evaluated in English, Chinese, and Arabic.\footnote{Evaluations used 
+and have been evaluated in English, Italian, Chinese, Arabic, and Danish.\footnote{Evaluations used 
 English SemCor \citep{ciaramita-06,paas-09}, 
 English-Italian MultiSemCor \citep{picca-08,picca-09,attardi-10}, 
 the Italian Syntactic-Semantic Treebank and Italian Wikipedia \citep{attardi-10,rossi-13}, 
 Chinese Cilin \citep{qiu-11},  
-and Arabic Wikipedia \citep{schneider-13}.}
+Arabic Wikipedia \citep{schneider-13}, and the Danish CLARIN Reference Corpus \citep{martinez-15}.}
 
 Features based on supersenses have also been exploited in downstream semantics tasks\longversion{ 
 such as preposition sense disambiguation, noun compound interpretation, and metaphor detection} 
@@ -577,7 +577,7 @@ For example, \lex{spill the beans} in its literal interpretation
 would receive supersenses \sst{v:contact} and \sst{n:food},
 whereas the idiomatic interpretation, `divulge a secret', is represented as
 an MWE holistically tagged as \sst{v:communication}.
-\Citet{schneider-15} develops this idea at length, and provides a web reviews dataset
+\Citet{schneider-15} develop this idea at length, and provide a web reviews dataset
 with the integrated annotation. Here, we expand the paradigm to additional domains
 and compare the performance of several systems.
 
@@ -698,11 +698,9 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \label{tbl:reviews}
 \end{table*}
 
-\longversion{To facilitate joint sequence modeling, 
-the lexical semantic}\shortversion{The} analysis for each sentence will be represented as 
+The analysis for each sentence will be represented as 
 a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
-the MWE part above the sentence and the supersense part below\longversion{ the sentence}; 
-in practice, these will be hyphenated into a single tag per token.
+the MWE part above the sentence and the supersense part below the sentence.
 
 The MWE portion is a BIO-style \citep{ramshaw-95} 
 positional marker. Of the schemes discussed by \citet{schneider-14}, 
@@ -715,7 +713,7 @@ global validity can be enforced with first-order constraints
 to prohibit invalid bigrams such as \texttt{O~I} and \texttt{b~I} (see \citealp{schneider-14} for details).
 
 Because strong MWEs receive a supersense as a unit (if at all), 
-\texttt{I} and \texttt{i} are never conjoined with a supersense label.
+\texttt{I} and \texttt{i} are never accompanied by a supersense label.
 \texttt{O} or \texttt{o} indicates that the token is not part of any MWE, 
 but many such tokens do bear a noun or verb supersense.
 %\longversion{Of course, the supersenses in this task only cover noun and verb expressions, 
@@ -792,31 +790,40 @@ The recall value is $1/1$.
 \end{figure*}
 
 \subsection{Annotation Process}
-We use data sets from various sources, with varying degrees of existing pre-annotation. Unless already provided, we add POS tags and baseline supersenses (using the most-frequent WordNet sense), which are then manually corrected by a trained annotator, and additionally marked with MWEs. The annotator spend XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} before annotating the data sets. 
+We use data sets from various sources, with varying degrees of existing pre-annotation. 
+Unless already provided, we add Universal POS tags \citep{petrov,nivre} 
+and baseline supersenses (using the most-frequent WordNet sense), 
+which are then manually corrected by a trained annotator, and additionally marked with MWEs. 
+The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
+before annotating the data sets. 
 
-Annotation of the review training data was done by linguists, who took pains to establish conventions and resolve disagreements.
-Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
-\nss{NEEDS UPDATE: Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
-(\Cref{tbl:reviews} offers a more detailed breakdown.)
-15\% of MWEs contain a gap.\finalversion{\nss{proportion strong/weak}}} 
 
 
-\subsection{\textsc{Reviews}} 
-\paragraph{Training}
-The review part of the training data consists of the STREUSLE corpus \citet{schneider-14-corpus,schneider-15},\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}
+\subsection{\dataset{Reviews}} 
+\paragraph{Training.}
+The \dataset{Reviews} part of the training data consists of the STREUSLE corpus \citep{schneider-14-corpus,schneider-15},\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}
 comprising comprehensive multiword expression and supersense annotations on a 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-made up of 723~online user reviews for services (such as restaurants or beauticians).
-The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
-and Penn Treebank--style POS tags replaced with Universal POS tags. 
+made up of 723~online user reviews for services (such as restaurants and beauticians).
 
-\paragraph{Test}
+STREUSLE annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
+Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
+Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
+(\Cref{tbl:reviews} offers a more detailed breakdown.)
+15\% of MWEs contain a gap.\nss{supersense counts?}
+
+The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
+and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The PTB-to-UPOS conversion script is available at:
+\mbox{\url{http://tiny.cc/ptb2upos}}} 
+
+
+\paragraph{Test.}
 The test portion comprises 340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} 
 (the website as a general resource was described in \citet{hovy-2015trustpilot}). 
 The reviews were chosen to control for age, gender, and location, and contained gold POS tags. 
 The data was further annotated for supersenses and MWE by \nss{?}.
 
-\subsection{\textsc{Tweets}} 
-\paragraph{Training}
+\subsection{\dataset{Tweets}} 
+\paragraph{Training.}
 \citep{johannsen-14} recently annotated two samples of 987 Twitter messages (18,000 words) 
 with supersenses\longversion{: 
 (a)~the POS+NER-annotated data set of \citet{ritter-11}, 
@@ -832,7 +839,10 @@ Annotators were shown pre-annotations from a heuristic supersense chunking\slash
 and asked to correct the boundaries and supersense labels. 
 %The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
 Though there was no explicit MWE annotation phase, 
-many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs. 
+many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs.\nss{POS?}
+
+\nss{Reannotation/Harmonization}
+ 
 %\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
 % The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
 % The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
@@ -848,15 +858,29 @@ many of the multiword chunks tagged with a \longversion{noun or verb }supersense
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
 % be as specific as possible about timeline}
 
-\paragraph{Test}
-Our test set consists of 500 tweets (6,627 tokens) taken from the TweeBank corpus \citep{kong-14}, which already contains gold-standard MWEs. We converted the POS tags from gold ARK TweetNLP POS + FUDG dependencies to UPOS and had an annotator supply supersenses.
+\paragraph{Test.}
+Our test set consists of 500 tweets (6,627 tokens) taken from the Tweebank corpus \citep{kong-14}, 
+which already contains some gold-standard MWEs. 
+We converted the POS tags from gold ARK TweetNLP POS + FUDG dependencies to UPOS 
+and had an annotator supply supersenses.
 
 
-\subsection{\textsc{TED Talks}}
-\paragraph{Test}
-To test the broad-coverage aspect of the submitted systems, the test set contained a ``surprise'' domain. We opted for TED talks, i.e., the transcription of spoken language. We chose 100 sentences (2,187 tokens), a subset of the IWSLT data set\footnote{\url{http://ahclab.naist.jp/resource/tedtreebank/}}  \citet{neubig-2014naist}, and the 60 sentences (1,329 tokens) from the IWSLT test set \citep{cettolo-2012wit3}.
+\subsection{\dataset{TED Talks}}
+\paragraph{Test.}
+To test the broad-coverage aspect of the submitted systems, the test set contained a ``surprise'' domain. 
+We opted to sample transcribed sentences from TED talks. 
+Because individual TED talks tend to heavily repeat vocabulary, we took the first 10 sentences 
+from each of 16 documents in order to achieve a lexically diverse sample. 
+Specifically, we chose 
+(a)~10 sentences (2,187 tokens) from each of the 10 talks in the 
+NAIST-NTT Ted Talk Treebank\footnote{\url{http://ahclab.naist.jp/resource/tedtreebank/}} \citep{neubig-2014naist} 
+(which in turn is a subset of the IWSLT\nss{year?} data set); 
+and (b)~60 sentences (1,329 tokens) from the IWSLT\nss{year?} test set \citep{cettolo-2012wit3}.
+The latter 6~documents were chosen to maximize language pair diversity, 
+with particular emphasis on \nss{lges of interest}.
 
-We induced POS by conversion from the gold PTB trees (for the first part) and by annotation with a averaged structured perceptron model (Rungsted)\footnote{\url{https://github.com/coastalcph/rungsted}} from UD v1.2.
+
+We induced POS by conversion from the gold PTB trees (for the first part) and by annotation with a averaged structured perceptron model (Rungsted)\footnote{\url{https://github.com/coastalcph/rungsted}} from UD v1.2\nss{cite}.
 
 
 \section{Evaluation}\label{sec:eval}
@@ -902,11 +926,10 @@ but the domain of the sentence was marked in the training data.}
 %\longversion{The sentences provided for this task are tokenized. 
 %For evaluation to be possible, system predictions must respect the input tokenization.}
 
-\longversion{
 No sentence-level metadata was provided in the input at test time.
 The training data marked the domain from which the sentence was drawn 
-(\textsc{Reviews} or \textsc{Tweets}); systems could make use of this information as they wish, 
-so long as it is not required as part of the input at test time.}
+(\textsc{Reviews} or \textsc{Tweets}); systems were free to make use of this information, 
+so long as it was not required as part of the input at test time.
 
 % \nss{a few possibilities for conditions---
 % \begin{description}
@@ -927,24 +950,27 @@ of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
 and a gold MWE, these scores are computed based on \emph{links} between tokens in an expression \citep{schneider-14}. The tokens must appear in order but do not need to be adjacent.
+The precision is the proportion of predicted links whose words 
+both belong to the same expression in the gold standard. 
+Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 \Cref{fig:linkmeasure} defines this measure in detail and illustrates the calculations for an example.
 %\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
 %of a sentence. 
 
- The precision is the proportion of predicted links whose words 
- both belong to the same expression in the gold standard. 
- Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
- is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
- A weak link is treated as intermediate between a strong link and no link at all: 
- precision, recall, and $F_1$ computed on strong links only are averaged 
- with the respective calculations computed on all links without regard to strength. 
- \Cref{fig:linkmeasure} illustrates these calculations with an example.
+%  A weak link is treated as intermediate between a strong link and no link at all: 
+%  precision, recall, and $F_1$ computed on strong links only are averaged 
+%  with the respective calculations computed on all links without regard to strength. 
+%  \Cref{fig:linkmeasure} illustrates these calculations with an example.
 
 To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense part of the joint tag.\longversion{
-Because the supersense of a strong MWE is marked on its \emph{first} word, 
-this will have the effect of penalizing errors on the left boundary of an MWE, 
-but it is less sensitive to the MWE analysis than the link-based measure.}
+we compute $F_1$ of the supersense-labeled tokens. 
+(This interacts slightly with MWE identification, however, 
+as supersenses are only marked on the first token of MWEs.)
+% \longversion{
+% Because the supersense of a strong MWE is marked on its \emph{first} word, 
+% this will have the effect of penalizing errors on the left boundary of an MWE, 
+% but it is less sensitive to the MWE analysis than the link-based measure.}
 
 \finalversion{\nss{consider alternate combined measure:}
 The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
