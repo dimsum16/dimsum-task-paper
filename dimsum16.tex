@@ -618,7 +618,7 @@ must not receive separate supersenses.}
 %"labels": {"8": ["friends", "GROUP"], "3": ["recommend", "communication"], "4": ["Garage", "GROUP"]}, "_": [[3, 6], [4, 5]], "words": [["I", "PRP"], ["highly", "RB"], ["recommend", "VBP"], ["Garage", "NNP"], ["Pros", "NNPS"], ["to", "IN"], ["my", "PRP$"], ["friends", "NNS"], [".", "."]], "~": [[2, 3, 6]]}
 % ewtb.r.329991.1 I googled restaurants in the area and Fuji_Sushi came_up and reviews were great so I made_ a carry_out _order of : L 17 .       {"labels": {"2": ["googled", "communication"], "3": ["restaurants", "GROUP"], "6": ["area", "LOCATION"], "8": ["Fuji", "GROUP"], "10": ["came", "communication"], "13": ["reviews", "COMMUNICATION"], "14": ["were", "stative"], "18": ["made", "communication"], "20": ["carry", "possession"]}, "_": [[8, 9], [10, 11], [18, 22], [20, 21]], "words": [["I", "PRP"], ["googled", "VBD"], ["restaurants", "NNS"], ["in", "IN"], ["the", "DT"], ["area", "NN"], ["and", "CC"], ["Fuji", "NNP"], ["Sushi", "NNP"], ["came", "VBD"], ["up", "RB"], ["and", "CC"], ["reviews", "NNS"], ["were", "VBD"], ["great", "JJ"], ["so", "RB"], ["I", "PRP"], ["made", "VBD"], ["a", "DT"], ["carry", "VB"], ["out", "RP"], ["order", "NN"], ["of", "IN"], [":", ":"], ["L", "$"], ["17", "CD"], [".", "."]], "~": []}
 
-
+\finalversion{
 \begin{table*}[t]\small\centering
 \begin{tabular}{@{}>{\textsc\bgroup}l<{\egroup}@{~~}r@{~~}r@{~~}c@{~~}|l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
 \multicolumn{4}{c}{\textbf{MWE}} & \multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
@@ -689,7 +689,7 @@ det\_adj &                       28 &      \phantom{0}& \lex{a~few}
  & \textbf{\smaller[.5] all 26 NSSTs} & \textbf{9018} 
 \end{tabular}
 
-\caption{Top MWE patterns along with frequency-ranked noun and verb supersense tagsets from the \textsc{Reviews} corpus. 
+\caption{\nss{Consider revising to reflect DiMSUM corpus.}Top MWE patterns along with frequency-ranked noun and verb supersense tagsets from the \textsc{Reviews} corpus. 
 The last column of each entry shows the most frequent lexical item (lemma sequence) of the class.
 MWE patterns are strong (\_) or weak (\tat) sequences of coarse parts of speech. (\textsc{pn} stands for ``proper noun.'')
 Contiguous and gappy MWE counts are distinguished: e.g.,~78\% of instances of the \textsc{v\_n} pattern 
@@ -698,9 +698,10 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 }
 \label{tbl:reviews}
 \end{table*}
+}
 
 The analysis for each sentence will be represented as 
-a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
+a sequence of paired MWE and supersense tags. \Cref{fig:ex1} illustrates 
 the MWE part above the sentence and the supersense part below the sentence.
 
 The MWE portion is a BIO-style \citep{ramshaw-95} 
@@ -1048,16 +1049,55 @@ According to McNemar's test, the predictions of the highest ranking and the next
 
 \subsection{Easy and hard decisions}
 
-Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. Given the wide range of participating system and previous work, it is reasonable to assume that the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. In fact, some decisions are relatively easy, in the sense that most or all systems get them right, while others are hard, in that none or very few systems produce the correct answer. Figure \ref{fig:supersense-predictions} explores this for the supersense-tagging subtask. The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. Hard instances account for about 25~\% of instances where the gold data has a label other than \texttt{O}, which also puts an upper bound on any system combination. Even an oracle system allowed to choose the best prediction for each instance from among all the systems would still not push the accuracy above 75\%.
+Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. 
+Given the wide range of participating system and previous work, it is reasonable to assume that 
+the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. 
+In fact, some decisions are relatively easy, in the sense that most or all systems get them right, 
+while others are hard, in that none or very few systems produce the correct answer. 
+\Cref{fig:supersense-predictions} explores this for the supersense-tagging subtask. 
+The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. 
+Hard instances account for about 25\% of instances where the gold data has a supersense, 
+which also puts an upper bound on any system combination. 
+Even an oracle system allowed to choose the best prediction for each instance 
+from among all the systems would still not push the accuracy above 75\%.
 
-The distribution of easy and hard instances varies a lot between labels, though. As shown in Figure \ref{fig:easy-and-hard-supersenses} for supersenses, individual labels range from the fairly easy (e.g. \textsc{v.stative} and \textsc{v.communication}) to the more difficult (e.g. \textsc{n.attribute} and \textsc{v.contact}). The most common supersense, \textsc{v.stative}, is easy, because it has few distinct lexical forms (the ten most common lemmas make up more than 77\% of the instances), and so the $P(\textit{supersense} | \textit{lemma})$ mapping has low entropy. Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
+The distribution of easy and hard instances varies a lot between labels, though. 
+As shown for supersenses in \cref{fig:easy-and-hard-supersenses}, 
+individual labels range from the fairly easy (e.g.\ \textsc{v.stative} and \textsc{v.communication}) 
+to the more difficult (e.g.\ \textsc{n.attribute} and \textsc{v.contact}). 
+The most common supersense, \textsc{v.stative}, is easy because it has few distinct lexical forms 
+(the ten most common lemmas make up more than 77\% of the instances), and so the
+$P(\textit{supersense} | \textit{lemma})$ mapping has low entropy. 
+Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
 
-Supersenses may be difficult for more than one reason. For instance, \textsc{v.contact}---e.g. \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. In contrast, person names, job titles etc. that should be tagged as \textsc{n.person} are rarely ambiguous with respect to supersense. The main challenge in that case is that the category is open-ended and not in general evident from syntactic structure.
-\\\\
-Finally, we examine wether the submitted approaches capture different aspects of the task. I.e., could we produce a better system by combining the individual systems? We cannot estimate this from the result tables, since, combinatorially, there are many ways to obtain a given score. However, we can estimate it from the prediction overlap between systems.
-The $N \times N$ labeled matrix in Figure \ref{fig:system-clusters} shows how the $N$ systems relate to each other. Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ that were not correctly predicted by $b$. This is an asymmetrical measure of predictive similarity. A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. When the difference $|T_{a,b} - T_{b,a}|$ is small, the two systems make similar predictions. 
+Supersenses may be difficult for more than one reason. 
+For instance, \textsc{v.contact}---e.g.\ \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms 
+than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. 
+In contrast, person names, job titles, etc.\ that should be tagged as \textsc{n.person} are rarely ambiguous
+with respect to supersense. The main challenge in that case is that the category is open-ended 
+and not in general evident from syntactic structure.
 
-Clustering the systems in Figure \ref{fig:system-clusters} (shown on the left side of the plot) results in groups that correspond to the systems ranking in Table \ref{tbl:main-results}. Inside the cluster of systems ranked at 1, the asymmetrical predictive advantage ranges between 267 and 469. Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. The best combination system would thus likely be between two of the rank-1 systems. However, the gains are small, and overall the systems seem to extract the same knowledge, or subsets of the same knowledge, out of the training data. % Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
+Finally, we examine whether the submitted approaches capture different aspects of the task. 
+I.e., could we produce a better system by combining the individual systems? 
+We cannot estimate this from the result tables, since, combinatorially, 
+there are many ways to obtain a given score. 
+However, we can estimate it from the prediction overlap between systems.
+The $N \times N$ labeled matrix in \cref{fig:system-clusters} 
+shows how the $N$ systems relate to each other. 
+Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. 
+The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ 
+that were not correctly predicted by $b$. This is an asymmetric measure of predictive similarity. 
+A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. 
+When the sum $T_{a,b} + T_{b,a}$ is small, the two systems make similar predictions. 
+
+Clustering the systems in Figure \ref{fig:system-clusters} (shown on the left side of the plot) 
+results in groups that correspond to the ranking in \cref{tbl:main-results}. 
+Inside the cluster of systems ranked at 1, the asymmetric predictive advantage ranges between 267 and 469. 
+Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. 
+The best combination system would thus likely be between two of the rank-1 systems. 
+However, the gains are small, and overall the systems seem to extract the same knowledge, 
+or subsets of the same knowledge, out of the training data. 
+% Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
 
 
 \begin{figure}[ht]
@@ -1071,7 +1111,6 @@ Clustering the systems in Figure \ref{fig:system-clusters} (shown on the left si
 \end{figure}
 
 
-Overall the results clearly show that the joint supersense and MWE tagging task is not currently resolved. Given the wide range of participating system and previous work, it seems a reasonable corollary that the task itself is not easy. On the other hand, it is not uniformly hard. In fact some decisions are relatively easy in the sense that most or all systems get them right, while some are hard so that none or very few systems produce the correct answer. Figure \ref{fig:supersense-predictions} explores this for the supersense-tagging subtask. The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. Hard instances account for about 25~\% of instances where the gold data has a label other than \texttt{O}, which puts an upper bound on any system combination. Even a hypothetical oracle system that chooses the best prediction for each instance from among all the systems would still not push the accuracy above about 75~\%.
 
 \begin{figure}
 %	\resizebox{ \columnwidth }{!}{
@@ -1082,12 +1121,7 @@ Overall the results clearly show that the joint supersense and MWE tagging task 
 \end{figure}
 
 
-The distribution of easy and hard instances varies a lot between labels. As shown in Figure \ref{fig:easy-and-hard-supersenses} for supersenses, individual label types range between the fairly easy (e.g. \textsc{v.stative} and \textsc{v.communication}), and the more difficult (e.g. \textsc{n.attribute} and \textsc{v.contact}). The most common supersense \textsc{v.stative} is easy because it has relatively few distinct forms (the ten most common lemmas make up more than 77~\% of the instances), and the $P(\textit{supersense} | \textit{lemma})$ mapping is low entropy. Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
 
-Supersenses may be difficult for more than one reason. For instance, \textsc{v.contact}---e.g. \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. In contrast, person names, job titles etc. that should be tagged as \textsc{n.person} are rarely ambiguous with respect to supersense. The main challenge in that case is that the category is open-ended and not in general evident from syntactic structure.
-
-Finally, we examine the diversity of the submitted systems. Do they capture different aspects of the task, which would entail that a better system could be produced by combining the individual systems? We cannot estimate this from the result tables, since, combinatorially, there are many ways to obtain a given score.
-The $N \times N$ labeled matrix in Figure \ref{fig:system-clusters} shows how the $N$ systems relate to each other. Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ that were not correctly predicted by $b$. This is an asymmetrical measure of predictive similarity. A single low number indicates one out of two things: either the systems are similar, or $b$ is better than $a$. When the sum $T_{a,b} + T_{b,a}$ is small, the two systems make similar predictions. 
 
 \begin{figure}
 	\resizebox{ \columnwidth }{!}{
@@ -1097,9 +1131,6 @@ The $N \times N$ labeled matrix in Figure \ref{fig:system-clusters} shows how th
 	\label{fig:system-clusters}
 \end{figure}
 
-
-
-We cluster the systems and observe that the resulting groups correspond to similarly ranked systems in Table \ref{tbl:main-results}. The clustering is displayed at the left side of the plot. Inside the cluster of systems with rank one, the asymmetrical predictive advantage ranges between 267 and 469. Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. The best combination system would thus likely be between two of the rank one systems. However, the gains are small, and overall the systems seem to extract the same knowledge, or subsets of the same knowledge, out of the training data. % Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
 
 
 
