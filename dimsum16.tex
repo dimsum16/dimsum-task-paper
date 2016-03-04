@@ -805,8 +805,8 @@ made up of 723~online user reviews for services (such as restaurants and beautic
 
 STREUSLE annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
 Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
-Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
-(\Cref{tbl:reviews} offers a more detailed breakdown.)
+Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs.\finalversion{\nss{
+(\Cref{tbl:reviews} offers a more detailed breakdown.)}}
 15\% of MWEs contain a gap.\nss{supersense counts?}
 
 The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
@@ -1043,9 +1043,19 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
 
 \subsection{Ranking and significance}
 
-The overall best scoring system, at a combined measure of .5777, is S214. The competition, however, is close: S249 scored .5771, and S248 obtained a combined score of .5710.  To check whether the predictions of the systems are indeed significantly different from each other, we performed significance testing using McNemar's test. McNemar's test is a paired test that operates directly on the predicted system output. A consequence of this is that we do not directly test whether the computed \emph{scores} are significantly different from each other, only whether the \emph{predictions} are. 
+The overall best scoring system, at a combined measure of .5777, is S214. 
+The competition, however, is close: S249 scored .5771, and S248 obtained a combined score of .5710.  
+To check whether the predictions of the systems are significantly different from each other, 
+we ran McNemar's test, a paired test that operates directly on the predicted system output. 
+A consequence of this is that we do not directly test whether the computed \emph{scores} 
+are significantly different from each other, only whether the \emph{predictions} are. 
 
-According to McNemar's test, the predictions of the highest ranking and the next highest ranking system are not significantly different at $p < .05$. The third highest ranking system performs significantly worse than the top system, but is \emph{not} significantly different from the second place. We therefore decided to rank all three systems together. In general, adjacent entries in the sorted scoring table are ranked together if the difference between them is not statistically significant according to the test. 
+According to McNemar's test, the predictions of the highest-ranking and the next-highest-ranking system 
+are not significantly different at $p < .05$. The third highest ranking system performs significantly worse 
+than the top system, but is \emph{not} significantly different from the second-place system. 
+We therefore decided to rank all three systems together. 
+In general, adjacent entries in the sorted scoring table are ranked together 
+if the difference between them is not statistically significant according to the test. 
 
 \subsection{Easy and hard decisions}
 
@@ -1144,10 +1154,20 @@ or subsets of the same knowledge, out of the training data.
 
 
 \section{Conclusion}
-We proposed a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. The granularity of the semantic tagging strikes a balance between the extremely difficult fine-grained distinctions in WSD and the easier but semantically impoverished classes in NER.  To guard against domain bias, we provided training data from two different genres, namely online reviews and tweets, as well as a test-only data set with subtitles. 
+This task featured a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
+The granularity of the semantic tagging strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
+and the restrictiveness of the NER task. To guard against domain bias, we provided training data 
+from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
 
-The best scoring system obtained .57 $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, averaged over the three test domains. This level of performance suggests that the task is not yet resolved. Furthermore, our error analysis suggested that the submitted systems to a large degree extracted the same knowledge from the training data. Substantial improvements of performance would thus seem to require novel approaches. 
+The best scoring system obtained .57 $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
+averaged over the three test domains. This level of performance suggests that the task is not yet resolved. 
+Furthermore, our error analysis suggested that the submitted systems to a large degree 
+extracted the same knowledge from the training data. 
+Substantial improvements of performance would thus seem to require novel approaches. 
 
+\finalversion{
+\section*{Acknowledgments}
+\nss{Sam (annotator), funding}}
 
 \begin{table}\small\centering
 \begin{tabular}{lrrrr}
@@ -1194,7 +1214,7 @@ S255       &   0.4615 &  0.4981 &   0.4544 &      0.4664 \\
 \bottomrule
 \end{tabular}
 
-\caption{Per-domain evaluation results. Figures are $F_1$ percentages.\nss{show condition, bold statistical winners?}}	
+\caption{Per-domain evaluation results. Figures are $F_1$ percentages.\finalversion{\nss{show condition, bold statistical winners?}}}	
 \label{tbl:per-domain-results}
 \end{table}
 
