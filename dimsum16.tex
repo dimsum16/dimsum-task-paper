@@ -750,10 +750,10 @@ and annotated.
 \emph{Precision:} The proportion of predicted links whose words 
 both belong to the same expression in the gold standard. \\
 \emph{Recall:} Same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
-is a slight simplification of the MUC coreference measure \citep{vilain-95}.}} \\
-\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
-precision, recall, and $F_1$ computed on strong links only are averaged 
-with the respective calculations computed on all links without regard to strength.
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}} %\\
+%\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
+%precision, recall, and $F_1$ computed on strong links only are averaged 
+%with the respective calculations computed on all links without regard to strength.
 \end{framed}\centering
 \begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
  \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
@@ -766,26 +766,28 @@ with the respective calculations computed on all links without regard to strengt
  \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
 \path[-,thick, bend right=45] (n3.south) edge (n4.south);
  \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
- \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtt{means}{B}{O}};
- \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtt{a}{\color{orange}Ĩ}{B}};
- \node[inner sep=0cm,above right=0pt of n9.south east] (n10) {\tagtt{lot}{\color{orange}Ī}{Ĩ}};
-  \path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
-\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
- \node[inner sep=0cm,above right=0pt of n10.south east] (n11) {\tagtt{to}{Ĩ}{o}};
- \node[inner sep=0cm,above right=0pt of n11.south east] (n12) {\tagtt{me}{Ĩ}{Ĩ}};
-  \path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
-\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
-  \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
-  \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
- \node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
+ %\node[inner sep=0cm,above right=0pt of n7.south east] (n8) %{\tagtt{means}{B}{O}};
+ %\node[inner sep=0cm,above right=0pt of n8.south east] (n9) %{\tagtt{a}{\color{orange}Ĩ}{B}};
+ %\node[inner sep=0cm,above right=0pt of n9.south east] (n10) %{\tagtt{lot}{\color{orange}Ī}{Ĩ}};
+  %\path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
+%\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
+ %\node[inner sep=0cm,above right=0pt of n10.south east] (n11) %{\tagtt{to}{Ĩ}{o}};
+ %\node[inner sep=0cm,above right=0pt of n11.south east] (n12) %{\tagtt{me}{Ĩ}{Ĩ}};
+  %\path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
+%\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
+ % \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
+ % \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
+ %\node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
 \end{tikzpicture}
-\caption{A \textsc{Reviews} sentence with two hypothetical MWE annotations. 
-Strong links are depicted with solid arcs, and weak links with dotted arcs. 
-Precision of the top annotation relative to the bottom one is $1/3$ with weak links removed 
-and $2/6$ with weak links strengthened to strong links (note that a link between words $w_1$ and $w_2$ is ``matched'' 
+\caption{A \textsc{Reviews} sentence with MWE annotations. 
+%Strong links are depicted with solid arcs, and weak links with dotted arcs. 
+Precision of the top annotation relative to the bottom one is $1/2$. %with weak links removed 
+%and $2/6$ with weak links strengthened to strong links
+(note that a link between words $w_1$ and $w_2$ is ``matched'' 
 if, in the other annotation, there is a path between $w_1$ and $w_2$). 
-The respective recall values are $1/1$ and $3/3$. 
-Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.}
+The recall value is $1/1$. 
+%Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
+}
 \label{fig:linkmeasure}
 \end{figure*}
 
