@@ -351,9 +351,12 @@ College Park, Maryland, USA\\
 \global\naaclfinalfalse % turn on header/line numbers for review
 
 \begin{abstract}
-Semantic analysis tasks to date have been hampered by two problems: sense granularity (too coarse or too fine) of individual words and, related to that, domain limitations.
-In this task, we address both problems, by choosing an intermediate sense granularity (supersenses) combined with multi-word expressions on a wide variety of domains.
-Nine systems were submitted in two settings. The best system scored .57 $F_1$ in a multi-domain evaluation setting, indicating that the task remains largely unresolved. An error analysis reveals that a large number of instances in the data set are either hard cases which no systems get right or easy cases that all systems correctly solve.
+This task adopts an explicit yet broad-coverage paradigm for lexical semantics, representing
+multiword expressions and supersenses (coarse-grained classes) in an integrated fashion.
+Nine systems were submitted; the best scored .57 $F_1$ in a multi-domain evaluation setting, 
+indicating that the task remains largely unresolved. 
+An error analysis reveals that a large number of instances in the data set are either hard cases 
+which no systems get right or easy cases that all systems correctly solve.
 %We propose a SemEval~2016 Shared Task 
 %of analyzing the lexical semantics of English sentences 
 %in a broad-coverage fashion. 
@@ -1171,7 +1174,7 @@ or subsets of the same knowledge, out of the training data.
 
 \section{Conclusion}
 This task featured a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
-The granularity of the semantic tagging strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
+The semantic tagset strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
 and the restrictiveness of the NER task. To guard against domain bias, we provided training data 
 from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
 
