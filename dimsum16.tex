@@ -929,27 +929,23 @@ wide use of any and all available resources, including for
 distant or direct supervision. 
 A \textbf{closed} condition encouraged controlled comparisons of algorithms 
 by limiting their training to specific resources distributed for the task. 
-Lastly, we allowed for a \textbf{semi-closed} condition, in which XXX\dirk{...AJ?}
-
+Lastly, we allowed for a \textbf{semi-supervised closed} condition, in which 
+use of a specific large unlabeled corpus---the Yelp Academic Dataset\footnote{\url{https://www.yelp.com/academic_dataset}}---was permitted.
+Only one team submitted a system in the semi-supervised closed condition.
 
 %a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
 %and a \textbf{semi-supervised} closed condition will further allow use of a specific unannotated corpus.\footnote{%
 %We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
 %which is freely available for research use, as the unlabeled corpus for the semi-supervised closed condition.
-All conditions had access to 1) the annotated data we provide; 
-2) a set of Brown clusters \citep{brown-92} computed from a large corpus; 
-and 3) the \longversion{English }WordNet lexicon. 
+All conditions had access to: 1)~the annotated data we provided; 
+2)~a set of Brown clusters \citep{brown-92} computed from a large corpus;\finalversion{\nss{specify/cite}} 
+and 3)~the English WordNet lexicon. 
 The input at test time included POS tags. 
-\shortversion{Sentence-level metadata was not provided at test time, 
-but the domain of the sentence was marked in the training data.}
-%(If the task proves popular, in a future incarnation we might consider additional conditions, 
-%such as an unsupervised condition.)
 
-%\longversion{The sentences provided for this task are tokenized. 
-%For evaluation to be possible, system predictions must respect the input tokenization.}
-
-No sentence-level metadata was provided in the input at test time.
-The training data marked the domain from which the sentence was drawn 
+No sentence-level metadata was provided in the input at test time: 
+test set sentence IDs were obscured to hide the source domain, and the order of sentences was randomized 
+to remove document structure.
+The training data, however, marked the domain from which the sentence was drawn 
 (\textsc{Reviews} or \textsc{Tweets}); systems were free to make use of this information, 
 so long as it was not required as part of the input at test time.
 
