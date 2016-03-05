@@ -754,7 +754,7 @@ The train and test sets are summarized in \cref{tbl:datasets}
 and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
 
 \begin{table}
-\caption{\nss{Summary of component datasets: train/test split, sizes, gold status of POS, etc.}}
+\caption{\nss{TODO: Summary of component datasets: train/test split, sizes, gold status of POS, etc.}}
 \label{tbl:datasets}
 \end{table}
 
@@ -807,14 +807,17 @@ Supersense precision and recall are both $1/2$.
 \end{figure*}
 
 \subsection{Annotation Process}
-We use data sets from various sources, with varying degrees of existing pre-annotation. 
-Unless already provided, we add Universal POS tags \citep{petrov,nivre} 
-and baseline supersenses (using the most-frequent WordNet sense), 
-which are then manually corrected by a trained annotator, and additionally marked with MWEs. 
-The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
-before annotating the data sets. 
+We compiled data sets from various sources, with varying degrees of existing pre-annotation. 
+Unless already provided, we added Universal POS tags as defined by the Universal Dependencies project, 
+and baseline supersenses (using the most frequent WordNet sense). 
+The pre-annotated supersenses were then manually corrected by a trained annotator, 
+who simultaneously annotated the sentence for MWEs. 
+\finalversion{\nss{TODO: training time, IAA}The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
+before annotating the data sets.}
 
-
+The test set newly annotated for this task comprises exactly 1,000 sentences and exactly 16,500 words.
+In addition, portions of the training data were reannotated for improved quality and consistency 
+with the STREUSLE annotations, as explained below.\finalversion{\nss{total size of training data?}}
 
 \subsection{\dataset{Reviews}} 
 \paragraph{Training.}
@@ -824,9 +827,9 @@ made up of 723~online user reviews for services (such as restaurants and beautic
 
 STREUSLE annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
 Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
-Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs.\finalversion{\nss{
+Annotators found approximately 3,500~MWEs, 9,000~noun expressions, and 8,000~main verb expressions (excluding auxiliary verbs).\finalversion{\nss{
 (\Cref{tbl:reviews} offers a more detailed breakdown.)}}
-15\% of MWEs contain a gap.\nss{supersense counts?}
+15\% of MWEs contain a gap.
 
 The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
 and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The PTB-to-UPOS conversion script is available at:
@@ -837,7 +840,7 @@ and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The
 The test portion comprises 340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} 
 (the website as a general resource was described in \citet{hovy-2015trustpilot}). 
 The reviews were chosen to control for age, gender, and location, and contained gold POS tags. 
-The data was further annotated for supersenses and MWE by \nss{?}.
+\finalversion{The data was further annotated for supersenses and MWE by \nss{?}.}
 
 \subsection{\dataset{Tweets}} 
 \paragraph{Training.}
@@ -856,10 +859,11 @@ Annotators were shown pre-annotations from a heuristic supersense chunking\slash
 and asked to correct the boundaries and supersense labels. 
 %The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
 Though there was no explicit MWE annotation phase, 
-many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs.\nss{POS?}
+many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs.\finalversion{\nss{POS?}}
 
-\nss{Reannotation/Harmonization}
- 
+Both datasets were fully reannotated to match the conventions of the \dataset{Reviews} data from the STREUSLE corpus. 
+The annotator examined every sentence and corrected any MWE or supersense decisions deemed to be inconsistent with the guidelines.\finalversion{\nss{TODO: how many changes were made??}}
+
 %\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
 % The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
 % The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
@@ -877,7 +881,7 @@ many of the multiword chunks tagged with a \longversion{noun or verb }supersense
 
 \paragraph{Test.}
 Our test set consists of 500 tweets (6,627 tokens) taken from the Tweebank corpus \citep{kong-14}, 
-which already contains some gold-standard MWEs. 
+which already contained some gold-standard MWEs. 
 We converted the POS tags from gold ARK TweetNLP POS + FUDG dependencies to UPOS 
 and had an annotator supply supersenses.
 
@@ -889,15 +893,16 @@ We opted to sample transcribed sentences from TED talks.
 Because individual TED talks tend to heavily repeat vocabulary, we took the first 10 sentences 
 from each of 16 documents in order to achieve a lexically diverse sample. 
 Specifically, we chose 
-(a)~10 sentences (2,187 tokens) from each of the 10 talks in the 
+(a)~100 sentences (2,187 tokens) from the 10 talks in the 
 NAIST-NTT Ted Talk Treebank\footnote{\url{http://ahclab.naist.jp/resource/tedtreebank/}} \citep{neubig-2014naist} 
-(which in turn is a subset of the IWSLT\nss{year?} data set); 
-and (b)~60 sentences (1,329 tokens) from the IWSLT\nss{year?} test set \citep{cettolo-2012wit3}.
-The latter 6~documents were chosen to maximize language pair diversity, 
-with particular emphasis on \nss{lges of interest}.
+(which in turn is a subset of the IWSLT training data); 
+and (b)~60 sentences (1,329 tokens) from the IWSLT test data \citep{cettolo-2012wit3}.
+The latter 6~documents were chosen to maximize language pair diversity.\finalversion{\nss{with particular emphasis on Czech, Hindi? list lge pairs?}}
 
 
-We induced POS by conversion from the gold PTB trees (for the first part) and by annotation with a averaged structured perceptron model (Rungsted)\footnote{\url{https://github.com/coastalcph/rungsted}} from UD v1.2\nss{cite}.
+We induced parts of speech by conversion from the gold PTB trees for the NAIST-NTT data, 
+and for the remaining data, by automatic tagging with an averaged structured perceptron model (Rungsted\footnote{\url{https://github.com/coastalcph/rungsted}}) 
+trained on Universal Dependencies v1.2 \citep{nivre-15}.
 
 
 \section{Evaluation}\label{sec:eval}
