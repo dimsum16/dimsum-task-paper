@@ -368,40 +368,53 @@ Nine systems were submitted in two settings. The best system scored .57 $F_1$ in
 
 \section{Introduction}\label{sec:intro}
 
-Broad-coverage NLP techniques such as XXX\dirk{Nathan, could you make clear what broad coverage is?} have
-become mainstream for several aspects of language---including morphology, syntax, 
-and some areas of semantics (notably, named entity recognition, %\nss{2002/2003}
-semantic role labeling, %\nss{2004/2005/2008/2009} 
-and coreference resolution). %\nss{2011/2012}
-%, thanks in part to previous SemEval shared tasks, 
-Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
-to broad coverage. %\nss{need to say something about purely unsupervised distributional approaches?} 
 
+% Broad-coverage NLP techniques such as XXX\dirk{Nathan, could you make clear what broad coverage is?} have
+% become mainstream for several aspects of language---including morphology, syntax, 
+% and some areas of semantics (notably, named entity recognition, %\nss{2002/2003}
+% semantic role labeling, %\nss{2004/2005/2008/2009} 
+% and coreference resolution). %\nss{2011/2012}
+% %, thanks in part to previous SemEval shared tasks,
+
+Bread-and-butter grammatical analysis tasks in contemporary NLP---part-of-speech tagging, for example---are \emph{comprehensive}, 
+operating under the assumption that all grammatically-relevant parts of a sentence  
+will be substantively analyzed. (We do not expect POS taggers to only know about a subset of the parts of speech in the language.) 
+Furthermore, for manual annotation, 
+POS tags accommodate unseen words, and most adapt readily to new text genres.
+These factors, taken together, indicate a representation achieves \emph{broad coverage}. 
+
+Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
+to broad coverage.
 The dominant paradigm of fine-grained word sense disambiguation, WordNet \citep{wordnet}, 
 is difficult to annotate in corpora, results in considerable data sparseness, 
 and does not readily generalize to out-of-vocabulary words.
 While the main corpus with WordNet senses, 
-SemCor \citep{semcor}, does reflect some text genres, it is hard
+SemCor \citep{semcor}, does reflect several text genres, it is hard
 to expand its annotations to new genres, such as social web text 
 or transcribed speech.
 This severely limits the applicability of SemCor-based NLP tools 
 and restricts opportunities for linguistic studies of lexical semantics in corpora.
 
-Consequently,  \citet{carpuat-05,resnik-06} found that traditional, fine-grained word sense disambiguation did indeed \emph{not} improve machine translation. However, abstracting the senses and moving to multi-word does \citep{chan-07,carpuat-07,lefever-10}.
+\finalversion{\nss{do we want to say something about insights from MT? this needs work:}
+Consequently,  \citet{carpuat-05,resnik-06} found that traditional, fine-grained word sense disambiguation 
+did indeed \emph{not} improve machine translation. 
+\nss{TODO}However, abstracting the senses and moving to multi-word does \citep{chan-07,carpuat-07,lefever-10}.
+}
 
 %The goal of this task is therefore to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
 %translations in a second language replaced abstract word senses, 
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
 
-In this task, we therefore move away 
-from fine-grained sense inventories and lexicalized annotation.
-We define a more general representation that can be useful 
-for many NLP applications beyond machine translation, to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
-
-We use two lexical representations---multiword expressions 
-and supersenses---and a variety of non-standard genres.
-%before delving into the data, evaluation, and results.
+We report on the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.io/}} which challenged participants to analyze the lexical semantics 
+of English sentences with a tagset integrating
+\textbf{multiword expressions} and \textbf{noun and verb supersenses} \citep[following][]{schneider-15}, 
+on multiple nontraditional genres of text. 
+By moving away from fine-grained sense inventories and lexicalized, language-specific\footnote{Though our dataset is limited to English, the representation is applicable to other languages: see \cref{sec:integration}.} annotation,
+we take a step in the direction of broad-coverage, coarse-grained lexical semantic analysis. 
+We believe this departure from the classical lexical semantics paradigm 
+will ultimately prove fruitful for a variety of NLP applications in a variety of genres. 
+%to establish a broad-coverage paradigm for lexical semantic analysis that works on a variety of genres.
 
 % \nss{motivation: lexical semantic analysis of MWEs and supersenses in English. 
 % semantics is a hot topic.
@@ -411,13 +424,16 @@ and supersenses---and a variety of non-standard genres.
 % parsing, distributional word representations, language models, 
 % use of language resources such as WordNet, (other buzzwords?)}
 
-\paragraph{Summary}
-To date, many of the analysis problems in computational lexical semantics are limited in scope, due to granularity and coverage.
-In contrast, in this shared task (following \citet{schneider-15}) we integrate broad-coverage MWE identification with supersense tagging (\cref{sec:rep}).
-We provide a benchmark dataset including several nontraditional domains (\cref{sec:data});
-establish objective, controlled evaluation procedures (\cref{sec:eval});
-and compare \nss{diverse? }systems (\cref{sec:results}).\nss{results, in a nutshell}
-Though our dataset is limited to English, the representation is applicable to other languages.
+%\paragraph{Summary}
+%To date, many of the analysis problems in computational lexical semantics are limited in scope, due to granularity and coverage.
+%We integrate broad-coverage MWE identification with supersense tagging 
+The integrated lexical semantic representation (\cref{sec:integration}, \cref{sec:rep})
+has been annotated in an extensive benchmark dataset comprising several nontraditional domains (\cref{sec:data}).
+Objective, controlled evaluation procedures (\cref{sec:eval})
+facilitate a comparison of the 9~systems submitted as part of the official task (\cref{sec:results}).
+While the systems range in performance, all are below 60\% in our composite evaluation, 
+suggesting that further work is needed to make progress on this difficult task.
+
 
 
 % \nss{encourage creativity of solutions}
@@ -445,7 +461,7 @@ Though our dataset is limited to English, the representation is applicable to ot
 % If it is accepted, we will publicize the task widely in order to recruit as much participation as possible.
 
 
-\section{Background}
+\section{Background}\label{sec:integration}
 \textbf{Multiword expressions.} 
 Most contemporary approaches to syntactic and semantic analysis
 treat space-separated words as the basic units of structure. 
@@ -731,8 +747,8 @@ and contains annotations in a JSON data structure, are provided as well.
 The task built upon two existing datasets of social web text, which were 
 harmonized to form the training data. Four new samples from three domains 
 were annotated from scratch to form the test set.
-The train and test sets are summarized in \cref{tbl:datasets}. 
-%These capture two genres of social web text:
+The train and test sets are summarized in \cref{tbl:datasets} 
+and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
 
 \begin{table}
 \caption{\nss{Summary of component datasets: train/test split, sizes, gold status of POS, etc.}}
