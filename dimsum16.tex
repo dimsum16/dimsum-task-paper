@@ -910,6 +910,67 @@ We induced parts of speech by conversion from the gold PTB trees for the NAIST-N
 and for the remaining data, by automatic tagging with an averaged structured perceptron model (Rungsted\footnote{\url{https://github.com/coastalcph/rungsted}}) 
 trained on Universal Dependencies v1.2 \citep{nivre-15}.
 
+\subsection{Comparing Domains}
+
+Given the lexical semantic annotations, 
+a natural question to ask is whether strong differences can be observed between the domains.
+For example, we can examine which kinds of multiword expressions and which kinds of supersenses 
+occur more often in some domains than in others. 
+However, we hasten to note that the samples are not necessarily representative of their domains overall, 
+and in fact, may have been sampled in a biased way (e.g., the Lowlands sample was limited to tweets containing a URL, 
+and as a result, most of these tweets are headlines and advertisements).
+Furthermore, the annotation procedures differed by subcorpus, likely biasing the results.
+Thus, in this section we report observations but do not make any strong claims about their generality.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/mwes-pos.pdf}
+\caption{Counts of MWE occurrences, grouped by the POS of the first word in the MWE. 
+Blue bars represent POSes that tend to start nominal MWEs; red bars roughly capture verbal MWEs.}
+\label{fig:mwes-pos}
+\end{figure}
+
+\paragraph{MWEs.} MWEs in the seven subcorpora are summarized in \cref{fig:mwes-pos} with respect to syntactic status. 
+Colors represent the POS tag of the first word in the MWE. 
+Starting with proper nouns, the blue bars indicate POS tags that tend to begin nominal MWEs (noun, adjective, determiner, etc.).
+Red bar POSes are characteristic of verbal MWEs. The remaining bars are prepositional (dark green) 
+and other miscellaneous tags, which collectively comprise no more than 10\% of the MWEs in each subcorpus.
+
+It is worth noting that in this plot, subcorpora within the same domain 
+are sometimes more divergent than subcorpora in different domains. 
+Lowlands stands out as having a large share of proper noun MWEs---presumably due to the headline-oriented 
+nature of the sample. STREUSLE has the smallest proportion of nominal MWEs, 
+perhaps owing to the way it was annotated: 
+initial rounds of STREUSLE annotation targeted MWEs only, with noun and verb supersenses 
+added only later; whereas in the other datasets, MWE and supersense annotation were performed jointly, 
+so annotator attention may have been focused on nominal and verbal expressions 
+rather than other MWEs.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
+\caption{Domain differences between rates of occurrence of each supersense. 
+The area of each circle is proportional to the supersense's \emph{total} frequency across all domains.
+Noun supersenses appear in the plot on the left, and verb supersenses in the plot on the right. 
+(Each domain's rate is microaveraged across its subcorpora; 
+thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.)}
+\label{fig:supersense-domains}
+\end{figure*}
+
+\paragraph{Supersenses.} In the spirit of \citet{schneider-12}, we performed an analysis to see 
+which supersenses were more characteristic of some domains than others. 
+\Cref{fig:supersense-domains} plots the relative frequency (out of all supersense-labeled units) 
+of each supersense in each of the three domains. The \dataset{Reviews} domain is used for the base frequency: 
+the x-axis is the supersense's rate of occurrence in the \dataset{Tweets} domain \emph{over and above} 
+its rate of occurrence in \dataset{Reviews}. Likewise, the y-axis represents the rate for the \dataset{TED} talks 
+minus the rate for the \dataset{Reviews}. 
+
+These plots show some clear outliers: among nouns (left plot), 
+\sst{n.group} and \sst{n.food} are overrepresented in \dataset{Reviews} 
+relative to the other domains---unsurprising because restaurants and other businesses are prominent in this subcorpus.
+On the other hand, \sst{n.person} is underrepresented in \dataset{Reviews}. 
+\sst{n.time} and \sst{n.communication} are more popular in the \dataset{Tweets} domain than the others.
+Among verbs (right plot), \sst{v.stative} is underrepresented, apparently due to the relative rarity of 
+the copula (which often can be safely omitted in headlines and other telegraphic messages 
+without obscuring the meaning).
 
 \section{Evaluation}\label{sec:eval}
 \longversion{
