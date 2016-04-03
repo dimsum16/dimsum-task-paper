@@ -5,8 +5,8 @@
 \usepackage{relsize} % relative font sizes (e.g. \smaller). must precede ACL style
 \usepackage{style/naaclhlt2016}
 
-%\naaclfinalcopy % Uncomment this line for the final submission
-\def\naaclpaperid{***} %  Enter the naacl Paper ID here
+\naaclfinalcopy % Uncomment this line for the final submission
+%\def\naaclpaperid{***} %  Enter the naacl Paper ID here
 
 % To expand the titlebox for more authors, uncomment
 % below and set accordingly.
@@ -348,7 +348,7 @@ College Park, Maryland, USA\\
 % are one technique for extracting MWE types \citep[cf.][\emph{inter alia}]{pecina-10}.}
 \naaclfinalcopy % show authors
 \maketitle
-\global\naaclfinalfalse % turn on header/line numbers for review
+%\global\naaclfinalfalse % turn on header/line numbers for review
 
 \begin{abstract}
 This task adopts an explicit yet broad-coverage paradigm for lexical semantics, representing
@@ -539,7 +539,7 @@ Arabic Wikipedia \citep{schneider-13}, and the Danish CLARIN Reference Corpus \c
 
 Features based on supersenses have also been exploited in downstream semantics tasks\longversion{ 
 such as preposition sense disambiguation, noun compound interpretation, and metaphor detection} 
-\citep{ye-07,hovy2010,tratz-10,hovy-2013identifying,tsvetkov-13}. 
+\citep{ye-07,hovy2010,tratz-10,hovy-2013identifying,tsvetkov-13,heilman}. 
 
 \begin{table}\centering\small
 \resizebox{ \columnwidth }{!}{
@@ -753,10 +753,15 @@ were annotated from scratch to form the test set.
 The train and test sets are summarized in \cref{tbl:datasets} 
 and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
 
-\begin{table}
-\caption{\nss{TODO: Summary of component datasets: train/test split, sizes, gold status of POS, etc.}}
-\label{tbl:datasets}
-\end{table}
+\begin{table*}\small\centering
+\input{sourcedatasets.tex}
+\label{tbl:srcdatasets}
+\end{table*}
+
+\begin{table*}\small\centering
+\input{annotateddatasets.tex}
+\label{tbl:annotateddata}
+\end{table*}
 
 The domains covered are \textbf{online customer reviews}, 
 \textbf{tweets}, and \textbf{TED talks}.

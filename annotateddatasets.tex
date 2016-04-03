@@ -1,0 +1,37 @@
+\begin{tabular}{@{}r@{~~}l@{~~}l@{~~}>{\hspace{20pt}}l@{~~}r@{~~}r@{~~}r@{~}>{\smaller}r@{~~}r@{~~}r@{~}>{\smaller}r@{~~}r@{~}>{\smaller}r@{}}
+ & & & & & & \multicolumn{2}{@{}c}{\textbf{Gappy}} & \textbf{\% tokens} 
+ & \multicolumn{2}{@{}c}{\textbf{N SS}} & \multicolumn{2}{@{}c}{\textbf{V SS}} \\
+ & \textbf{Domain} & \textbf{Source corpus} & \multicolumn{1}{@{}c}{\textbf{MWEs+Supersenses}} & \textbf{Words} & \textbf{MWEs} 
+ & \multicolumn{2}{@{}c}{\textbf{MWEs}} & \textbf{in MWE} 
+ & \multicolumn{1}{@{}c}{\textbf{units}} & \textbf{MWE} & \multicolumn{1}{@{}c}{\textbf{units}} & \textbf{MWE} \\
+\midrule
+\multirow{3}{*}{\rotatebox{90}{\datasplit{Train}}} & 
+\dataset{Reviews} & STREUSLE   & Gold           & 55,579 & 3,117 & 397 & 13\% & 13\% & 9,112 & 13\% & 7,689 & 13\% \\
+& \dataset{Tweets} & Lowlands  & Gold---revised &  3,062 &   276 &   5 &  2\% & 22\% &   741 & 31\% &   281 &  7\% \\
+& \dataset{Tweets} & Ritter    & Gold---revised & 15,185 &   839 &  65 &  8\% & 13\% & 2,738 & 20\% & 1,893 & 10\% \\
+\cmidrule{2-9}
+& \multicolumn{3}{r}{\textbf{Train Total}}  &   73,826 & 4,232 & 467 & 11\% & 13\% & 12,591 & 16\% & 9,863 & 12\% \\
+\midrule
+\multirow{4}{*}{\rotatebox{90}{\datasplit{Test}\hspace{10pt}}} &	
+\dataset{Reviews} & Trustpilot & Gold---new & 6,357 & 327 & 13 & 4\% & 12\% & 1,055 & 23\% & 848 & 6\% \\
+& \dataset{Tweets} & Tweebank  & Gold---new & 6,627 & 362 & 20 & 6\% & 13\% &   899 & 21\% & 911 & 8\% \\
+& \dataset{TED} & NAIST-NTT    & Gold---new & 2,187 &  93 &  2 & 2\% &  9\% &   373 & 16\% & 278 & 7\% \\
+& \dataset{TED} & IWSLT test   & Gold---new & 1,329 &  55 &  1 & 2\% &  9\% &   228 & 15\% & 153 & 3\% \\
+\cmidrule{2-9}
+& \multicolumn{3}{r}{\textbf{Test Total}}	&  16,500 & 837 & 36 & 4\% & 12\% & 2,555 & 21\% & 2,190 & 7\% \\
+\midrule
+\multicolumn{4}{r}{\textbf{\dataset{Reviews} Total}} &  61,936 & 3,444 & 410 & 12\% & 13\% & 10,167 & 14\% & 8,537 & 12\% \\
+\multicolumn{4}{r}{\textbf{\dataset{Tweets} Total}}  &  24,874 & 1,477 &  90 &  6\% & 14\% &  4,378 & 22\% & 3,085 & 9\% \\
+\multicolumn{4}{r}{\textbf{\dataset{TED} Total}}     &   3,516 &   148 &   3 &  2\% &  9\% &    601 & 16\% &   431 & 6\% \\
+\midrule
+\multicolumn{4}{r}{\textbf{Grand Total}}             &  90326 & 5069 & 503 & 10\% & 13\% & 15146 & 17\% & 12053 & 11\% \\
+\end{tabular}
+\caption[Annotated datasets]{Annotated datasets: for each subcorpus, the status of lexical semantic annotations 
+(retained, revised, or newly annotated for this task); word token and MWE instance counts; 
+number and proportion (out of all MWEs) that are gappy; proportion of tokens that belong to an MWE; 
+number of units labeled with a noun supersense, and proportion that are MWEs; 
+and likewise for verb supersenses.\endgraf\setlength{\parindent}{1em}
+Additional statistics that are relatively consistent across domains: 
+MWEs per word: mean and median both .055 (lowest: TED, .044; highest: STREUSLE, .090).
+Supersenses per word: mean and median both 0.3.
+Just 8 MWEs contain more than one gap (all are found in STREUSLE or Ritter).}
