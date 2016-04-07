@@ -283,7 +283,7 @@
 \newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
 \newcommand{\AnnA}[0]{\mbox{\textbf{Ann-A}}} % annotator A
 \newcommand{\AnnB}[0]{\mbox{\textbf{Ann-B}}} % annotator B
-\newcommand{\sys}[1]{\mbox{\textbf{#1}}}   % name of a system (one of our experimental conditions)
+\newcommand{\sys}[1]{\mbox{\texttt{#1}}}   % name of a system (one of our experimental conditions)
 \newcommand{\dataset}[1]{\mbox{\textsc{#1}}}	% one of the datasets in our experiments
 \newcommand{\datasplit}[1]{\mbox{\textbf{#1}}}	% portion one of the datasets in our experiments
 
@@ -1125,25 +1125,37 @@ We give an overview of these systems and analyze their performance.
 
 \subsection{Synopsis of approaches}
 
-P359 = S??? (Dirk):
+%P359  (UTU, Dirk):
+From the \textbf{UTU} team \citep{dimsum-16-utu},
+\sys{S211}, \sys{S254}, \sys{S255}
 Generate all possible SST sequences (matched against a dictionary for MWEs), then decide whether to keep each pair or not, and rank the accepted candidates. Method performs reasonably well for SST, not so much for MWE.
-Very good discussion and error analysis!
 
-P367 = S??? (Dirk):
+%P367 =  (UW-CSE, Dirk):
+From the \textbf{UW-CSE} team \citep{dimsum-16-uw}, 
+\sys{S248}, \sys{S249}
 Double-tier CRF, with separate chains for MWEs and SST labels, but some shared parameters.
-Very brief error analysis.
 
-P332 = S??? (Nathan):
+%P332 = \sys{S106} (UFRGS\&LIF, Nathan):
+From the \textbf{UFRGS\&LIF} team \citep{dimsum-16-ufrgs},
+\sys{S106} detects MWEs by heuristic pattern-matching against sequences in the training data, 
+and tags supersenses based on the first WordNet sense of each word.
 
-P433 = S??? (Nathan):
+%P433 =  (ICL-HD, Nathan):
+From the \textbf{ICL-HD} team \citep{dimsum-16-icl},
+\sys{S214}
 
-P347 = S??? (AJ):
 
-P531 = S227 (team name: VectorWeavers) (Marine):  
-This submission relies on neural network classifiers to perform MWE boundary detection and SST, 
+%P531 = S227 (team name: VectorWeavers) (Marine):  
+From the \textbf{VectorWeavers} team \citep{dimsum-16-vector},
+\sys{S227} relies on neural network classifiers to perform MWE boundary detection and SST, 
 using features based on word embeddings and syntactic parses. 
 Results shows that syntax helps identify MWE boundaries accurately, and that 
 simple incremental composition functions can help construct useful MWE representations.
+
+%P347 =  (WHUNlp, AJ): 
+From the WHUNlp team
+\sys{S108}
+
 
 \subsection{Overall results}
 Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-results} a more detailed breakdown. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system: systems entering in the open condition (all resources allowed) are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition (only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
@@ -1152,15 +1164,15 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
 \begin{tabular}{rllrl}
  \#   & \textbf{System} &           \textbf{Team} &  \textbf{Score}  & \textbf{Resources} \\
 \midrule
-    1 &   S214 &         ICL-HD &  57.77 &   ++ \\
-      &   S249 &         UW-CSE &  57.71 &   ++ \\
-      &   S248 &         UW-CSE &  57.10 &      \\
-    2 &   S106 &          UFRGS &  50.27 &      \\
-    3 &   S227 &  VectorWeavers &  49.94 &   ++ \\
-    4 &   S255 &           BCED &  47.13 &   ++ \\
-    5 &   S211 &           BCED &  46.17 &    + \\
-      &   S254 &           BCED &  45.79 &      \\
-    6 &   S108 &         WHUNlp &  25.71 &      \\
+    1 &   \sys{S214} &         ICL-HD &  57.77 &   ++ \\
+      &   \sys{S249} &         UW-CSE &  57.71 &   ++ \\
+      &   \sys{S248} &         UW-CSE &  57.10 &      \\
+    2 &   \sys{S106} &     UFRGS\&LIF &  50.27 &      \\
+    3 &   \sys{S227} &  VectorWeavers &  49.94 &   ++ \\
+    4 &   \sys{S255} &            UTU &  47.13 &   ++ \\
+    5 &   \sys{S211} &            UTU &  46.17 &    + \\
+      &   \sys{S254} &            UTU &  45.79 &      \\
+    6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
 \end{tabular}
 
 \caption{Main results. Scores are combined $F_1$ percentages.}
@@ -1171,8 +1183,8 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
 
 
 \paragraph{Ranking and significance.}
-The overall best scoring system, with a combined measure of 57.77\%, is S214. 
-The competition, however, is close: S249 scored 57.71\%, and S248 obtained a combined score of 57.10\%.  
+The overall best scoring system, with a combined measure of 57.77\%, is \sys{S214}. 
+The competition, however, is close: \sys{S249} scored 57.71\%, and \sys{S248} obtained a combined score of 57.10\%.  
 To check whether the predictions of the systems are significantly different from each other, 
 we ran McNemar's test, a paired test that operates directly on the predicted system output. 
 A consequence of this is that we do not directly test whether the computed \emph{scores} 
@@ -1310,39 +1322,39 @@ which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
 \midrule
 \multicolumn{5}{@{}l}{\textbf{Multiword expressions}} \\
 
-S106       &   49.57 &  56.76 &   51.16 &      51.48 \\
-S108       &   26.39 &  33.44 &   34.18 &      30.98 \\
-S211 +     &    9.07 &  18.28 &   15.76 &      13.46 \\
-S214 ++    &   53.37 &  \textbf{57.14} &   59.49 &      56.66 \\
-S227 ++    &   36.18 &  41.76 &   39.32 &      38.49 \\
-S248       &   53.96 &  52.35 &   54.48 &      53.93 \\
-S249 ++    &   \textbf{54.80} &  53.48 &   \textbf{61.09} &      \textbf{57.24} \\
-S254       &    7.05 &  16.30 &    6.34 &       8.20 \\
-S255 ++    &    8.68 &  20.11 &   15.50 &      13.48 \\[1.4ex]
+\sys{S106}       &   49.57 &  56.76 &   51.16 &      51.48 \\
+\sys{S108}       &   26.39 &  33.44 &   34.18 &      30.98 \\
+\sys{S211} +     &    9.07 &  18.28 &   15.76 &      13.46 \\
+\sys{S214} ++    &   53.37 &  \textbf{57.14} &   59.49 &      56.66 \\
+\sys{S227} ++    &   36.18 &  41.76 &   39.32 &      38.49 \\
+\sys{S248}       &   53.96 &  52.35 &   54.48 &      53.93 \\
+\sys{S249} ++    &   \textbf{54.80} &  53.48 &   \textbf{61.09} &      \textbf{57.24} \\
+\sys{S254}       &    7.05 &  16.30 &    6.34 &       8.20 \\
+\sys{S255} ++    &    8.68 &  20.11 &   15.50 &      13.48 \\[1.4ex]
 
 \multicolumn{5}{@{}l}{\textbf{Supersenses}} \\
 
-S106       &           50.93  &          49.61  &         49.20  &      49.98 \\
-S108       &           25.82  &          24.68  &         24.63  &      25.14 \\
-S211 +     &           52.00  &          51.40  &         49.95  &      51.11 \\
-S214 ++    &   \textbf{57.66} &  \textbf{60.06} &         55.99  &      57.55 \\
-S227 ++    &           51.36  &          52.00  &         51.70  &      51.62 \\
-S248       &           57.19  &          59.11  &         56.82  &      57.47 \\
-S249 ++    &           57.00  &          59.17  & \textbf{57.46} &  \textbf{57.64} \\
-S254       &           52.68  &          51.44  &         49.66  &      51.29 \\
-S255 ++    &           51.98  &          53.28  &         51.11  &      51.93 \\[1.4ex]
+\sys{S106}       &           50.93  &          49.61  &         49.20  &      49.98 \\
+\sys{S108}       &           25.82  &          24.68  &         24.63  &      25.14 \\
+\sys{S211} +     &           52.00  &          51.40  &         49.95  &      51.11 \\
+\sys{S214} ++    &   \textbf{57.66} &  \textbf{60.06} &         55.99  &      57.55 \\
+\sys{S227} ++    &           51.36  &          52.00  &         51.70  &      51.62 \\
+\sys{S248}       &           57.19  &          59.11  &         56.82  &      57.47 \\
+\sys{S249} ++    &           57.00  &          59.17  & \textbf{57.46} &  \textbf{57.64} \\
+\sys{S254}       &           52.68  &          51.44  &         49.66  &      51.29 \\
+\sys{S255} ++    &           51.98  &          53.28  &         51.11  &      51.93 \\[1.4ex]
 
 \multicolumn{5}{@{}l}{\textbf{Combined score}} \\
 
-S106       &   50.71 &  50.57 &   49.54 &      50.22 \\
-S108       &   25.86 &  25.39 &   25.87 &      25.76 \\
-S211 +     &   46.19 &  47.90 &   44.42 &      45.86 \\
-S214 ++    &   \textbf{56.98} &  \textbf{59.71} &   56.63 &      57.41 \\
-S227 ++    &   49.25 &  50.82 &   49.74 &      49.77 \\
-S248       &   56.66 &  58.26 &   56.38 &      56.88 \\
-S249 ++    &   56.61 &  58.33 &   \textbf{58.18} &      \textbf{57.57} \\
-S254       &   46.57 &  47.82 &   42.99 &      45.47 \\
-S255 ++    &   46.15 &  49.81 &   45.44 &      46.64 \\
+\sys{S106}       &   50.71 &  50.57 &   49.54 &      50.22 \\
+\sys{S108}       &   25.86 &  25.39 &   25.87 &      25.76 \\
+\sys{S211} +     &   46.19 &  47.90 &   44.42 &      45.86 \\
+\sys{S214} ++    &   \textbf{56.98} &  \textbf{59.71} &   56.63 &      57.41 \\
+\sys{S227} ++    &   49.25 &  50.82 &   49.74 &      49.77 \\
+\sys{S248}       &   56.66 &  58.26 &   56.38 &      56.88 \\
+\sys{S249} ++    &   56.61 &  58.33 &   \textbf{58.18} &      \textbf{57.57} \\
+\sys{S254}       &   46.57 &  47.82 &   42.99 &      45.47 \\
+\sys{S255} ++    &   46.15 &  49.81 &   45.44 &      46.64 \\
 
 
 \end{tabular}
