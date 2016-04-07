@@ -1118,9 +1118,30 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 \end{table*}
 }
 
-\section{Results}\label{sec:results}
+\section{Entries and Results}\label{sec:results}
 
-We received a total of nine unique submissions before the deadline expired. 
+A total of nine unique system entries were submitted before the deadline expired. 
+We give an overview of these systems and analyze their performance.
+
+\subsection{Synopsis of approaches}
+
+P359 = S??? (Dirk):
+Generate all possible SST sequences (matched against a dictionary for MWEs), then decide whether to keep each pair or not, and rank the accepted candidates. Method performs reasonably well for SST, not so much for MWE.
+Very good discussion and error analysis!
+
+P367 = S??? (Dirk):
+Double-tier CRF, with separate chains for MWEs and SST labels, but some shared parameters.
+Very brief error analysis.
+
+P332 = S??? (Nathan):
+
+P433 = S??? (Nathan):
+
+P347 = S??? (AJ):
+
+P531 = S??? (Marine):
+
+\subsection{Overall results}
 Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-results} a more detailed breakdown. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system: systems entering in the open condition (all resources allowed) are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition (only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
 
 \begin{table}\small\centering
@@ -1145,8 +1166,7 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
 \end{table}
 
 
-\subsection{Ranking and significance}
-
+\paragraph{Ranking and significance.}
 The overall best scoring system, with a combined measure of 57.77\%, is S214. 
 The competition, however, is close: S249 scored 57.71\%, and S248 obtained a combined score of 57.10\%.  
 To check whether the predictions of the systems are significantly different from each other, 
