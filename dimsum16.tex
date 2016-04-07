@@ -1125,36 +1125,53 @@ We give an overview of these systems and analyze their performance.
 
 \subsection{Synopsis of approaches}
 
-%P359  (UTU, Dirk):
-From the \textbf{UTU} team \citep{dimsum-16-utu},
-\sys{S211}, \sys{S254}, \sys{S255}
-Generate all possible SST sequences (matched against a dictionary for MWEs), then decide whether to keep each pair or not, and rank the accepted candidates. Method performs reasonably well for SST, not so much for MWE.
-
-%P367 =  (UW-CSE, Dirk):
-From the \textbf{UW-CSE} team \citep{dimsum-16-uw}, 
-\sys{S248}, \sys{S249}
-Double-tier CRF, with separate chains for MWEs and SST labels, but some shared parameters.
-
 %P332 = \sys{S106} (UFRGS\&LIF, Nathan):
 From the \textbf{UFRGS\&LIF} team \citep{dimsum-16-ufrgs},
 \sys{S106} detects MWEs by heuristic pattern-matching against sequences in the training data, 
 and tags supersenses based on the first WordNet sense of each word.
 
+%P359  (UTU, Dirk):
+From the \textbf{UTU} team \citep{dimsum-16-utu},
+\sys{S211}, \sys{S254}, and \sys{S255} 
+match word sequences against a variety of resources
+and then choose a supersense with an ensemble of classifiers. 
+The method performs reasonably well for supersenses, but is weak at detecting MWEs.
+
+
+%P367 =  (UW-CSE, Dirk):
+The \textbf{UW-CSE} team \citep{dimsum-16-uw} 
+experimented with a sequence CRF as well as a double-chained CRF, 
+with separate chains for MWE tags and supersenses, and some parameters shared between them.
+The closed-condition and open-condition feature sets were drawn from AMALGrAM \citep{schneider-15}.
+Of the official submissions, \sys{S248} used a single-chain CRF and \sys{S249} a double-chained CRF.
+A full comparison demonstrates that the double-chained CRF performs best on the combined measure 
+in both the closed and open conditions. 
+
 %P433 =  (ICL-HD, Nathan):
 From the \textbf{ICL-HD} team \citep{dimsum-16-icl},
-\sys{S214}
+\sys{S214} uses the AMALGrAM sequence tagger \citep{schneider-15} 
+with an augmented feature set that leverages word embeddings 
+and a knowledge base. The word embedding features, the knowledge base--derived 
+features, and their union all improve over the condition with no new features, 
+with respect to both MWE performance and supersense performance. 
+The best results for the combined measure are obtained with the 
+word embedding features (but not the knowledge base features). 
+The word embeddings are shown to be somewhat complementary 
+to AMALGrAM's Brown cluster features: ablating either reduces performance.
 
+%P347 =  (WHUNlp, AJ): 
+From the \textbf{WHUNlp} team,
+\sys{S108} uses a pipeline where a sequence CRF first identifies MWEs, 
+and a maximum entropy classifier then predicts a supersense independently 
+for each lexical expression. Each of these models has a small number of feature templates 
+recording words and POS tags.
 
 %P531 = S227 (team name: VectorWeavers) (Marine):  
 From the \textbf{VectorWeavers} team \citep{dimsum-16-vector},
-\sys{S227} relies on neural network classifiers to perform MWE boundary detection and SST, 
+\sys{S227} relies on neural network classifiers to detect MWE boundaries and label supersenses, 
 using features based on word embeddings and syntactic parses. 
-Results shows that syntax helps identify MWE boundaries accurately, and that 
+Results show that syntax helps identify MWE boundaries accurately, and that 
 simple incremental composition functions can help construct useful MWE representations.
-
-%P347 =  (WHUNlp, AJ): 
-From the WHUNlp team
-\sys{S108}
 
 
 \subsection{Overall results}
