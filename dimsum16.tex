@@ -817,13 +817,27 @@ Supersense precision and recall are both $1/2$.
 \subsection{Annotation Process}
 We compiled data sets from various sources, with varying degrees of existing pre-annotation. 
 Unless already provided, we added Universal POS tags as defined by the Universal Dependencies project, 
-and baseline supersenses (using the most frequent WordNet sense). 
+and baseline supersenses (heuristically using the most frequent WordNet sense, and
+in some cases grouping sequences of proper nouns as MWEs). % apparently PROPN -> MWE heuristics were used for TED but not Trustpilot? Hence ``in some cases'' 
+%(MWEs annotated in the gold Tweebank parses were retained.) % this is noted in the Tweebank section below
 The pre-annotated supersenses were then manually corrected by a trained annotator, 
-who simultaneously annotated the sentence for MWEs. 
-\finalversion{\nss{TODO: training time, IAA}The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
-before annotating the data sets.}
+who simultaneously annotated the sentence for comprehensive MWEs. 
+\nss{TODO: training time, IAA}The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
+before annotating the data sets.
+
+
+% $ cd /Users/nathan/dev/e/2016DiMSUM_data
+% $ diff --side-by-side --suppress-common-lines <(conversion/test/sst2dimsum.py conversion/test/test.shuf.sst) dimsum16.test | wc -l
+%     3120
+% $ sed '/^$/d' dimsum16.test | wc -l
+%    16500
+%% 3120/16500 = 19% of tokens were affected by a change to MWE boundaries and/or supersenses.
 
 The test set newly annotated for this task comprises exactly 1,000 sentences and exactly 16,500 words.
+3,120~word tokens (19\%) differ from the pre-annotation with respect to gold MWE boundaries and/or supersenses.\footnote{On the surface, 
+this might be taken to mean that the accuracy of the heuristic baseline used for pre-annotation is 81\%. 
+However, because the annotator saw the pre-annotation, we expect that this agreement rate 
+is higher than if the gold standard had been produced from scratch.}
 In addition, portions of the training data were reannotated for improved quality and consistency 
 with the STREUSLE annotations, as explained below.\finalversion{\nss{total size of training data?}}
 
