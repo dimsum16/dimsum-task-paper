@@ -415,7 +415,7 @@ We report on the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.i
 of English sentences with a tagset integrating
 \textbf{multiword expressions} and \textbf{noun and verb supersenses} \citep[following][]{schneider-15}, 
 on multiple nontraditional genres of text. 
-By moving away from fine-grained sense inventories and lexicalized, language-specific\footnote{Though our dataset is limited to English, the representation is applicable to other languages: see \cref{sec:integration}.} annotation,
+By moving away from fine-grained sense inventories and lexicalized, language-specific\footnote{Though our data set is limited to English, the representation is applicable to other languages: see \cref{sec:integration}.} annotation,
 we take a step in the direction of broad-coverage, coarse-grained lexical semantic analysis. 
 We believe this departure from the classical lexical semantics paradigm 
 will ultimately prove fruitful for a variety of NLP applications in a variety of genres. 
@@ -433,7 +433,7 @@ will ultimately prove fruitful for a variety of NLP applications in a variety of
 %To date, many of the analysis problems in computational lexical semantics are limited in scope, due to granularity and coverage.
 %We integrate broad-coverage MWE identification with supersense tagging 
 The integrated lexical semantic representation (\cref{sec:integration}, \cref{sec:rep})
-has been annotated in an extensive benchmark dataset comprising several nontraditional domains (\cref{sec:data}).
+has been annotated in an extensive benchmark data set comprising several nontraditional domains (\cref{sec:data}).
 Objective, controlled evaluation procedures (\cref{sec:eval})
 facilitate a comparison of the 9~systems submitted as part of the official task (\cref{sec:results}).
 While the systems range in performance, all are below 60\% in our composite evaluation, 
@@ -600,7 +600,7 @@ For example, \lex{spill the beans} in its literal interpretation
 would receive supersenses \sst{v:contact} and \sst{n:food},
 whereas the idiomatic interpretation, `divulge a secret', is represented as
 an MWE holistically tagged as \sst{v:communication}.
-\Citet{schneider-15} develop this idea at length, and provide a web reviews dataset
+\Citet{schneider-15} develop this idea at length, and provide a web reviews data set
 with the integrated annotation. Here, we expand the paradigm to additional domains
 and compare the performance of several systems.
 
@@ -750,7 +750,7 @@ and contains annotations in a JSON data structure, are provided as well.
 
 \section{Data}\label{sec:data}
 
-The task built upon two existing datasets of social web text, which were 
+The task built upon two existing data sets of social web text, which were 
 harmonized to form the training data. Four new samples from three domains 
 were annotated from scratch to form the test set.
 The train and test sets are summarized in \cref{tbl:srcdatasets,tbl:annotateddata} 
@@ -768,7 +768,7 @@ and are publicly available on the web.\footnote{\url{https://github.com/dimsum16
 
 The domains covered are \textbf{online customer reviews}, 
 \textbf{tweets}, and \textbf{TED talks}.
-This section describes, for each domain, how its component datasets were sampled, preprocessed, 
+This section describes, for each domain, how its component data sets were sampled, preprocessed, 
 and annotated.
 
 \begin{figure*} %\small
@@ -822,9 +822,20 @@ in some cases grouping sequences of proper nouns as MWEs). % apparently PROPN ->
 %(MWEs annotated in the gold Tweebank parses were retained.) % this is noted in the Tweebank section below
 The pre-annotated supersenses were then manually corrected by a trained annotator, 
 who simultaneously annotated the sentence for comprehensive MWEs. 
-\nss{TODO: training time, IAA}The annotator spent XXX hours of training on a dedicated data set,\dirk{how many, Nathan?} 
-before annotating the data sets.
 
+The annotator was trained by the first author of this paper  
+using \citeposs{schneider-15} web interface and annotation guidelines.
+Prior to starting on the data sets for this task,
+the annotator devoted approximately 8~hours to training practice 
+on a separate data set which already had a gold standard.
+Periodic feedback was given on initial annotations as the annotator grew accustomed to the conventions.
+For the Ritter tweets in the training set,
+the first author independently annotated 6~sets of 11~sentences, spaced out across annotation batches. 
+Inter-annotator agreement (IAA) estimates for these sets ranged from 60\% to 75\% $F_1$ for MWEs, and 
+67\%--80\% accuracy for supersenses (on tokens which had supersenses in both annotations).
+% https://docs.google.com/spreadsheets/d/13IRaz-K98Css-72Ft4u5FtEYDbCHay8qnRXmD-oEEDU/edit#gid=0
+Resources did not allow for more systematic double-annotation and IAA estimation 
+throughout the data.
 
 % $ cd /Users/nathan/dev/e/2016DiMSUM_data
 % $ diff --side-by-side --suppress-common-lines <(conversion/test/sst2dimsum.py conversion/test/test.shuf.sst) dimsum16.test | wc -l
@@ -883,10 +894,10 @@ and asked to correct the boundaries and supersense labels.
 Though there was no explicit MWE annotation phase, 
 many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs.\finalversion{\nss{POS?}}
 
-Both datasets were fully reannotated to match the conventions of the \dataset{Reviews} data from the STREUSLE corpus. 
+Both data sets were fully reannotated to match the conventions of the \dataset{Reviews} data from the STREUSLE corpus. 
 The annotator examined every sentence and corrected any MWE or supersense decisions deemed to be inconsistent with the guidelines.\finalversion{\nss{TODO: how many changes were made??}}
 
-%\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
+%\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the data sets are already published}
 % The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
 % The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
 % Excluding these instances to evaluate the performance on the more difficult content words, 
@@ -975,7 +986,7 @@ Lowlands stands out as having a large share of proper noun MWEs---presumably due
 nature of the sample. STREUSLE has the smallest proportion of nominal MWEs, 
 perhaps owing to the way it was annotated: 
 initial rounds of STREUSLE annotation targeted MWEs only, with noun and verb supersenses 
-added only later; whereas in the other datasets, MWE and supersense annotation were performed jointly, 
+added only later; whereas in the other data sets, MWE and supersense annotation were performed jointly, 
 so annotator attention may have been focused on nominal and verbal expressions 
 rather than other MWEs.
 
@@ -1334,7 +1345,7 @@ This task featured a broad-coverage lexical semantic analysis task that combines
 The semantic tagset strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
 and the restrictiveness of the NER task. To guard against domain bias, we provided training data 
 from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
-The training and test datasets are publicly available at \url{https://github.com/dimsum16/dimsum-data}.
+The training and test data sets are publicly available at \url{https://github.com/dimsum16/dimsum-data}.
 
 The best scoring system obtained 57\% $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
 averaged over the three test domains. This level of performance suggests that the task is not yet resolved. 
