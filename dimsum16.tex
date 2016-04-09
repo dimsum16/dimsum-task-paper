@@ -1149,7 +1149,7 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 
 \section{Entries and Results}\label{sec:results}
 
-Six teams\footnote{None of the task organizers participated in any of the teams.} participated in the task, 
+Six teams\footnote{None of the teams included any DiMSUM organizers.} participated in the task, 
 submitting a total of nine unique system entries prior to the deadline. 
 We give an overview of these systems and analyze their performance.
 
@@ -1231,7 +1231,7 @@ simple incremental composition functions can help construct useful MWE represent
 The main results appear in \cref{tbl:main-results}. 
 The first column of \cref{tbl:main-results} gives the ranking of the systems. 
 Several systems may share a rank if they do not produce significantly different predictions, as detailed below. 
-The score is the combined supersense and MWE measure, macro-averaged over the three test set domains 
+The score is the combined supersense and MWE measure, macroaveraged over the three test set domains 
 as described above. 
 The final column indicates the resource condition:
 systems entered in the open condition (all resources allowed) are designated ``++''; 
@@ -1327,10 +1327,16 @@ the former is better in the surprise \dataset{TED} domain---particularly TED MWE
 The latter is slightly better in \dataset{Tweets}, 
 and the systems are quite close in \dataset{Reviews} (the domain with the most training data).
 
+\sys{S214} and \sys{S249} were in the open condition, taking advantage of additional resources. 
+The best system in the closed condition is \sys{S248}, which is very similar to \sys{S249}---and 
+recall that its predictions, overall, are not statistically worse.  
+\Cref{tbl:per-domain-results} reveals one striking difference, however: 
+in MWE scores for \dataset{Tweets}, \sys{S249} bests \sys{S248} by nearly 7 points.
+
 When scores in the 3~domains are compared for each system, there is surprisingly little difference overall.
 We expected that the \dataset{TED} domain would be most difficult because it is not represented 
 in the training data, but the scores in \cref{tbl:per-domain-results} give no clear indication that this is the case. 
-Perhaps systems avoided domain bias because the training data included two highly divergent genres; 
+Perhaps systems escaped domain bias because the training data included two highly divergent genres; 
 or perhaps other aspects of the data sets (e.g., topic) matter more for this task than 
 differences in genre.  
 
@@ -1345,12 +1351,12 @@ differences in genre.
 \subsection{Easy and hard decisions}
 
 Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. 
-Given the wide range of participating system and previous work, it is reasonable to assume that 
+Given the wide range of participating systems and previous work, it is reasonable to assume that 
 the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. 
-In fact, some decisions are relatively easy, in the sense that most or all systems get them right, 
-while others are hard, in that none or very few systems produce the correct answer. 
+In fact, some decisions are relatively easy, in the sense that most or all systems get them right; 
+whereas others are hard, in that none or very few systems produce the correct answer. 
 \Cref{fig:supersense-predictions} explores this for the supersense-tagging subtask. 
-The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. 
+The tallest bars are near the left and right sides of the graph, representing the hard and easy instances, respectively. 
 Hard instances account for about 25\% of instances where the gold data has a supersense, 
 which also puts an upper bound on any system combination. 
 Even an oracle system allowed to choose the best prediction for each instance 
@@ -1368,7 +1374,7 @@ individual labels range from the fairly easy (e.g.\ \textsc{v.stative} and \text
 to the more difficult (e.g.\ \textsc{n.attribute} and \textsc{v.contact}). 
 The most common supersense, \textsc{v.stative}, is easy because it has few distinct lexical forms 
 (the ten most common lemmas make up more than 77\% of the instances), and so the
-$P(\textit{supersense} \mid \textit{lemma})$ mapping has low entropy. 
+$P(\textit{supersense} \mid \textit{lemma})$ mapping has low entropy.\nss{backwards?}
 Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
 
 Supersenses may be difficult for more than one reason. 
@@ -1378,9 +1384,11 @@ In contrast, person names, job titles, etc.\ that should be tagged as \textsc{n.
 with respect to supersense. The main challenge in that case is that the category is open-ended 
 and not in general evident from syntactic structure.
 
+\subsection{System correlation}
+
 Finally, we examine whether the submitted approaches capture different aspects of the task. 
 I.e., could we produce a better system by combining the individual systems? 
-We cannot estimate this from the result tables, since, combinatorially, 
+We cannot estimate this from the results tables, since, combinatorially, 
 there are many ways to obtain a given score. 
 However, we can estimate it from the prediction overlap between systems.
 The $N \times N$ labeled matrix in \cref{fig:system-clusters} 
@@ -1430,11 +1438,11 @@ and the restrictiveness of the NER task. To guard against domain bias, we provid
 from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
 The training and test data sets are publicly available at \url{https://github.com/dimsum16/dimsum-data}.
 
-The best scoring system obtained 57\% $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
+The best scoring systems obtained 57.7\% $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
 averaged over the three test domains. This level of performance suggests that the task is not yet resolved. 
-Furthermore, our error analysis suggested that the submitted systems to a large degree 
-extracted the same knowledge from the training data. 
-Substantial improvements of performance would thus seem to require novel approaches. 
+Furthermore, our error analysis suggests that the submitted systems  
+arrived at similar generalizations from the training data. 
+Substantially improving performance would thus seem to require novel approaches. 
 
 \section*{Acknowledgments}
 
