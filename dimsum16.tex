@@ -99,7 +99,7 @@
 \usepackage{booktabs} % pretty tables
 \usepackage{multicol}
 \usepackage{footnote}
-\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}} % hidden column
+\newcolumntype{H}{>{\hspace{-15pt}\setbox0=\hbox\bgroup}c<{\egroup}@{}} % hidden column
 
 \usepackage{url}
 \usepackage[usenames]{color}
@@ -259,7 +259,7 @@
 % \addtolength{\abovedisplayskip}{-.5cm} % space before maths
 % \addtolength{\belowdisplayskip}{-.5cm} % space after maths
 % %\addtolength{\topsep}{-.5cm} %space between first item and preceding paragraph
-%\setlength{\belowcaptionskip}{-.5cm}
+\setlength{\belowcaptionskip}{-.5cm}
 
 
 % customize \paragraph spacing
@@ -725,7 +725,7 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \end{table*}
 }
 
-The analysis for each sentence will be represented as 
+The analysis for each sentence is represented as 
 a sequence of paired MWE and supersense tags. \Cref{fig:ex1} illustrates 
 the MWE part above the sentence and the supersense part below the sentence.
 
@@ -759,6 +759,8 @@ were annotated from scratch to form the test set.
 The train and test sets are summarized in \cref{tbl:srcdatasets,tbl:annotateddata} 
 and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
 
+%\pagebreak
+
 \begin{table*}\small\centering
 \input{sourcedatasets.tex}
 \label{tbl:srcdatasets}
@@ -769,53 +771,19 @@ and are publicly available on the web.\footnote{\url{https://github.com/dimsum16
 \label{tbl:annotateddata}
 \end{table*}
 
+% footnote in caption of tbl:annotateddata
+\footnotetext{Additional statistics that are relatively consistent across domains: 
+MWEs per word: mean and median both .055 (lowest: TED, .044; highest: STREUSLE, .090).
+Supersenses per word: mean and median both 0.3.
+Just 8 MWEs contain more than one gap (all are found in STREUSLE or Ritter).}
+
+%\pagebreak
 The domains covered are \textbf{online customer reviews}, 
 \textbf{tweets}, and \textbf{TED talks}.
 This section describes, for each domain, how its component data sets were sampled, preprocessed, 
 and annotated.
 
-\begin{figure*} %\small
-% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
-\begin{framed}\small
-\emph{Precision:} The proportion of predicted links whose words 
-both belong to the same expression in the gold standard. \\
-\emph{Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
-%\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
-%precision, recall, and $F_1$ computed on strong links only are averaged 
-%with the respective calculations computed on all links without regard to strength.
-\end{framed}\centering
-\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
- \node[inner sep=0cm]                                  (n1) {\tagtss{The}{O}{}{O}{}};
- \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtss{staff}{O}{\textsc{n.group}}{\color{orange}B}{\color{orange}n.group}};
- \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtss{leaves}{\color{red}B}{\color{red}v.cognition}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtss{a}{\color{blue}b}{}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtss{lot}{\color{blue}i}{}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtss{to}{\color{red}I}{}{\color{orange}I}{}};
-%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
-\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
- \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
-\path[-,thick,orange, bend right=20] (n2.south) edge (n3.south);
-\path[-,thick,orange, bend right=20] (n3.south) edge (n4.south);
-\path[-,thick,orange, bend right=20] (n4.south) edge (n5.south);
-\path[-,thick,orange, bend right=20] (n5.south) edge (n6.south);
- \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtss{be}{\color{red}I}{}{\color{orange}I}{}};
-\path[-,thick,orange, bend right=20] (n6.south) edge (n7.south); 
- \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtss{desired}{\color{red}I}{}{O}{v.emotion}};
-\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
-\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
- \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtss{.}{O}{}{O}{}};
-\end{tikzpicture}
-\caption{A \textsc{Reviews} sentence with MWE and supersense analyses: gold above and hypothetical prediction below. 
-MWE precision of the bottom annotation relative to the top one is $2/5$. %with weak links removed 
-%and $2/6$ with weak links strengthened to strong links
-(Note that a link between words $w_1$ and $w_2$ is ``matched'' 
-if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
-The MWE recall value is $3/4$. 
-Supersense precision and recall are both $1/2$.
-%Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
-}
-\label{fig:linkmeasure}
-\end{figure*}
+
 
 \subsection{Annotation Process}
 We compiled data sets from various sources, with varying degrees of existing pre-annotation. 
@@ -981,7 +949,21 @@ Blue bars represent POSes that tend to start nominal MWEs; red bars roughly capt
 \label{fig:mwes-pos}
 \end{figure}
 
+<<<<<<< HEAD
 \paragraph{MWEs.} \cref{fig:mwes-pos} summarizes MWEs in the seven subcorpora with respect to syntactic status. 
+=======
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
+\caption{Domain differences between rates of occurrence of each supersense. 
+The area of each circle is proportional to the supersense's \emph{total} frequency across all domains.
+Noun supersenses appear in the plot on the left, and verb supersenses in the plot on the right. 
+(Each domain's rate is microaveraged across its subcorpora; 
+thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.)}
+\label{fig:supersense-domains}
+\end{figure*}
+
+\paragraph{MWEs.} MWEs in the seven subcorpora are summarized in \cref{fig:mwes-pos} with respect to syntactic status. 
+>>>>>>> 5b6957ea819e89b3f5016da3b229d4a1c8b1e0eb
 Colors represent the POS tag of the first word in the MWE. 
 Starting with proper nouns, the blue bars indicate POS tags that tend to begin nominal MWEs (noun, adjective, determiner, etc.).
 Red bar POS tags are characteristic of verbal MWEs. The remaining bars are prepositional (dark green) 
@@ -997,6 +979,7 @@ added only later; whereas in the other data sets, MWE and supersense annotation 
 so annotator attention may have been focused on nominal and verbal expressions 
 rather than other MWEs.
 
+<<<<<<< HEAD
 \begin{figure*}
 \includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
 \caption{Supersense rate differences by domains, compared to reviews data set. 
@@ -1006,6 +989,9 @@ Each domain's rate is microaveraged across its subcorpora;
 thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.}
 \label{fig:supersense-domains}
 \end{figure*}
+=======
+
+>>>>>>> 5b6957ea819e89b3f5016da3b229d4a1c8b1e0eb
 
 \paragraph{Supersenses.} In the spirit of \citet{schneider-12}, we performed an analysis to see 
 which supersenses were more characteristic of some domains than others. 
@@ -1025,20 +1011,58 @@ Among verbs (right plot), \sst{v.stative} is underrepresented, apparently due to
 the copula (which often can be safely omitted in headlines and other telegraphic messages 
 without obscuring the meaning).
 
-\section{Evaluation}\label{sec:eval}
-\longversion{
-\finalversion{\subsection{\nss{TODO}System Submission Process}
 
-On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
-They will have until May~10 to submit up to 3~system predictions for evaluation. 
-The test data will include sentences from both evaluation domains, 
-in a random order: to encourage robust systems, 
-the domain of each sentence will not be marked at test time, 
-and the proportion of sentences from each domain is not guaranteed to be 
-the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
+\begin{figure*}[t] %\small
+% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
+\begin{framed}\small
+\emph{MWE Precision:} The proportion of predicted links whose words 
+both belong to the same expression in the gold standard. \\
+\emph{MWE Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
+%\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
+%precision, recall, and $F_1$ computed on strong links only are averaged 
+%with the respective calculations computed on all links without regard to strength.
+\end{framed}\centering
+\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
+ \node[inner sep=0cm]                                  (n1) {\tagtss{The}{O}{}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtss{staff}{O}{\textsc{n.group}}{\color{orange}B}{\color{orange}n.group}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtss{leaves}{\color{red}B}{\color{red}v.cognition}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtss{a}{\color{blue}b}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtss{lot}{\color{blue}i}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtss{to}{\color{red}I}{}{\color{orange}I}{}};
+%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
+\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
+ \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
+\path[-,thick,orange, bend right=20] (n2.south) edge (n3.south);
+\path[-,thick,orange, bend right=20] (n3.south) edge (n4.south);
+\path[-,thick,orange, bend right=20] (n4.south) edge (n5.south);
+\path[-,thick,orange, bend right=20] (n5.south) edge (n6.south);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtss{be}{\color{red}I}{}{\color{orange}I}{}};
+\path[-,thick,orange, bend right=20] (n6.south) edge (n7.south); 
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtss{desired}{\color{red}I}{}{O}{v.emotion}};
+\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
+\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtss{.}{O}{}{O}{}};
+\end{tikzpicture}
+\caption{A \textsc{Reviews} sentence with MWE and supersense analyses: gold above and hypothetical prediction below. 
+MWE precision of the bottom annotation relative to the top one is $2/5$. %with weak links removed 
+%and $2/6$ with weak links strengthened to strong links
+(Note that a link between words $w_1$ and $w_2$ is ``matched'' 
+if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
+The MWE recall value is $3/4$. 
+Supersense precision and recall are both $1/2$.
+Combined precision/recall scores add the respective subscores' numerators and denominators:
+thus, combined precision is $\tfrac{2+1}{5+2} = 3/7$, 
+and combined recall is $\tfrac{3+1}{4+2} = 2/3$.
+Combined $F_1$ is their harmonic mean, i.e.~$12/23$.
+%Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
 }
+\label{fig:linkmeasure}
+\end{figure*}
 
-\textbf{Submission conditions.}
+
+\section{Evaluation}\label{sec:eval}
+
+\paragraph{Submission conditions.}
 % \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
 % they will be encouraged to submit the closed condition results to the open condition as well.}
 %The main goal of the task was to find creative new ways to improve the performance of lexical semantic analysis on various domains. 
@@ -1081,14 +1105,15 @@ so long as it was not required as part of the input at test time.
 % I feel like there are pluses and minuses to all 4 of these conditions. maybe we should just mention the possibilities 
 % and survey teams to ensure we only evaluate conditions that generate sufficient interest}
 
-\textbf{Scoring.}
+\paragraph{Scoring.}
 We provided an evaluation script to allow participants to check the format of system output and to compute all official scores.
 
 The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
 of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
-and a gold MWE, these scores are computed based on \emph{links} between tokens in an expression \citep{schneider-14}. The tokens must appear in order but do not need to be adjacent.
+and a gold MWE, these scores are computed based on \emph{links} between consecutive tokens in an expression \citep{schneider-14}. 
+The tokens must appear in order but do not need to be adjacent.
 The precision is the proportion of predicted links whose words 
 both belong to the same expression in the gold standard. 
 Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
@@ -1103,26 +1128,33 @@ is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 %  \Cref{fig:linkmeasure} illustrates these calculations with an example.
 
 To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense-labeled tokens. 
+we compute precision, recall, and $F_1$ of the supersense-labeled word tokens.
+The numerator of both precision and recall is the number of tokens 
+labeled with the correct supersense.
 (This interacts slightly with MWE identification, however, 
-as supersenses are only marked on the first token of MWEs.)
+as supersenses are only marked on the first token of MWEs. 
+We do not mark supersenses on all words of the MWE to avoid 
+giving MWEs a disproportionate influence on the supersense score.)
 % \longversion{
 % Because the supersense of a strong MWE is marked on its \emph{first} word, 
 % this will have the effect of penalizing errors on the left boundary of an MWE, 
 % but it is less sensitive to the MWE analysis than the link-based measure.}
 
-\finalversion{\nss{consider alternate combined measure:}
-The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
-in terms of link-based $F_1$, where for each supersense label, 
-a self-link encoding that label is added to the first word of the expression.
-Credit is only given for a self-link if in the other analysis, 
-a corresponding self-link occurs with the same supersense.\nss{short:}}
-Finally, a \textbf{combined} measure combines the MWE and supersense measures 
-to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.\footnote{All measures are micro-averages, 
-computed over all tokens in the corpus 
-(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
-All measures are then combined with each of the three domains weighted equally.}
+Finally, \textbf{combined} precision, recall, and $F_1$ 
+aggregate the MWE and supersense subscores.
+The combined precision ratio is computed from the MWE and supersense precision ratios 
+by adding their numerators and denominators, and likewise for combined recall 
+(see the example in \cref{fig:linkmeasure}).
+
+Within each domain, scores are computed as microaverages.
+The official tri-domain scores reported here are domain macroaverages:  
+per-domain measures are aggregated with the three domains weighted equally. 
+The main score, tri-domain combined $F_1$, is the arithmetic mean of the three per-domain combined $F_1$ scores.
+(Some system papers report domain microaverages, which give less influence to the \dataset{TED} domain 
+because it is the smallest of the domains in the test set.)
+
+
+
 
 % \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 % weight MWE links according to supersense match;
@@ -1195,6 +1227,29 @@ word embedding features (but not the knowledge base features).
 The word embeddings are shown to be somewhat complementary 
 to AMALGrAM's Brown cluster features: ablating either reduces performance.
 
+\begin{table}\small\centering
+\begin{tabular}{rllrl}
+ \#   & \textbf{System} &           \textbf{Team} &  \textbf{Score}  & \textbf{Resources} \\
+\midrule
+    1 &   \sys{S214} &         ICL-HD &  57.77 &   ++ \\
+      &   \sys{S249} &         UW-CSE &  57.71 &   ++ \\
+      &   \sys{S248} &         UW-CSE &  57.10 &      \\
+    2 &   \sys{S106} &     UFRGS\&LIF &  50.27 &      \\
+    3 &   \sys{S227} &  VectorWeavers &  49.94 &   ++ \\
+    4 &   \sys{S255} &            UTU &  47.13 &   ++ \\
+    5 &   \sys{S211} &            UTU &  46.17 &    + \\
+      &   \sys{S254} &            UTU &  45.79 &      \\
+    6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
+\end{tabular}
+
+\caption{Main results on the test set. Scores are tri-domain combined $F_1$ percentages. 
+Resource conditions are described in \cref{sec:overall}.}
+
+\label{tbl:main-results}
+	
+\end{table}
+
+
 %P347 =  (WHUNlp, AJ): 
 From the \textbf{WHUNlp} team (Tang Xin and Li Fei, Wuhan University),
 \sys{S108} uses a pipeline where a sequence CRF first identifies MWEs, 
@@ -1211,28 +1266,69 @@ simple incremental composition functions can help construct useful MWE represent
 
 
 \subsection{Overall results}\label{sec:overall}
-Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-results} a more detailed breakdown. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system: systems entering in the open condition (all resources allowed) are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition (only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
+The main results appear in \cref{tbl:main-results}. 
+The first column of \cref{tbl:main-results} gives the ranking of the systems. 
+Several systems may share a rank if they do not produce significantly different predictions, as detailed below. 
+The score is the combined supersense and MWE measure, macro-averaged over the three test set domains 
+as described above. 
+The final column indicates the resource condition:
+systems entered in the open condition (all resources allowed) are designated ``++''; 
+``+'' indicates the more restricted semi-supervised closed condition,  
+while the remaining systems are in the closed condition (most restrictive). 
+Details of the resource conditions and scoring appear in \cref{sec:eval}.
 
-\begin{table}\small\centering
-\begin{tabular}{rllrl}
- \#   & \textbf{System} &           \textbf{Team} &  \textbf{Score}  & \textbf{Resources} \\
-\midrule
-    1 &   \sys{S214} &         ICL-HD &  57.77 &   ++ \\
-      &   \sys{S249} &         UW-CSE &  57.71 &   ++ \\
-      &   \sys{S248} &         UW-CSE &  57.10 &      \\
-    2 &   \sys{S106} &     UFRGS\&LIF &  50.27 &      \\
-    3 &   \sys{S227} &  VectorWeavers &  49.94 &   ++ \\
-    4 &   \sys{S255} &            UTU &  47.13 &   ++ \\
-    5 &   \sys{S211} &            UTU &  46.17 &    + \\
-      &   \sys{S254} &            UTU &  45.79 &      \\
-    6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
+
+\begin{table}[t]\small\centering
+\begin{tabular}{lr<{\hspace{10pt}}rr<{\hspace{7pt}}H}
+\textbf{Submission} &  \multicolumn{1}{c}{\textbf{\dataset{Reviews}}} &   \multicolumn{1}{c}{\textbf{\dataset{TED}}} 
+   &  \multicolumn{1}{c}{\textbf{\dataset{Tweets}}} &  \multicolumn{1}{H}{\textbf{$\mu$avg}} \\
+%\midrule
+\cmidrule{1-4}
+\multicolumn{5}{l}{\textbf{Multiword expressions}} \\
+
+\sys{S106}       &   49.57 &  56.76 &   51.16 &      51.48 \\
+\sys{S108}       &   26.39 &  33.44 &   34.18 &      30.98 \\
+\sys{S211} +     &    9.07 &  18.28 &   15.76 &      13.46 \\
+\sys{S214} ++    &   53.37 &  \textbf{57.14} &   59.49 &      56.66 \\
+\sys{S227} ++    &   36.18 &  41.76 &   39.32 &      38.49 \\
+\sys{S248}       &   53.96 &  52.35 &   54.48 &      53.93 \\
+\sys{S249} ++    &   \textbf{54.80} &  53.48 &   \textbf{61.09} &      \textbf{57.24} \\
+\sys{S254}       &    7.05 &  16.30 &    6.34 &       8.20 \\
+\sys{S255} ++    &    8.68 &  20.11 &   15.50 &      13.48 \\
+{} & \\[-1.4ex]
+
+\multicolumn{5}{l}{\textbf{Supersenses}} \\
+
+\sys{S106}       &           50.93  &          49.61  &         49.20  &      49.98 \\
+\sys{S108}       &           25.82  &          24.68  &         24.63  &      25.14 \\
+\sys{S211} +     &           52.00  &          51.40  &         49.95  &      51.11 \\
+\sys{S214} ++    &   \textbf{57.66} &  \textbf{60.06} &         55.99  &      57.55 \\
+\sys{S227} ++    &           51.36  &          52.00  &         51.70  &      51.62 \\
+\sys{S248}       &           57.19  &          59.11  &         56.82  &      57.47 \\
+\sys{S249} ++    &           57.00  &          59.17  & \textbf{57.46} &  \textbf{57.64} \\
+\sys{S254}       &           52.68  &          51.44  &         49.66  &      51.29 \\
+\sys{S255} ++    &           51.98  &          53.28  &         51.11  &      51.93 \\
+{} & \\[-1.4ex]
+
+\multicolumn{5}{l}{\textbf{Combined score}} \\
+
+\sys{S106}       &   50.71 &  50.57 &   49.54 &      50.22 \\
+\sys{S108}       &   25.86 &  25.39 &   25.87 &      25.76 \\
+\sys{S211} +     &   46.19 &  47.90 &   44.42 &      45.86 \\
+\sys{S214} ++    &   \textbf{56.98} &  \textbf{59.71} &   56.63 &      57.41 \\
+\sys{S227} ++    &   49.25 &  50.82 &   49.74 &      49.77 \\
+\sys{S248}       &   56.66 &  58.26 &   56.38 &      56.88 \\
+\sys{S249} ++    &   56.61 &  58.33 &   \textbf{58.18} &      \textbf{57.57} \\
+\sys{S254}       &   46.57 &  47.82 &   42.99 &      45.47 \\
+\sys{S255} ++    &   46.15 &  49.81 &   45.44 &      46.64 \\
+
+
 \end{tabular}
 
-\caption{Main results. Scores are combined $F_1$ percentages. 
-Resource conditions are described in \cref{sec:overall}.}
-
-\label{tbl:main-results}
-	
+\caption{Per-domain evaluation results. Figures are $F_1$ percentages.
+The best value in each section and column is in bold.
+Refer to \cref{tbl:main-results} for the identities of the systems.}	
+\label{tbl:per-domain-results}
 \end{table}
 
 
@@ -1251,9 +1347,37 @@ We therefore decided to rank all three systems together.
 In general, adjacent entries in the sorted scoring table are ranked together 
 if the difference between them is not statistically significant according to the test. 
 
-\subsection{Domain effects}
 
-\nss{TODO}
+
+\paragraph{Drilling down.}
+\Cref{tbl:per-domain-results} offers a more detailed breakdown by domain and 
+subscore (MWEs vs.~supersenses vs.~combined). 
+The best scores are about 57\% for both MWEs and supersenses. 
+Systems \sys{S214} and \sys{S249} are the clear winners: 
+the former is better in the surprise \dataset{TED} domain---particularly TED MWEs (by nearly 4~points).
+The latter is slightly better in \dataset{Tweets}, 
+and the systems are quite close in \dataset{Reviews} (the domain with the most training data).
+
+When scores in the 3~domains are compared for each system, there is surprisingly little difference overall.
+We expected that the \dataset{TED} domain would be most difficult because it is not represented 
+in the training data, but the scores in \cref{tbl:per-domain-results} give no clear indication that this is the case. 
+Perhaps systems avoided domain bias because the training data included two highly divergent genres; 
+or perhaps other aspects of the data sets (e.g., topic) matter more for this task than 
+differences in genre.  
+
+
+
+
+\begin{figure}
+	\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
+	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
+%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
+}
+	\label{fig:supersense-predictions}
+\end{figure}
+
+
+
 
 \subsection{Easy and hard decisions}
 
@@ -1268,6 +1392,12 @@ Hard instances account for about 25\% of instances where the gold data has a sup
 which also puts an upper bound on any system combination. 
 Even an oracle system allowed to choose the best prediction for each instance 
 from among all the systems would still not push the accuracy above 75\%.
+
+\begin{figure}
+	\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
+	\label{fig:easy-and-hard-supersenses}
+\end{figure}
 
 The distribution of easy and hard instances varies a lot between labels, though. 
 As shown for supersenses in \cref{fig:easy-and-hard-supersenses}, 
@@ -1298,7 +1428,7 @@ that were not correctly predicted by $b$. This is an asymmetric measure of predi
 A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. 
 When the sum $T_{a,b} + T_{b,a}$ is small, the two systems make similar predictions. 
 
-Clustering the systems in Figure \ref{fig:system-clusters} (shown on the left side of the plot) 
+Clustering the systems in \cref{fig:system-clusters} (shown on the left side of the plot) 
 results in groups that correspond to the ranking in \cref{tbl:main-results}. 
 Inside the cluster of systems ranked at 1, the asymmetric predictive advantage ranges between 267 and 469. 
 Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. 
@@ -1308,33 +1438,12 @@ or subsets of the same knowledge, out of the training data.
 % Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
 
 
-\begin{figure}[ht]
-%	\resizebox{ \columnwidth }{!}{
-		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
-%	}
-	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
-%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
-}
-	\label{fig:supersense-predictions}
-\end{figure}
-
-
-
-\begin{figure}
-%	\resizebox{ \columnwidth }{!}{
-		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
-%	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
-	\label{fig:easy-and-hard-supersenses}
-\end{figure}
 
 
 
 
 \begin{figure}
-	\resizebox{ \columnwidth }{!}{
-		\includegraphics{figs/system_pairwise_clusters_cropped.pdf}
-	}
+	\includegraphics[width=\columnwidth]{figs/system_pairwise_clusters_cropped.pdf}
 	\caption{System clusters. Each cell compares the predictions of two systems $i$ and $j$ with respect to a gold standard. The value in the $i$,$j$-th cell is the number of predictions that $i$ got right but $j$ did not.}
 	\label{fig:system-clusters}
 \end{figure}
@@ -1369,55 +1478,7 @@ Substantial improvements of performance would thus seem to require novel approac
 We are grateful to Sam Gibbon for the lexical semantic annotation,
 which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
 
-\begin{table}\small\centering
-\begin{tabular}{@{}lr<{\hspace{10pt}}rr<{\hspace{10pt}}r@{}}
-\textbf{Submission} &  \multicolumn{1}{c}{\textbf{\dataset{Reviews}}} &   \multicolumn{1}{c}{\textbf{\dataset{TED}}} 
-   &  \multicolumn{1}{c}{\textbf{\dataset{Twitter}}} &  \multicolumn{1}{c}{\textbf{All}} \\
-\midrule
-\multicolumn{5}{@{}l}{\textbf{Multiword expressions}} \\
 
-\sys{S106}       &   49.57 &  56.76 &   51.16 &      51.48 \\
-\sys{S108}       &   26.39 &  33.44 &   34.18 &      30.98 \\
-\sys{S211} +     &    9.07 &  18.28 &   15.76 &      13.46 \\
-\sys{S214} ++    &   53.37 &  \textbf{57.14} &   59.49 &      56.66 \\
-\sys{S227} ++    &   36.18 &  41.76 &   39.32 &      38.49 \\
-\sys{S248}       &   53.96 &  52.35 &   54.48 &      53.93 \\
-\sys{S249} ++    &   \textbf{54.80} &  53.48 &   \textbf{61.09} &      \textbf{57.24} \\
-\sys{S254}       &    7.05 &  16.30 &    6.34 &       8.20 \\
-\sys{S255} ++    &    8.68 &  20.11 &   15.50 &      13.48 \\[1.4ex]
-
-\multicolumn{5}{@{}l}{\textbf{Supersenses}} \\
-
-\sys{S106}       &           50.93  &          49.61  &         49.20  &      49.98 \\
-\sys{S108}       &           25.82  &          24.68  &         24.63  &      25.14 \\
-\sys{S211} +     &           52.00  &          51.40  &         49.95  &      51.11 \\
-\sys{S214} ++    &   \textbf{57.66} &  \textbf{60.06} &         55.99  &      57.55 \\
-\sys{S227} ++    &           51.36  &          52.00  &         51.70  &      51.62 \\
-\sys{S248}       &           57.19  &          59.11  &         56.82  &      57.47 \\
-\sys{S249} ++    &           57.00  &          59.17  & \textbf{57.46} &  \textbf{57.64} \\
-\sys{S254}       &           52.68  &          51.44  &         49.66  &      51.29 \\
-\sys{S255} ++    &           51.98  &          53.28  &         51.11  &      51.93 \\[1.4ex]
-
-\multicolumn{5}{@{}l}{\textbf{Combined score}} \\
-
-\sys{S106}       &   50.71 &  50.57 &   49.54 &      50.22 \\
-\sys{S108}       &   25.86 &  25.39 &   25.87 &      25.76 \\
-\sys{S211} +     &   46.19 &  47.90 &   44.42 &      45.86 \\
-\sys{S214} ++    &   \textbf{56.98} &  \textbf{59.71} &   56.63 &      57.41 \\
-\sys{S227} ++    &   49.25 &  50.82 &   49.74 &      49.77 \\
-\sys{S248}       &   56.66 &  58.26 &   56.38 &      56.88 \\
-\sys{S249} ++    &   56.61 &  58.33 &   \textbf{58.18} &      \textbf{57.57} \\
-\sys{S254}       &   46.57 &  47.82 &   42.99 &      45.47 \\
-\sys{S255} ++    &   46.15 &  49.81 &   45.44 &      46.64 \\
-
-
-\end{tabular}
-
-\caption{Per-domain evaluation results. Figures are $F_1$ percentages.
-The best value in each section and column is in bold.
-Refer to \cref{tbl:main-results} for the identities of the systems.}	
-\label{tbl:per-domain-results}
-\end{table}
 
 
 \bibliographystyle{style/aclnat}
