@@ -724,7 +724,7 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \end{table*}
 }
 
-The analysis for each sentence will be represented as 
+The analysis for each sentence is represented as 
 a sequence of paired MWE and supersense tags. \Cref{fig:ex1} illustrates 
 the MWE part above the sentence and the supersense part below the sentence.
 
@@ -776,9 +776,9 @@ and annotated.
 \begin{figure*} %\small
 % {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
 \begin{framed}\small
-\emph{Precision:} The proportion of predicted links whose words 
+\emph{MWE Precision:} The proportion of predicted links whose words 
 both belong to the same expression in the gold standard. \\
-\emph{Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
+\emph{MWE Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
 %\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
 %precision, recall, and $F_1$ computed on strong links only are averaged 
 %with the respective calculations computed on all links without regard to strength.
@@ -811,6 +811,10 @@ MWE precision of the bottom annotation relative to the top one is $2/5$. %with w
 if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
 The MWE recall value is $3/4$. 
 Supersense precision and recall are both $1/2$.
+Combined precision/recall scores add the respective subscores' numerators and denominators:
+thus, combined precision is $\tfrac{2+1}{5+2} = 3/7$, 
+and combined recall is $\tfrac{3+1}{4+2} = 2/3$.
+Combined $F_1$ is their harmonic mean, i.e.~$12/23$.
 %Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
 }
 \label{fig:linkmeasure}
@@ -1024,17 +1028,6 @@ the copula (which often can be safely omitted in headlines and other telegraphic
 without obscuring the meaning).
 
 \section{Evaluation}\label{sec:eval}
-\longversion{
-\finalversion{\subsection{\nss{TODO}System Submission Process}
-
-On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
-They will have until May~10 to submit up to 3~system predictions for evaluation. 
-The test data will include sentences from both evaluation domains, 
-in a random order: to encourage robust systems, 
-the domain of each sentence will not be marked at test time, 
-and the proportion of sentences from each domain is not guaranteed to be 
-the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
-}
 
 \paragraph{Submission conditions.}
 % \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
@@ -1086,7 +1079,8 @@ The \textbf{MWE} measure looks at precision, recall, and $F_1$
 of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
-and a gold MWE, these scores are computed based on \emph{links} between tokens in an expression \citep{schneider-14}. The tokens must appear in order but do not need to be adjacent.
+and a gold MWE, these scores are computed based on \emph{links} between consecutive tokens in an expression \citep{schneider-14}. 
+The tokens must appear in order but do not need to be adjacent.
 The precision is the proportion of predicted links whose words 
 both belong to the same expression in the gold standard. 
 Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
@@ -1101,26 +1095,33 @@ is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 %  \Cref{fig:linkmeasure} illustrates these calculations with an example.
 
 To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense-labeled tokens. 
+we compute precision, recall, and $F_1$ of the supersense-labeled word tokens.
+The numerator of both precision and recall is the number of tokens 
+labeled with the correct supersense.
 (This interacts slightly with MWE identification, however, 
-as supersenses are only marked on the first token of MWEs.)
+as supersenses are only marked on the first token of MWEs. 
+We do not mark supersenses on all words of the MWE to avoid 
+giving MWEs a disproportionate influence on the supersense score.)
 % \longversion{
 % Because the supersense of a strong MWE is marked on its \emph{first} word, 
 % this will have the effect of penalizing errors on the left boundary of an MWE, 
 % but it is less sensitive to the MWE analysis than the link-based measure.}
 
-\finalversion{\nss{consider alternate combined measure:}
-The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
-in terms of link-based $F_1$, where for each supersense label, 
-a self-link encoding that label is added to the first word of the expression.
-Credit is only given for a self-link if in the other analysis, 
-a corresponding self-link occurs with the same supersense.\nss{short:}}
-Finally, a \textbf{combined} measure combines the MWE and supersense measures 
-to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.\footnote{All measures are micro-averages, 
-computed over all tokens in the corpus 
-(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
-All measures are then combined with each of the three domains weighted equally.}
+Finally, \textbf{combined} precision, recall, and $F_1$ 
+aggregate the MWE and supersense subscores.
+The combined precision ratio is computed from the MWE and supersense precision ratios 
+by adding their numerators and denominators, and likewise for combined recall 
+(see the example in \cref{fig:linkmeasure}).
+
+Within each domain, scores are computed as microaverages.
+The official tri-domain scores reported here are domain macroaverages:  
+per-domain measures are aggregated with the three domains weighted equally. 
+The main score, tri-domain combined $F_1$, is the arithmetic mean of the three per-domain combined $F_1$ scores.
+(Some system papers report domain microaverages, which give less influence to the \dataset{TED} domain 
+because it is the smallest of the domains in the test set.)
+
+
+
 
 % \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 % weight MWE links according to supersense match;
@@ -1236,7 +1237,7 @@ Details of the resource conditions and scoring appear in \cref{sec:eval}.
     6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
 \end{tabular}
 
-\caption{Main results on the test set. Scores are combined $F_1$ percentages. 
+\caption{Main results on the test set. Scores are tri-domain combined $F_1$ percentages. 
 Resource conditions are described in \cref{sec:overall}.}
 
 \label{tbl:main-results}
