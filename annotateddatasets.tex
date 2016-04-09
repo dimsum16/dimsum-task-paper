@@ -1,4 +1,5 @@
-\begin{tabular}{@{}r@{~~}l@{~~}l@{~~}>{\hspace{15pt}}l@{~~}r@{~~}r@{~~}r@{~}>{\smaller}r@{~~}r@{~~}r@{~}>{\smaller}r@{~~}r@{~}>{\smaller}r@{}}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}r@{~~}l@{~~}l@{~~}>{\hspace{15pt}}l@{~~}r@{~~}r@{~~}r@{~}>{\smaller}r@{~~}r@{~~}r@{~}r@{~~}r@{~}r@{}}
  & & & & & & \multicolumn{2}{@{}c}{\textbf{Gappy}} & \textbf{\% tokens} 
  & \multicolumn{2}{@{}c}{\textbf{N SS}} & \multicolumn{2}{@{}c}{\textbf{V SS}} \\
  & \textbf{Domain} & \textbf{Source corpus} & \multicolumn{1}{@{}c}{\textbf{MWEs+Supersenses}} & \textbf{Words} & \textbf{MWEs} 
@@ -26,12 +27,13 @@
 \midrule
 \multicolumn{4}{r}{\textbf{Grand Total}}             &  90,326 & 5,069 & 503 & 10\% & 13\% & 15,146 & 17\% & 12,053 & 11\% \\
 \end{tabular}
-\caption[Annotated datasets]{Annotated datasets: for each subcorpus, the status of lexical semantic annotations 
-(retained, revised, or newly annotated for this task); word token and MWE instance counts; 
+}% end of resizing to textwidth
+\caption[Annotated datasets]{Annotated datasets: status of lexical semantic annotations 
+(retained, revised, or newly annotated for this task) per subcorpus; word token and MWE instance counts; 
 number and proportion (out of all MWEs) that are gappy; proportion of tokens that belong to an MWE; 
 number of units labeled with a noun supersense, and proportion that are MWEs; 
-and likewise for verb supersenses.\endgraf\setlength{\parindent}{1em}
-Additional statistics that are relatively consistent across domains: 
-MWEs per word: mean and median both .055 (lowest: TED, .044; highest: STREUSLE, .090).
-Supersenses per word: mean and median both 0.3.
-Just 8 MWEs contain more than one gap (all are found in STREUSLE or Ritter).}
+ likewise for verb supersenses.\endgraf\setlength{\parindent}{1em}
+Additional statistics relatively consistent across domains: 
+MWEs per word: mean/median .055 (lowest: TED, .044; highest: STREUSLE, .090).
+Supersenses per word: mean/median 0.3.
+Just 8 MWEs contain more than one gap (all in STREUSLE or Ritter).}

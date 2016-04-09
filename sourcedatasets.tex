@@ -1,7 +1,8 @@
-\begin{tabular}{@{}r@{~~}l@{~~}>{\raggedright\hangindent=1em}p{19.5em}@{~~}>{\raggedright\hangindent=1em}p{9.75em}@{~~}r@{~~}r@{~~}r@{~~}>{\smaller}r@{~~}>{\smaller}r@{}}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}r@{~~}l@{~~}>{\raggedright\hangindent=1em}p{19.5em}@{~~}>{\raggedright\hangindent=1em}p{9.75em}@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{}}
  & \textbf{Domain} & \textbf{Source corpus} & \textbf{UPOS (UD 1.2--style)} & \textbf{Docs} & \textbf{Sents} & \textbf{Words} 
  & \textbf{w$/$s}	
- & \textbf{$\lambda$types} \\
+ & \textbf{\#lemmas} \\
 \midrule
 \multirow{3}{*}{\rotatebox{90}{\datasplit{Train}}} & \dataset{Reviews} & STREUSLE 2.1 \textsmaller{\citep{schneider-15}} & Conv.~from PTB parses & 723 & 3,812 & 55,579 & 14.6 & 5,052 \\
 & \dataset{Tweets} & Lowlands (tweets w/ URLs) \textsmaller{\citep{johannsen-14}} & Conv.~from Petrov-style & N/A & 200 & 3,062 & 15.3 & 1,201 \\
@@ -22,14 +23,14 @@
 \midrule
 \multicolumn{4}{r}{\textbf{Grand Total}} && 5,799 & 90,326 & 15.6 & 9,321 \\
 \end{tabular}
-\caption[Source datasets and preprocessing]{Source datasets and preprocessing to obtain Universal POS tags (UPOS) 
-according to the 17-tag scheme as defined in version 1.2 of the Universal Dependencies project. 
-Most source corpora already contained some form of POS tags, so we automatically converted them to UPOS. 
-However, not all the necessary distinctions are made in the original tagsets---e.g., auxiliaries are distinguished from 
-main verbs in UD-style UPOS, but not in the Petrov-style \citep{petrov-11}, PTB \citep{ptb}, or TweetNLP \citep{owoputi-13} POS tagsets.
-If a gold parse was available, we used it to help disambiguate;
-otherwise, disambiguation was done manually as a followup step. 
-For the Tweebank data, our conversion procedure also modified the tokenization to be consistent with UPOS conventions for English 
+}% end of resizing to textwidth
+\caption[Source datasets and preprocessing]{Source datasets and preprocessing to obtain 17-tag Universal POS tags (UPOS) 
+version 1.2. 
+Most sources already contained some form of POS tags, which we automatically converted to UPOS. 
+We added missing necessary distinctions---e.g., UD-style UPOS distinguishes auxiliaries  from 
+main verbs, but Petrov-style \citep{petrov-11}, PTB \citep{ptb}, or TweetNLP \citep{owoputi-13} POS tagsets do not.
+Disambiguation was done manually or via a gold parse, where available. 
+We also modified the tokenization of the Tweebank data, to be consistent with UPOS conventions for English 
 (e.g., separating clitics).\endgraf\setlength{\parindent}{1em}
-\textbf{$\lambda$types} stands for the number of unique lemmas.
+%\textbf{$\lambda$types} stands for the number of unique lemmas.
 Only some portions of the data group sentences into documents: N/A = not applicable; N.A. = not available.}

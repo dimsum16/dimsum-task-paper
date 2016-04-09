@@ -247,6 +247,10 @@
 \newcommand{\fnref}[1]{footnote~\ref{#1}} % don't use \cref{} due to bug in (now out-of-date) cleveref package w.r.t. footnotes
 \newcommand{\Fnref}[1]{Footnote~\ref{#1}}
 
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000 
+\clubpenalty = 10000
+
 
 % Space savers
 % From http://www.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
@@ -331,7 +335,7 @@ Nathan Schneider \\
 	\And
 Dirk Hovy \quad Anders Johannsen\\
 Center for Language Technology\\
-University of Cophenhagen\\
+University of Copenhagen\\
 Copenhagen, Denmark\\
 {\tt nschneid@inf.ed.ac.uk}, {\tt krx628@hum.ku.dk}, {\tt anders@johannsen.com}, {\tt marine@cs.umd.edu} 
     \And
@@ -353,12 +357,11 @@ College Park, Maryland, USA\\ % email won't fit here, so put them all in the mid
 %\global\naaclfinalfalse % turn on header/line numbers for review
 
 \begin{abstract}
-This task adopts an explicit yet broad-coverage paradigm for lexical semantics, representing
-multiword expressions and supersenses (coarse-grained classes) in an integrated fashion.
-Nine systems were submitted; the best scored 57\% $F_1$ in a multi-domain evaluation setting, 
+This task combines the labeling of multiword expressions and supersenses (coarse-grained classes) in an explicit, yet broad-coverage paradigm for lexical semantics.
+Nine systems participated; the best scored 57\% $F_1$ in a multi-domain evaluation setting, 
 indicating that the task remains largely unresolved. 
-An error analysis reveals that a large number of instances in the data set are either hard cases 
-which no systems get right or easy cases that all systems correctly solve.
+An error analysis reveals that a large number of instances in the data set are either hard cases, 
+which no systems get right, or easy cases, which all systems correctly solve.
 %We propose a SemEval~2016 Shared Task 
 %of analyzing the lexical semantics of English sentences 
 %in a broad-coverage fashion. 
@@ -381,15 +384,14 @@ which no systems get right or easy cases that all systems correctly solve.
 % and coreference resolution). %\nss{2011/2012}
 % %, thanks in part to previous SemEval shared tasks,
 
-Bread-and-butter grammatical analysis tasks in contemporary NLP---part-of-speech tagging, for example---are \emph{comprehensive}, 
-operating under the assumption that all grammatically-relevant parts of a sentence  
-will be substantively analyzed. (We do not expect POS taggers to only know about a subset of the parts of speech in the language.) 
-Furthermore, for manual annotation, 
-POS tags accommodate unseen words, and most adapt readily to new text genres.
-These factors, taken together, indicate a representation achieves \emph{broad coverage}. 
+Grammatical analysis tasks, e.g., part-of-speech tagging, are rather successful applications of natural language processing (NLP).  They are \emph{comprehensive}, i.e., they 
+operate under the assumption that all grammatically-relevant parts of a sentence  
+will be analyzed: We do not expect a POS tagger to only know a subset of the tags in the language. 
+POS tags also accommodate unseen words, and adapt readily to new text genres.
+These factors together, indicate a representation which achieves \emph{broad coverage}. 
 
 Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
-to broad coverage.
+to broad coverage. The problems lie with their comprehensiveness and extensibility.
 The dominant paradigm of fine-grained word sense disambiguation, WordNet \citep{wordnet}, 
 is difficult to annotate in corpora, results in considerable data sparseness, 
 and does not readily generalize to out-of-vocabulary words.
@@ -411,8 +413,7 @@ did indeed \emph{not} improve machine translation.
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
 
-We report on the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.io/}} which challenged participants to analyze the lexical semantics 
-of English sentences with a tagset integrating
+To address this shortcoming, in the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.io/}} we challenged participants to analyze the lexical semantics of English sentences with a tagset integrating
 \textbf{multiword expressions} and \textbf{noun and verb supersenses} \citep[following][]{schneider-15}, 
 on multiple nontraditional genres of text. 
 By moving away from fine-grained sense inventories and lexicalized, language-specific\footnote{Though our data set is limited to English, the representation is applicable to other languages: see \cref{sec:integration}.} annotation,
@@ -963,15 +964,15 @@ trained on Universal Dependencies v1.2 \citep{nivre-15}.
 
 \subsection{Comparing Domains}
 
-Given the lexical semantic annotations, 
-a natural question to ask is whether strong differences can be observed between the domains.
-For example, we can examine which kinds of multiword expressions and which kinds of supersenses 
-occur more often in some domains than in others. 
-However, we hasten to note that the samples are not necessarily representative of their domains overall, 
-and in fact, may have been sampled in a biased way (e.g., the Lowlands sample was limited to tweets containing a URL, 
+A natural question to ask about lexical semantic annotations is whether we observe strong differences between domains.
+For example, which kinds of multiword expressions and which kinds of supersenses 
+occur more often in some domains than in others?
+In this section, we report our observations but do not make any strong claims about their generality, for the following reasons:
+ the samples are not necessarily representative of their domains overall, 
+and, in fact, may have been sampled in a biased way (e.g., the Lowlands sample was limited to tweets containing a URL, 
 and as a result, most of these tweets are headlines and advertisements).
 Furthermore, the annotation procedures differed by subcorpus, likely biasing the results.
-Thus, in this section we report observations but do not make any strong claims about their generality.
+
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{figs/mwes-pos.pdf}
@@ -980,10 +981,10 @@ Blue bars represent POSes that tend to start nominal MWEs; red bars roughly capt
 \label{fig:mwes-pos}
 \end{figure}
 
-\paragraph{MWEs.} MWEs in the seven subcorpora are summarized in \cref{fig:mwes-pos} with respect to syntactic status. 
+\paragraph{MWEs.} \cref{fig:mwes-pos} summarizes MWEs in the seven subcorpora with respect to syntactic status. 
 Colors represent the POS tag of the first word in the MWE. 
 Starting with proper nouns, the blue bars indicate POS tags that tend to begin nominal MWEs (noun, adjective, determiner, etc.).
-Red bar POSes are characteristic of verbal MWEs. The remaining bars are prepositional (dark green) 
+Red bar POS tags are characteristic of verbal MWEs. The remaining bars are prepositional (dark green) 
 and other miscellaneous tags, which collectively comprise no more than 10\% of the MWEs in each subcorpus.
 
 It is worth noting that in this plot, subcorpora within the same domain 
@@ -998,21 +999,22 @@ rather than other MWEs.
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
-\caption{Domain differences between rates of occurrence of each supersense. 
-The area of each circle is proportional to the supersense's \emph{total} frequency across all domains.
-Noun supersenses appear in the plot on the left, and verb supersenses in the plot on the right. 
-(Each domain's rate is microaveraged across its subcorpora; 
-thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.)}
+\caption{Supersense rate differences by domains, compared to reviews data set. 
+Circle area proportional to the supersense's \emph{total} frequency across all domains.
+Noun supersenses on the left, verb supersenses on the right. 
+Each domain's rate is microaveraged across its subcorpora; 
+thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.}
 \label{fig:supersense-domains}
 \end{figure*}
 
 \paragraph{Supersenses.} In the spirit of \citet{schneider-12}, we performed an analysis to see 
 which supersenses were more characteristic of some domains than others. 
 \Cref{fig:supersense-domains} plots the relative frequency (out of all supersense-labeled units) 
-of each supersense in each of the three domains. The \dataset{Reviews} domain is used for the base frequency: 
-the x-axis is the supersense's rate of occurrence in the \dataset{Tweets} domain \emph{over and above} 
+of each supersense in each of the three domains. We use the \dataset{Reviews} domain as base frequency: in comparison, 
+the x-axis is the supersense's occurrence rate in the \dataset{Tweets} domain \emph{over and above} 
 its rate of occurrence in \dataset{Reviews}. Likewise, the y-axis represents the rate for the \dataset{TED} talks 
-minus the rate for the \dataset{Reviews}. 
+minus the rate for the \dataset{Reviews}.
+\dirk{What? This is really confusing: don't they just show the relative difference? Why is one more and the other one less?}
 
 These plots show some clear outliers: among nouns (left plot), 
 \sst{n.group} and \sst{n.food} are overrepresented in \dataset{Reviews} 
