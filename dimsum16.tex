@@ -99,7 +99,7 @@
 \usepackage{booktabs} % pretty tables
 \usepackage{multicol}
 \usepackage{footnote}
-\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}} % hidden column
+\newcolumntype{H}{>{\hspace{-15pt}\setbox0=\hbox\bgroup}c<{\egroup}@{}} % hidden column
 
 \usepackage{url}
 \usepackage[usenames]{color}
@@ -1036,7 +1036,7 @@ and the proportion of sentences from each domain is not guaranteed to be
 the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
 }
 
-\textbf{Submission conditions.}
+\paragraph{Submission conditions.}
 % \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
 % they will be encouraged to submit the closed condition results to the open condition as well.}
 %The main goal of the task was to find creative new ways to improve the performance of lexical semantic analysis on various domains. 
@@ -1079,7 +1079,7 @@ so long as it was not required as part of the input at test time.
 % I feel like there are pluses and minuses to all 4 of these conditions. maybe we should just mention the possibilities 
 % and survey teams to ensure we only evaluate conditions that generate sufficient interest}
 
-\textbf{Scoring.}
+\paragraph{Scoring.}
 We provided an evaluation script to allow participants to check the format of system output and to compute all official scores.
 
 The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
@@ -1209,15 +1209,17 @@ simple incremental composition functions can help construct useful MWE represent
 
 
 \subsection{Overall results}\label{sec:overall}
-\Cref{tbl:main-results} shows the main results, \cref{tbl:per-domain-results} a more detailed breakdown. 
+The main results appear in \cref{tbl:main-results}. 
 The first column of \cref{tbl:main-results} gives the ranking of the systems. 
 Several systems may share a rank if they do not produce significantly different predictions, as detailed below. 
-The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. 
-The final column indicates to what extent external resources were used by the system: systems entering 
-in the open condition (all resources allowed) are marked by ``++''. 
-A total of four systems chose this option. Systems participating in the more restricted semi-closed condition 
-(only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. 
-The rest of the systems are in the closed condition. 
+The score is the combined supersense and MWE measure, macro-averaged over the three test set domains 
+as described above. 
+The final column indicates the resource condition:
+systems entered in the open condition (all resources allowed) are designated ``++''; 
+``+'' indicates the more restricted semi-supervised closed condition,  
+while the remaining systems are in the closed condition (most restrictive). 
+Details of the resource conditions and scoring appear in \cref{sec:eval}.
+
 
 \begin{table}\small\centering
 \begin{tabular}{rllrl}
@@ -1234,7 +1236,7 @@ The rest of the systems are in the closed condition.
     6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
 \end{tabular}
 
-\caption{Main results. Scores are combined $F_1$ percentages. 
+\caption{Main results on the test set. Scores are combined $F_1$ percentages. 
 Resource conditions are described in \cref{sec:overall}.}
 
 \label{tbl:main-results}
@@ -1257,9 +1259,21 @@ We therefore decided to rank all three systems together.
 In general, adjacent entries in the sorted scoring table are ranked together 
 if the difference between them is not statistically significant according to the test. 
 
-\subsection{Domain effects}
+\paragraph{Drilling down.}
+\Cref{tbl:per-domain-results} offers a more detailed breakdown by domain and 
+subscore (MWEs vs.~supersenses vs.~combined). 
+The best scores are about 57\% for both MWEs and supersenses. 
+Systems \sys{S214} and \sys{S249} are the clear winners: 
+the former is better in the surprise \dataset{TED} domain---particularly TED MWEs (by nearly 4~points).
+The latter is slightly better in \dataset{Tweets}, 
+and the systems are quite close in \dataset{Reviews} (the domain with the most training data).
 
-\nss{TODO}
+When scores in the 3~domains are compared for each system, there is surprisingly little difference overall.
+We expected that the \dataset{TED} domain would be most difficult because it is not represented 
+in the training data, but the scores in \cref{tbl:per-domain-results} give no clear indication that this is the case. 
+Perhaps systems avoided domain bias because the training data included two highly divergent genres; 
+or perhaps other aspects of the data sets (e.g., topic) matter more for this task than 
+differences in genre.  
 
 \subsection{Easy and hard decisions}
 
@@ -1376,11 +1390,12 @@ We are grateful to Sam Gibbon for the lexical semantic annotation,
 which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
 
 \begin{table}\small\centering
-\begin{tabular}{@{}lr<{\hspace{10pt}}rr<{\hspace{10pt}}r@{}}
+\begin{tabular}{lr<{\hspace{10pt}}rr<{\hspace{9pt}}H}
 \textbf{Submission} &  \multicolumn{1}{c}{\textbf{\dataset{Reviews}}} &   \multicolumn{1}{c}{\textbf{\dataset{TED}}} 
-   &  \multicolumn{1}{c}{\textbf{\dataset{Twitter}}} &  \multicolumn{1}{c}{\textbf{All}} \\
-\midrule
-\multicolumn{5}{@{}l}{\textbf{Multiword expressions}} \\
+   &  \multicolumn{1}{c}{\textbf{\dataset{Tweets}}} &  \multicolumn{1}{H}{\textbf{$\mu$avg}} \\
+%\midrule
+\cmidrule{1-4}
+\multicolumn{5}{l}{\textbf{Multiword expressions}} \\
 
 \sys{S106}       &   49.57 &  56.76 &   51.16 &      51.48 \\
 \sys{S108}       &   26.39 &  33.44 &   34.18 &      30.98 \\
@@ -1390,9 +1405,10 @@ which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
 \sys{S248}       &   53.96 &  52.35 &   54.48 &      53.93 \\
 \sys{S249} ++    &   \textbf{54.80} &  53.48 &   \textbf{61.09} &      \textbf{57.24} \\
 \sys{S254}       &    7.05 &  16.30 &    6.34 &       8.20 \\
-\sys{S255} ++    &    8.68 &  20.11 &   15.50 &      13.48 \\[1.4ex]
+\sys{S255} ++    &    8.68 &  20.11 &   15.50 &      13.48 \\
+{} & \\[-1.4ex]
 
-\multicolumn{5}{@{}l}{\textbf{Supersenses}} \\
+\multicolumn{5}{l}{\textbf{Supersenses}} \\
 
 \sys{S106}       &           50.93  &          49.61  &         49.20  &      49.98 \\
 \sys{S108}       &           25.82  &          24.68  &         24.63  &      25.14 \\
@@ -1402,9 +1418,10 @@ which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
 \sys{S248}       &           57.19  &          59.11  &         56.82  &      57.47 \\
 \sys{S249} ++    &           57.00  &          59.17  & \textbf{57.46} &  \textbf{57.64} \\
 \sys{S254}       &           52.68  &          51.44  &         49.66  &      51.29 \\
-\sys{S255} ++    &           51.98  &          53.28  &         51.11  &      51.93 \\[1.4ex]
+\sys{S255} ++    &           51.98  &          53.28  &         51.11  &      51.93 \\
+{} & \\[-1.4ex]
 
-\multicolumn{5}{@{}l}{\textbf{Combined score}} \\
+\multicolumn{5}{l}{\textbf{Combined score}} \\
 
 \sys{S106}       &   50.71 &  50.57 &   49.54 &      50.22 \\
 \sys{S108}       &   25.86 &  25.39 &   25.87 &      25.76 \\
