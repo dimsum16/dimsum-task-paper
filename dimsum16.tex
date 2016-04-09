@@ -826,9 +826,10 @@ made up of 723~online user reviews for services (such as restaurants and beautic
 
 STREUSLE annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
 Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
-Annotators found approximately 3,500~MWEs, 9,000~noun expressions, and 8,000~main verb expressions (excluding auxiliary verbs).\finalversion{\nss{
-(\Cref{tbl:reviews} offers a more detailed breakdown.)}}
-15\% of MWEs contain a gap.
+%Annotators found approximately 3,500~MWEs, 9,000~noun expressions, and 8,000~main verb expressions (excluding auxiliary verbs).\finalversion{\nss{
+%(\Cref{tbl:reviews} offers a more detailed breakdown.)}}
+%15\% of MWEs contain a gap.
+%% (this may be confusing as the table shows slightly lower numbers due to filtering weak MWEs)
 
 The task release is based on version~2.1 of STREUSLE, with weak MWEs removed
 and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The PTB-to-UPOS conversion script is available at:
@@ -838,7 +839,7 @@ and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The
 \paragraph{Test.}
 The test portion comprises 340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} 
 (the website as a general resource was described in \citet{hovy-2015trustpilot}). 
-The reviews were chosen to control for age, gender, and location, and contained gold POS tags. 
+The reviews were chosen to obtain a demographic balance (by age, gender, and location), and contained gold POS tags. 
 \finalversion{The data was further annotated for supersenses and MWE by \nss{?}.}
 
 \subsection{\dataset{Tweets}}\label{sec:tweets} 
@@ -860,7 +861,7 @@ and asked to correct the boundaries and supersense labels.
 Though there was no explicit MWE annotation phase, 
 many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs.\finalversion{\nss{POS?}}
 
-Both data sets were fully reannotated to match the conventions of the \dataset{Reviews} data from the STREUSLE corpus. 
+We fully reannotated both data sets to match the conventions of the \dataset{Reviews} data from the STREUSLE corpus. 
 The annotator examined every sentence and corrected any MWE or supersense decisions deemed to be inconsistent with the guidelines.\finalversion{\nss{TODO: how many changes were made??}}
 
 %\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the data sets are already published}
@@ -879,7 +880,7 @@ The annotator examined every sentence and corrected any MWE or supersense decisi
 % be as specific as possible about timeline}
 
 \paragraph{Test.}
-Our test set consists of 500 tweets (6,627 tokens) taken from the Tweebank corpus \citep{kong-14}, 
+Our test set consists of 500 tweets (6,627 tokens) taken from the Tweebank corpus \citep{kong-14},\footnote{\url{http://www.cs.cmu.edu/~ark/TweetNLP/}} 
 which already contained some gold-standard MWEs. 
 We converted the POS tags from gold ARK TweetNLP POS + FUDG dependencies to UPOS 
 and had an annotator supply supersenses.
@@ -895,7 +896,7 @@ Specifically, we chose
 (a)~100 sentences (2,187 tokens) from the 10 talks in the 
 NAIST-NTT Ted Talk Treebank\footnote{\url{http://ahclab.naist.jp/resource/tedtreebank/}} \citep{neubig-2014naist} 
 (which in turn is a subset of the IWSLT training data); 
-and (b)~60 sentences (1,329 tokens) from the IWSLT test data \citep{cettolo-2012wit3}.
+and (b)~60 sentences (1,329 tokens) from the IWSLT test data \citep{cettolo-2012wit3}.\footnote{\url{https://wit3.fbk.eu/}}
 The latter 6~documents were chosen to maximize language pair diversity.\footnote{These 6~talks
 are known to have been translated from English into (at least) the following languages: 
 \{ar, de, es, fa, he, hi, it, ko, nl, th, vi, zh\}. Additionally, we note that 4 of the documents have Czech (cs) 
@@ -905,21 +906,10 @@ translations, while the other 2 have French (fr) translations.
 report that all the 10~documents in the NAIST-NTT Treebank have been translated from English into the following 
 18~languages: \{ar, bg, de, el, es, fr, he, it, ja, ko, nl, pl, \mbox{pt-BR}, ro, ru, tr, \mbox{zh-CN}, \mbox{zh-TW}\}. 
 Many additional languages are represented for subsets of the documents.}
-% \footnote{All~6 documents
-% include the following language pairs: en-\{ar,de,es,fa,he,it,ko,nl,th,vi,zh\}. 
-% 2~documents include the en-fr pair (also part of IWSLT~2014). 
-% all
-% en-{hi,ko}
-% 69, 129 only
-% en-fr
-% 1161, 1176, 1353, 1371 only
-% en-cs
-% https://wit3.fbk.eu/mono.php?release=2012-02&tinfo=cleanedhtml_ted}
-
 
 We induced parts of speech by conversion from the gold PTB trees for the NAIST-NTT data, 
 and for the remaining data, by automatic tagging with an averaged structured perceptron model (Rungsted\footnote{\url{https://github.com/coastalcph/rungsted}}) 
-trained on Universal Dependencies v1.2 \citep{nivre-15}.
+trained on the English Universal Dependencies v1.2 treebank \citep{nivre-15}.\footnote{\url{http://hdl.handle.net/11234/1-1548}}
 
 \subsection{Comparing Domains}
 
@@ -940,7 +930,7 @@ Blue bars represent POSes that tend to start nominal MWEs; red bars roughly capt
 \label{fig:mwes-pos}
 \end{figure}
 
-\paragraph{MWEs.} \cref{fig:mwes-pos} summarizes MWEs in the seven subcorpora with respect to syntactic status. 
+\paragraph{MWEs.} \Cref{fig:mwes-pos} summarizes MWEs in the seven subcorpora with respect to syntactic status. 
 Colors represent the POS tag of the first word in the MWE. 
 Starting with proper nouns, the blue bars indicate POS tags that tend to begin nominal MWEs (noun, adjective, determiner, etc.).
 Red bar POS tags are characteristic of verbal MWEs. The remaining bars are prepositional (dark green) 
@@ -969,11 +959,10 @@ thus, larger subcorpora weigh more heavily than smaller subcorpora in the same d
 \paragraph{Supersenses.} In the spirit of \citet{schneider-12}, we performed an analysis to see 
 which supersenses were more characteristic of some domains than others. 
 \Cref{fig:supersense-domains} plots the relative frequency (out of all supersense-labeled units) 
-of each supersense in each of the three domains. We use the \dataset{Reviews} domain as base frequency: in comparison, 
-the x-axis is the supersense's occurrence rate in the \dataset{Tweets} domain \emph{over and above} 
-its rate of occurrence in \dataset{Reviews}. Likewise, the y-axis represents the rate for the \dataset{TED} talks 
-minus the rate for the \dataset{Reviews}.
-\dirk{What? This is really confusing: don't they just show the relative difference? Why is one more and the other one less?}
+of each supersense in each of the three domains. We use the \dataset{Reviews} domain as base frequency: 
+relative to that, 
+the x-axis is the supersense's occurrence rate in the \dataset{Tweets} domain, 
+and the y-axis represents the rate for the \dataset{TED} talks.
 
 These plots show some clear outliers: among nouns (left plot), 
 \sst{n.group} and \sst{n.food} are overrepresented in \dataset{Reviews} 
