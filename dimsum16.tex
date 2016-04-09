@@ -395,7 +395,7 @@ is difficult to annotate in corpora, results in considerable data sparseness,
 and does not readily generalize to out-of-vocabulary words.
 While the main corpus with WordNet senses, 
 SemCor \citep{semcor}, does reflect several text genres, it is hard
-to expand its annotations to new genres, such as social web text 
+to expand SemCor-style annotations to new genres, such as social web text 
 or transcribed speech.
 This severely limits the applicability of SemCor-based NLP tools 
 and restricts opportunities for linguistic studies of lexical semantics in corpora.
@@ -468,7 +468,7 @@ suggesting that further work is needed to make progress on this difficult task.
 
 \section{Background}\label{sec:integration}
 \textbf{Multiword expressions.} 
-Most contemporary approaches to syntactic and semantic analysis
+Most contemporary approaches to English syntactic and semantic analysis
 treat space-separated words as the basic units of structure. 
 %It has even been suggested that dependency syntax, for example, 
 %offers a good approximation of semantic structure.
@@ -517,12 +517,14 @@ but may contain \textbf{gaps} (viz.: \lex{made\ldots order}). The corpus also co
 % I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
 % and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
 % }
-As noted above, relying on WordNet-like fine-grained, lexicalized senses 
-creates problems for scalability and extensibility to new domains and languages. 
-Named entity recognition (NER) does not suffer from these problems, but its classes---a small number of coarse-grained classes---only apply to named entities, not verbs, adjectives, or common nouns.
+As noted above, relying on WordNet-like fine-grained, lexicalized \textbf{senses} 
+creates problems for annotating at a large scale and covering new domains and languages. 
+Named entity recognition (NER) does not suffer from these problems, 
+as it uses a much smaller number of coarse-grained classes. 
+However, these classes only apply to a subset of the nouns in a sentence and exclude verbs and adjectives.
 They therefore provide far from complete coverage in a corpus.
 
-Noun and verb \textbf{supersenses}
+Noun and verb \textbf{supersenses} \citep{ciaramita-06}
 offer a middle ground in granularity: they generalize 
 named entity classes to cover all nouns (with 26~classes), but also cover verbs (15~classes)---see \cref{tbl:supersenses}---and provide a human-interpretable high-level clustering. WordNet supersenses for adjectives and adverbs nominally exist, 
 but are based on morphosyntactic rather than semantic properties.  
@@ -539,7 +541,7 @@ the Italian Syntactic-Semantic Treebank and Italian Wikipedia \citep{attardi-10,
 Chinese Cilin \citep{qiu-11},  
 Arabic Wikipedia \citep{schneider-13}, and the Danish CLARIN Reference Corpus \citep{martinez-15}.}
 
-Features based on supersenses have also been exploited in downstream semantics tasks\longversion{ 
+Features based on supersenses have been exploited in downstream semantics tasks\longversion{ 
 such as preposition sense disambiguation, noun compound interpretation, 
 question generation, and metaphor detection} 
 \citep{ye-07,hovy2010,tratz-10,heilman-thesis,hovy-2013identifying,tsvetkov-13}. 
@@ -631,7 +633,7 @@ and noun and verb supersenses below the sentence.
 Links illustrate the behavior of the MWE tags.
 The supersense labeling must respect the MWEs; thus, \sst{v.cognition} 
 applies to a four-word unit---\emph{to}, \emph{be}, and \emph{desired} 
-must not receive separate supersenses.}
+must not receive separate supersenses from \textit{leaves}.}
 \label{fig:ex1}
 \end{figure}
 
@@ -816,7 +818,7 @@ Supersense precision and recall are both $1/2$.
 
 \subsection{Annotation Process}
 We compiled data sets from various sources, with varying degrees of existing pre-annotation. 
-Unless already provided, we added Universal POS tags as defined by the Universal Dependencies project, 
+Unless already provided, we added Universal POS tags as defined by the Universal Dependencies project \citep{nivre-15}, 
 and baseline supersenses (heuristically using the most frequent WordNet sense, and
 in some cases grouping sequences of proper nouns as MWEs). % apparently PROPN -> MWE heuristics were used for TED but not Trustpilot? Hence ``in some cases'' 
 %(MWEs annotated in the gold Tweebank parses were retained.) % this is noted in the Tweebank section below
@@ -1047,6 +1049,7 @@ A \textbf{closed} condition encouraged controlled comparisons of algorithms
 by limiting their training to specific resources distributed for the task. 
 Lastly, we allowed for a \textbf{semi-supervised closed} condition, in which 
 use of a specific large unlabeled corpus---the Yelp Academic Dataset\footnote{\url{https://www.yelp.com/academic_dataset}}---was permitted.
+Teams were permitted to submit no more than one run per condition.
 Only one team submitted a system in the semi-supervised closed condition.
 
 %a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
@@ -1150,7 +1153,8 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 
 \section{Entries and Results}\label{sec:results}
 
-A total of nine unique system entries were submitted before the deadline expired. 
+Six teams\footnote{None of the task organizers participated in any of the teams.} participated in the task, 
+submitting a total of nine unique system entries prior to the deadline. 
 We give an overview of these systems and analyze their performance.
 
 \subsection{Synopsis of approaches}
@@ -1190,7 +1194,7 @@ The word embeddings are shown to be somewhat complementary
 to AMALGrAM's Brown cluster features: ablating either reduces performance.
 
 %P347 =  (WHUNlp, AJ): 
-From the \textbf{WHUNlp} team,
+From the \textbf{WHUNlp} team (Tang Xin and Li Fei, Wuhan University),
 \sys{S108} uses a pipeline where a sequence CRF first identifies MWEs, 
 and a maximum entropy classifier then predicts a supersense independently 
 for each lexical expression. Each of these models has a small number of feature templates 
@@ -1204,7 +1208,7 @@ Results show that syntax helps identify MWE boundaries accurately, and that
 simple incremental composition functions can help construct useful MWE representations.
 
 
-\subsection{Overall results}
+\subsection{Overall results}\label{sec:overall}
 Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-results} a more detailed breakdown. The first column of Table \ref{tbl:main-results} gives the ranking of the systems. Several systems may share a rank if they do not produce significantly different predictions, as detailed below. The score is the combined supersense and MWE measure, macro-averaged over the three test set domains. The final column indicates to what extent external resources were used by the system: systems entering in the open condition (all resources allowed) are marked by ``++''. A total of four systems chose this option. Systems participating in the more restricted semi-closed condition (only certain whitelisted resources), are marked by ``+''. Only a single submission was made in the semi-open track. The rest of the systems are in the closed condition. 
 
 \begin{table}\small\centering
@@ -1222,7 +1226,8 @@ Table \ref{tbl:main-results} shows the main results, Table \ref{tbl:per-domain-r
     6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
 \end{tabular}
 
-\caption{Main results. Scores are combined $F_1$ percentages.}
+\caption{Main results. Scores are combined $F_1$ percentages. 
+Resource conditions are described in \cref{sec:overall}.}
 
 \label{tbl:main-results}
 	

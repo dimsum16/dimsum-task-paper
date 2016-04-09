@@ -26,7 +26,7 @@
 according to the 17-tag scheme as defined in version 1.2 of the Universal Dependencies project. 
 Most source corpora already contained some form of POS tags, so we automatically converted them to UPOS. 
 However, not all the necessary distinctions are made in the original tagsets---e.g., auxiliaries are distinguished from 
-main verbs in UD-style UPOS, but not in the Petrov-style, PTB, or TweetNLP POS tagsets.
+main verbs in UD-style UPOS, but not in the Petrov-style \citep{petrov-11}, PTB \citep{ptb}, or TweetNLP \citep{owoputi-13} POS tagsets.
 If a gold parse was available, we used it to help disambiguate;
 otherwise, disambiguation was done manually as a followup step. 
 For the Tweebank data, our conversion procedure also modified the tokenization to be consistent with UPOS conventions for English 
