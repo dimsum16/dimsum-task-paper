@@ -758,6 +758,8 @@ were annotated from scratch to form the test set.
 The train and test sets are summarized in \cref{tbl:srcdatasets,tbl:annotateddata} 
 and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
 
+%\pagebreak
+
 \begin{table*}\small\centering
 \input{sourcedatasets.tex}
 \label{tbl:srcdatasets}
@@ -768,57 +770,19 @@ and are publicly available on the web.\footnote{\url{https://github.com/dimsum16
 \label{tbl:annotateddata}
 \end{table*}
 
+% footnote in caption of tbl:annotateddata
+\footnotetext{Additional statistics that are relatively consistent across domains: 
+MWEs per word: mean and median both .055 (lowest: TED, .044; highest: STREUSLE, .090).
+Supersenses per word: mean and median both 0.3.
+Just 8 MWEs contain more than one gap (all are found in STREUSLE or Ritter).}
+
+%\pagebreak
 The domains covered are \textbf{online customer reviews}, 
 \textbf{tweets}, and \textbf{TED talks}.
 This section describes, for each domain, how its component data sets were sampled, preprocessed, 
 and annotated.
 
-\begin{figure*} %\small
-% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
-\begin{framed}\small
-\emph{MWE Precision:} The proportion of predicted links whose words 
-both belong to the same expression in the gold standard. \\
-\emph{MWE Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
-%\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
-%precision, recall, and $F_1$ computed on strong links only are averaged 
-%with the respective calculations computed on all links without regard to strength.
-\end{framed}\centering
-\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
- \node[inner sep=0cm]                                  (n1) {\tagtss{The}{O}{}{O}{}};
- \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtss{staff}{O}{\textsc{n.group}}{\color{orange}B}{\color{orange}n.group}};
- \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtss{leaves}{\color{red}B}{\color{red}v.cognition}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtss{a}{\color{blue}b}{}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtss{lot}{\color{blue}i}{}{\color{orange}I}{}};
- \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtss{to}{\color{red}I}{}{\color{orange}I}{}};
-%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
-\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
- \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
-\path[-,thick,orange, bend right=20] (n2.south) edge (n3.south);
-\path[-,thick,orange, bend right=20] (n3.south) edge (n4.south);
-\path[-,thick,orange, bend right=20] (n4.south) edge (n5.south);
-\path[-,thick,orange, bend right=20] (n5.south) edge (n6.south);
- \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtss{be}{\color{red}I}{}{\color{orange}I}{}};
-\path[-,thick,orange, bend right=20] (n6.south) edge (n7.south); 
- \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtss{desired}{\color{red}I}{}{O}{v.emotion}};
-\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
-\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
- \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtss{.}{O}{}{O}{}};
-\end{tikzpicture}
-\caption{A \textsc{Reviews} sentence with MWE and supersense analyses: gold above and hypothetical prediction below. 
-MWE precision of the bottom annotation relative to the top one is $2/5$. %with weak links removed 
-%and $2/6$ with weak links strengthened to strong links
-(Note that a link between words $w_1$ and $w_2$ is ``matched'' 
-if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
-The MWE recall value is $3/4$. 
-Supersense precision and recall are both $1/2$.
-Combined precision/recall scores add the respective subscores' numerators and denominators:
-thus, combined precision is $\tfrac{2+1}{5+2} = 3/7$, 
-and combined recall is $\tfrac{3+1}{4+2} = 2/3$.
-Combined $F_1$ is their harmonic mean, i.e.~$12/23$.
-%Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
-}
-\label{fig:linkmeasure}
-\end{figure*}
+
 
 \subsection{Annotation Process}
 We compiled data sets from various sources, with varying degrees of existing pre-annotation. 
@@ -984,6 +948,16 @@ Blue bars represent POSes that tend to start nominal MWEs; red bars roughly capt
 \label{fig:mwes-pos}
 \end{figure}
 
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
+\caption{Domain differences between rates of occurrence of each supersense. 
+The area of each circle is proportional to the supersense's \emph{total} frequency across all domains.
+Noun supersenses appear in the plot on the left, and verb supersenses in the plot on the right. 
+(Each domain's rate is microaveraged across its subcorpora; 
+thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.)}
+\label{fig:supersense-domains}
+\end{figure*}
+
 \paragraph{MWEs.} MWEs in the seven subcorpora are summarized in \cref{fig:mwes-pos} with respect to syntactic status. 
 Colors represent the POS tag of the first word in the MWE. 
 Starting with proper nouns, the blue bars indicate POS tags that tend to begin nominal MWEs (noun, adjective, determiner, etc.).
@@ -1000,15 +974,7 @@ added only later; whereas in the other data sets, MWE and supersense annotation 
 so annotator attention may have been focused on nominal and verbal expressions 
 rather than other MWEs.
 
-\begin{figure*}
-\includegraphics[width=\textwidth]{figs/supersense-domains.pdf}
-\caption{Domain differences between rates of occurrence of each supersense. 
-The area of each circle is proportional to the supersense's \emph{total} frequency across all domains.
-Noun supersenses appear in the plot on the left, and verb supersenses in the plot on the right. 
-(Each domain's rate is microaveraged across its subcorpora; 
-thus, larger subcorpora weigh more heavily than smaller subcorpora in the same domain.)}
-\label{fig:supersense-domains}
-\end{figure*}
+
 
 \paragraph{Supersenses.} In the spirit of \citet{schneider-12}, we performed an analysis to see 
 which supersenses were more characteristic of some domains than others. 
@@ -1026,6 +992,55 @@ On the other hand, \sst{n.person} is underrepresented in \dataset{Reviews}.
 Among verbs (right plot), \sst{v.stative} is underrepresented, apparently due to the relative rarity of 
 the copula (which often can be safely omitted in headlines and other telegraphic messages 
 without obscuring the meaning).
+
+
+\begin{figure*}[t] %\small
+% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
+\begin{framed}\small
+\emph{MWE Precision:} The proportion of predicted links whose words 
+both belong to the same expression in the gold standard. \\
+\emph{MWE Recall:} Same as precision, but swapping the predicted and gold annotations. %\\
+%\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
+%precision, recall, and $F_1$ computed on strong links only are averaged 
+%with the respective calculations computed on all links without regard to strength.
+\end{framed}\centering
+\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
+ \node[inner sep=0cm]                                  (n1) {\tagtss{The}{O}{}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtss{staff}{O}{\textsc{n.group}}{\color{orange}B}{\color{orange}n.group}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtss{leaves}{\color{red}B}{\color{red}v.cognition}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtss{a}{\color{blue}b}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtss{lot}{\color{blue}i}{}{\color{orange}I}{}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtss{to}{\color{red}I}{}{\color{orange}I}{}};
+%\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
+\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
+ \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
+\path[-,thick,orange, bend right=20] (n2.south) edge (n3.south);
+\path[-,thick,orange, bend right=20] (n3.south) edge (n4.south);
+\path[-,thick,orange, bend right=20] (n4.south) edge (n5.south);
+\path[-,thick,orange, bend right=20] (n5.south) edge (n6.south);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtss{be}{\color{red}I}{}{\color{orange}I}{}};
+\path[-,thick,orange, bend right=20] (n6.south) edge (n7.south); 
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtss{desired}{\color{red}I}{}{O}{v.emotion}};
+\path[-,thick,red, bend left=30] (n6.north) edge (n7.north);
+\path[-,thick,red, bend left=30] (n7.north) edge (n8.north);
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtss{.}{O}{}{O}{}};
+\end{tikzpicture}
+\caption{A \textsc{Reviews} sentence with MWE and supersense analyses: gold above and hypothetical prediction below. 
+MWE precision of the bottom annotation relative to the top one is $2/5$. %with weak links removed 
+%and $2/6$ with weak links strengthened to strong links
+(Note that a link between words $w_1$ and $w_2$ is ``matched'' 
+if, in the other annotation, there is a path between $w_1$ and $w_2$.) 
+The MWE recall value is $3/4$. 
+Supersense precision and recall are both $1/2$.
+Combined precision/recall scores add the respective subscores' numerators and denominators:
+thus, combined precision is $\tfrac{2+1}{5+2} = 3/7$, 
+and combined recall is $\tfrac{3+1}{4+2} = 2/3$.
+Combined $F_1$ is their harmonic mean, i.e.~$12/23$.
+%Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.
+}
+\label{fig:linkmeasure}
+\end{figure*}
+
 
 \section{Evaluation}\label{sec:eval}
 
