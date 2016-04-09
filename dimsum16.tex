@@ -759,7 +759,6 @@ and Penn Treebank--style POS tags replaced with Universal POS tags.\footnote{The
 The test portion comprises 340 sentences (6,357 tokens) from the online review site Trustpilot, a subset of the data used in \citet{hovy-2015age} 
 (the website as a general resource was described in \citet{hovy-2015trustpilot}). 
 The reviews were chosen to obtain a demographic balance (by age, gender, and location), and contained gold POS tags. 
-\finalversion{The data was further annotated for supersenses and MWE by \nss{?}.}
 
 \subsection{\dataset{Tweets}}\label{sec:tweets} 
 \paragraph{Training.}
@@ -1037,35 +1036,6 @@ because it is the smallest of the domains in the test set.)
 
 
 
-
-% \nss{other possibilities that we should probably not mention in the interest of simplicity: 
-% weight MWE links according to supersense match;
-% full tag accuracy; 
-% giving less credit for supersense mismatches that disagree on POS}
-
-% \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
-% any of the measures, or that were especially creative in their approach?}
-
-\finalversion{
-\begin{table*}
-\centering\small
-\resizebox{ \textwidth }{!}{
-\begin{tabular}{lccccccc}
-           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
-           \cmidrule(r){3-5}\cmidrule(l){6-8}
-\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
-                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
-\midrule
-AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
-COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
-\end{tabular}
-}
-\caption{\nss{TODO}Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes, 
-because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
-is against supersense annotators' chunking decisions for noun and verb expressions.}
-\label{tbl:baselines}
-\end{table*}
-}
 
 \section{Entries and Results}\label{sec:results}
 
