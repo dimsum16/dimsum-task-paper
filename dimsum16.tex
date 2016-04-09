@@ -387,7 +387,7 @@ which no systems get right, or easy cases, which all systems correctly solve.
 Grammatical analysis tasks, e.g., part-of-speech tagging, are rather successful applications of natural language processing (NLP).  They are \emph{comprehensive}, i.e., they 
 operate under the assumption that all grammatically-relevant parts of a sentence  
 will be analyzed: We do not expect a POS tagger to only know a subset of the tags in the language. 
-POS tags also accommodate unseen words, and adapt readily to new text genres.
+Most POS tags accommodate unseen words and adapt readily to new text genres.
 Together, these factors indicate a representation which achieves \emph{broad coverage}. 
 
 Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
@@ -755,11 +755,9 @@ and contains annotations in a JSON data structure, are provided as well.
 
 The task built upon two existing data sets of social web text, which were 
 harmonized to form the training data. Four new samples from three domains 
-were annotated from scratch to form the test set.
+were newly annotated to form the test set.
 The train and test sets are summarized in \cref{tbl:srcdatasets,tbl:annotateddata} 
 and are publicly available on the web.\footnote{\url{https://github.com/dimsum16/dimsum-data}}
-
-%\pagebreak
 
 \begin{table*}\small\centering
 \input{sourcedatasets.tex}
@@ -771,13 +769,6 @@ and are publicly available on the web.\footnote{\url{https://github.com/dimsum16
 \label{tbl:annotateddata}
 \end{table*}
 
-% footnote in caption of tbl:annotateddata
-\footnotetext{Additional statistics that are relatively consistent across domains: 
-MWEs per word: mean and median both .055 (lowest: TED, .044; highest: STREUSLE, .090).
-Supersenses per word: mean and median both 0.3.
-Just 8 MWEs contain more than one gap (all are found in STREUSLE or Ritter).}
-
-%\pagebreak
 The domains covered are \textbf{online customer reviews}, 
 \textbf{tweets}, and \textbf{TED talks}.
 This section describes, for each domain, how its component data sets were sampled, preprocessed, 
