@@ -388,10 +388,10 @@ Grammatical analysis tasks, e.g., part-of-speech tagging, are rather successful 
 operate under the assumption that all grammatically-relevant parts of a sentence  
 will be analyzed: We do not expect a POS tagger to only know a subset of the tags in the language. 
 POS tags also accommodate unseen words, and adapt readily to new text genres.
-These factors together, indicate a representation which achieves \emph{broad coverage}. 
+Together, these factors indicate a representation which achieves \emph{broad coverage}. 
 
 Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
-to broad coverage. The problems lie with their comprehensiveness and extensibility.
+to broad coverage owing to limited comprehensiveness and extensibility.
 The dominant paradigm of fine-grained word sense disambiguation, WordNet \citep{wordnet}, 
 is difficult to annotate in corpora, results in considerable data sparseness, 
 and does not readily generalize to out-of-vocabulary words.
@@ -413,7 +413,7 @@ did indeed \emph{not} improve machine translation.
 %and the single-word disambiguation targets were replaced by the multiword phrases used 
 %by translation systems 
 
-To address this shortcoming, in the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.io/}} we challenged participants to analyze the lexical semantics of English sentences with a tagset integrating
+To address this limitation, in the DiMSUM~2016 shared task,\footnote{\url{http://dimsum16.github.io/}} we challenged participants to analyze the lexical semantics of English sentences with a tagset integrating
 \textbf{multiword expressions} and \textbf{noun and verb supersenses} \citep[following][]{schneider-15}, 
 on multiple nontraditional genres of text. 
 By moving away from fine-grained sense inventories and lexicalized, language-specific\footnote{Though our data set is limited to English, the representation is applicable to other languages: see \cref{sec:integration}.} annotation,
@@ -1329,6 +1329,13 @@ We therefore decided to rank all three systems together.
 In general, adjacent entries in the sorted scoring table are ranked together 
 if the difference between them is not statistically significant according to the test. 
 
+\begin{figure}
+	\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
+	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
+%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
+}
+	\label{fig:supersense-predictions}
+\end{figure}
 
 
 \paragraph{Drilling down.}
@@ -1350,13 +1357,7 @@ differences in genre.
 
 
 
-\begin{figure}
-	\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
-	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
-%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
-}
-	\label{fig:supersense-predictions}
-\end{figure}
+
 
 
 
@@ -1375,7 +1376,7 @@ which also puts an upper bound on any system combination.
 Even an oracle system allowed to choose the best prediction for each instance 
 from among all the systems would still not push the accuracy above 75\%.
 
-\begin{figure}
+\begin{figure}[t]
 	\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
 	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
 	\label{fig:easy-and-hard-supersenses}
