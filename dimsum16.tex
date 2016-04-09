@@ -255,7 +255,7 @@
 % \addtolength{\abovedisplayskip}{-.5cm} % space before maths
 % \addtolength{\belowdisplayskip}{-.5cm} % space after maths
 % %\addtolength{\topsep}{-.5cm} %space between first item and preceding paragraph
-%\setlength{\belowcaptionskip}{-.5cm}
+\setlength{\belowcaptionskip}{-.5cm}
 
 
 % customize \paragraph spacing
@@ -1209,6 +1209,29 @@ word embedding features (but not the knowledge base features).
 The word embeddings are shown to be somewhat complementary 
 to AMALGrAM's Brown cluster features: ablating either reduces performance.
 
+\begin{table}\small\centering
+\begin{tabular}{rllrl}
+ \#   & \textbf{System} &           \textbf{Team} &  \textbf{Score}  & \textbf{Resources} \\
+\midrule
+    1 &   \sys{S214} &         ICL-HD &  57.77 &   ++ \\
+      &   \sys{S249} &         UW-CSE &  57.71 &   ++ \\
+      &   \sys{S248} &         UW-CSE &  57.10 &      \\
+    2 &   \sys{S106} &     UFRGS\&LIF &  50.27 &      \\
+    3 &   \sys{S227} &  VectorWeavers &  49.94 &   ++ \\
+    4 &   \sys{S255} &            UTU &  47.13 &   ++ \\
+    5 &   \sys{S211} &            UTU &  46.17 &    + \\
+      &   \sys{S254} &            UTU &  45.79 &      \\
+    6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
+\end{tabular}
+
+\caption{Main results on the test set. Scores are tri-domain combined $F_1$ percentages. 
+Resource conditions are described in \cref{sec:overall}.}
+
+\label{tbl:main-results}
+	
+\end{table}
+
+
 %P347 =  (WHUNlp, AJ): 
 From the \textbf{WHUNlp} team (Tang Xin and Li Fei, Wuhan University),
 \sys{S108} uses a pipeline where a sequence CRF first identifies MWEs, 
@@ -1237,175 +1260,7 @@ while the remaining systems are in the closed condition (most restrictive).
 Details of the resource conditions and scoring appear in \cref{sec:eval}.
 
 
-\begin{table}\small\centering
-\begin{tabular}{rllrl}
- \#   & \textbf{System} &           \textbf{Team} &  \textbf{Score}  & \textbf{Resources} \\
-\midrule
-    1 &   \sys{S214} &         ICL-HD &  57.77 &   ++ \\
-      &   \sys{S249} &         UW-CSE &  57.71 &   ++ \\
-      &   \sys{S248} &         UW-CSE &  57.10 &      \\
-    2 &   \sys{S106} &     UFRGS\&LIF &  50.27 &      \\
-    3 &   \sys{S227} &  VectorWeavers &  49.94 &   ++ \\
-    4 &   \sys{S255} &            UTU &  47.13 &   ++ \\
-    5 &   \sys{S211} &            UTU &  46.17 &    + \\
-      &   \sys{S254} &            UTU &  45.79 &      \\
-    6 &   \sys{S108} &         WHUNlp &  25.71 &      \\
-\end{tabular}
-
-\caption{Main results on the test set. Scores are tri-domain combined $F_1$ percentages. 
-Resource conditions are described in \cref{sec:overall}.}
-
-\label{tbl:main-results}
-	
-\end{table}
-
-
-\paragraph{Ranking and significance.}
-The overall best scoring system, with a combined measure of 57.77\%, is \sys{S214}. 
-The competition, however, is close: \sys{S249} scored 57.71\%, and \sys{S248} obtained a combined score of 57.10\%.  
-To check whether the predictions of the systems are significantly different from each other, 
-we ran McNemar's test, a paired test that operates directly on the predicted system output. 
-A consequence of this is that we do not directly test whether the computed \emph{scores} 
-are significantly different from each other, only whether the \emph{predictions} are. 
-
-According to McNemar's test, the predictions of the highest-ranking and the next-highest-ranking system 
-are not significantly different at $p < .05$. The third highest ranking system performs significantly worse 
-than the top system, but is \emph{not} significantly different from the second-place system. 
-We therefore decided to rank all three systems together. 
-In general, adjacent entries in the sorted scoring table are ranked together 
-if the difference between them is not statistically significant according to the test. 
-
-\paragraph{Drilling down.}
-\Cref{tbl:per-domain-results} offers a more detailed breakdown by domain and 
-subscore (MWEs vs.~supersenses vs.~combined). 
-The best scores are about 57\% for both MWEs and supersenses. 
-Systems \sys{S214} and \sys{S249} are the clear winners: 
-the former is better in the surprise \dataset{TED} domain---particularly TED MWEs (by nearly 4~points).
-The latter is slightly better in \dataset{Tweets}, 
-and the systems are quite close in \dataset{Reviews} (the domain with the most training data).
-
-When scores in the 3~domains are compared for each system, there is surprisingly little difference overall.
-We expected that the \dataset{TED} domain would be most difficult because it is not represented 
-in the training data, but the scores in \cref{tbl:per-domain-results} give no clear indication that this is the case. 
-Perhaps systems avoided domain bias because the training data included two highly divergent genres; 
-or perhaps other aspects of the data sets (e.g., topic) matter more for this task than 
-differences in genre.  
-
-\subsection{Easy and hard decisions}
-
-Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. 
-Given the wide range of participating system and previous work, it is reasonable to assume that 
-the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. 
-In fact, some decisions are relatively easy, in the sense that most or all systems get them right, 
-while others are hard, in that none or very few systems produce the correct answer. 
-\Cref{fig:supersense-predictions} explores this for the supersense-tagging subtask. 
-The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. 
-Hard instances account for about 25\% of instances where the gold data has a supersense, 
-which also puts an upper bound on any system combination. 
-Even an oracle system allowed to choose the best prediction for each instance 
-from among all the systems would still not push the accuracy above 75\%.
-
-The distribution of easy and hard instances varies a lot between labels, though. 
-As shown for supersenses in \cref{fig:easy-and-hard-supersenses}, 
-individual labels range from the fairly easy (e.g.\ \textsc{v.stative} and \textsc{v.communication}) 
-to the more difficult (e.g.\ \textsc{n.attribute} and \textsc{v.contact}). 
-The most common supersense, \textsc{v.stative}, is easy because it has few distinct lexical forms 
-(the ten most common lemmas make up more than 77\% of the instances), and so the
-$P(\textit{supersense} \mid \textit{lemma})$ mapping has low entropy. 
-Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
-
-Supersenses may be difficult for more than one reason. 
-For instance, \textsc{v.contact}---e.g.\ \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms 
-than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. 
-In contrast, person names, job titles, etc.\ that should be tagged as \textsc{n.person} are rarely ambiguous
-with respect to supersense. The main challenge in that case is that the category is open-ended 
-and not in general evident from syntactic structure.
-
-Finally, we examine whether the submitted approaches capture different aspects of the task. 
-I.e., could we produce a better system by combining the individual systems? 
-We cannot estimate this from the result tables, since, combinatorially, 
-there are many ways to obtain a given score. 
-However, we can estimate it from the prediction overlap between systems.
-The $N \times N$ labeled matrix in \cref{fig:system-clusters} 
-shows how the $N$ systems relate to each other. 
-Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. 
-The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ 
-that were not correctly predicted by $b$. This is an asymmetric measure of predictive similarity. 
-A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. 
-When the sum $T_{a,b} + T_{b,a}$ is small, the two systems make similar predictions. 
-
-Clustering the systems in \cref{fig:system-clusters} (shown on the left side of the plot) 
-results in groups that correspond to the ranking in \cref{tbl:main-results}. 
-Inside the cluster of systems ranked at 1, the asymmetric predictive advantage ranges between 267 and 469. 
-Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. 
-The best combination system would thus likely be between two of the rank-1 systems. 
-However, the gains are small, and overall the systems seem to extract the same knowledge, 
-or subsets of the same knowledge, out of the training data. 
-% Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
-
-
-\begin{figure}[ht]
-%	\resizebox{ \columnwidth }{!}{
-		\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
-%	}
-	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
-%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
-}
-	\label{fig:supersense-predictions}
-\end{figure}
-
-
-
-\begin{figure}
-%	\resizebox{ \columnwidth }{!}{
-		\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
-%	}
-	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
-	\label{fig:easy-and-hard-supersenses}
-\end{figure}
-
-
-
-
-\begin{figure}
-	\resizebox{ \columnwidth }{!}{
-		\includegraphics{figs/system_pairwise_clusters_cropped.pdf}
-	}
-	\caption{System clusters. Each cell compares the predictions of two systems $i$ and $j$ with respect to a gold standard. The value in the $i$,$j$-th cell is the number of predictions that $i$ got right but $j$ did not.}
-	\label{fig:system-clusters}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Conclusion}
-This task featured a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
-The semantic tagset strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
-and the restrictiveness of the NER task. To guard against domain bias, we provided training data 
-from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
-The training and test data sets are publicly available at \url{https://github.com/dimsum16/dimsum-data}.
-
-The best scoring system obtained 57\% $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
-averaged over the three test domains. This level of performance suggests that the task is not yet resolved. 
-Furthermore, our error analysis suggested that the submitted systems to a large degree 
-extracted the same knowledge from the training data. 
-Substantial improvements of performance would thus seem to require novel approaches. 
-
-\section*{Acknowledgments}
-
-We are grateful to Sam Gibbon for the lexical semantic annotation,
-which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
-
-\begin{table}\small\centering
+\begin{table}[t]\small\centering
 \begin{tabular}{lr<{\hspace{10pt}}rr<{\hspace{7pt}}H}
 \textbf{Submission} &  \multicolumn{1}{c}{\textbf{\dataset{Reviews}}} &   \multicolumn{1}{c}{\textbf{\dataset{TED}}} 
    &  \multicolumn{1}{c}{\textbf{\dataset{Tweets}}} &  \multicolumn{1}{H}{\textbf{$\mu$avg}} \\
@@ -1457,6 +1312,155 @@ The best value in each section and column is in bold.
 Refer to \cref{tbl:main-results} for the identities of the systems.}	
 \label{tbl:per-domain-results}
 \end{table}
+
+
+\paragraph{Ranking and significance.}
+The overall best scoring system, with a combined measure of 57.77\%, is \sys{S214}. 
+The competition, however, is close: \sys{S249} scored 57.71\%, and \sys{S248} obtained a combined score of 57.10\%.  
+To check whether the predictions of the systems are significantly different from each other, 
+we ran McNemar's test, a paired test that operates directly on the predicted system output. 
+A consequence of this is that we do not directly test whether the computed \emph{scores} 
+are significantly different from each other, only whether the \emph{predictions} are. 
+
+According to McNemar's test, the predictions of the highest-ranking and the next-highest-ranking system 
+are not significantly different at $p < .05$. The third highest ranking system performs significantly worse 
+than the top system, but is \emph{not} significantly different from the second-place system. 
+We therefore decided to rank all three systems together. 
+In general, adjacent entries in the sorted scoring table are ranked together 
+if the difference between them is not statistically significant according to the test. 
+
+
+
+\paragraph{Drilling down.}
+\Cref{tbl:per-domain-results} offers a more detailed breakdown by domain and 
+subscore (MWEs vs.~supersenses vs.~combined). 
+The best scores are about 57\% for both MWEs and supersenses. 
+Systems \sys{S214} and \sys{S249} are the clear winners: 
+the former is better in the surprise \dataset{TED} domain---particularly TED MWEs (by nearly 4~points).
+The latter is slightly better in \dataset{Tweets}, 
+and the systems are quite close in \dataset{Reviews} (the domain with the most training data).
+
+When scores in the 3~domains are compared for each system, there is surprisingly little difference overall.
+We expected that the \dataset{TED} domain would be most difficult because it is not represented 
+in the training data, but the scores in \cref{tbl:per-domain-results} give no clear indication that this is the case. 
+Perhaps systems avoided domain bias because the training data included two highly divergent genres; 
+or perhaps other aspects of the data sets (e.g., topic) matter more for this task than 
+differences in genre.  
+
+
+
+
+\begin{figure}
+	\includegraphics[width=8.5cm]{figs/supersense_predictions.pdf}
+	\caption{Number of systems predicting the correct supersense (for tokens where there is a gold supersense). 
+%\aj{Slight edit: the graph is not technically a histogram.}. \aj{I did try to produce a version with each bar split into domains. It turns out that there are practically no domain differences. Only thing I found was that Trustpilot supersenses have a slightly higher proportion of \emph{both} the easy and the hard cases. }
+}
+	\label{fig:supersense-predictions}
+\end{figure}
+
+
+
+
+\subsection{Easy and hard decisions}
+
+Overall, the results clearly show that the joint supersense and MWE tagging task is not yet resolved. 
+Given the wide range of participating system and previous work, it is reasonable to assume that 
+the task itself is not easy. On the other hand, it is not \emph{uniformly} hard. 
+In fact, some decisions are relatively easy, in the sense that most or all systems get them right, 
+while others are hard, in that none or very few systems produce the correct answer. 
+\Cref{fig:supersense-predictions} explores this for the supersense-tagging subtask. 
+The tallest bars are near the left and right sides of the graph, representing the hard and easy instances. 
+Hard instances account for about 25\% of instances where the gold data has a supersense, 
+which also puts an upper bound on any system combination. 
+Even an oracle system allowed to choose the best prediction for each instance 
+from among all the systems would still not push the accuracy above 75\%.
+
+\begin{figure}
+	\includegraphics[width=8cm]{figs/proportion_of_easy_and_hard_supersenses.pdf}
+	\caption{Easy and hard supersense decisions. Shown in blue in the left side of the plot is the proportion of instances of the given supersense type where at most one system gave the \emph{wrong} answer. On the right side in red is the corresponding figure where at most one system gave the \emph{right} answer. Supersenses are sorted by corpus frequency.}
+	\label{fig:easy-and-hard-supersenses}
+\end{figure}
+
+The distribution of easy and hard instances varies a lot between labels, though. 
+As shown for supersenses in \cref{fig:easy-and-hard-supersenses}, 
+individual labels range from the fairly easy (e.g.\ \textsc{v.stative} and \textsc{v.communication}) 
+to the more difficult (e.g.\ \textsc{n.attribute} and \textsc{v.contact}). 
+The most common supersense, \textsc{v.stative}, is easy because it has few distinct lexical forms 
+(the ten most common lemmas make up more than 77\% of the instances), and so the
+$P(\textit{supersense} \mid \textit{lemma})$ mapping has low entropy. 
+Examples of \textsc{v.stative} lemmas include \emph{be}, \emph{have}, \emph{use}, and \emph{get}. 
+
+Supersenses may be difficult for more than one reason. 
+For instance, \textsc{v.contact}---e.g.\ \emph{deliver}, \emph{receive}, and \emph{take}---has more distinct forms 
+than \textsc{v.stative} and also a more complex mapping between lemmas and supersenses. 
+In contrast, person names, job titles, etc.\ that should be tagged as \textsc{n.person} are rarely ambiguous
+with respect to supersense. The main challenge in that case is that the category is open-ended 
+and not in general evident from syntactic structure.
+
+Finally, we examine whether the submitted approaches capture different aspects of the task. 
+I.e., could we produce a better system by combining the individual systems? 
+We cannot estimate this from the result tables, since, combinatorially, 
+there are many ways to obtain a given score. 
+However, we can estimate it from the prediction overlap between systems.
+The $N \times N$ labeled matrix in \cref{fig:system-clusters} 
+shows how the $N$ systems relate to each other. 
+Each cell compares the predictions of two systems $a$ and $b$ in the joint supersense and MWE task. 
+The value of a cell $T_{a,b}$ is the number of correct predictions made by $a$ 
+that were not correctly predicted by $b$. This is an asymmetric measure of predictive similarity. 
+A single low number indicates one out of two things: either the systems are similar, or $a$ is better than $b$. 
+When the sum $T_{a,b} + T_{b,a}$ is small, the two systems make similar predictions. 
+
+Clustering the systems in \cref{fig:system-clusters} (shown on the left side of the plot) 
+results in groups that correspond to the ranking in \cref{tbl:main-results}. 
+Inside the cluster of systems ranked at 1, the asymmetric predictive advantage ranges between 267 and 469. 
+Lower-ranked systems all have a smaller predictive advantage with respect to the top-ranked systems. 
+The best combination system would thus likely be between two of the rank-1 systems. 
+However, the gains are small, and overall the systems seem to extract the same knowledge, 
+or subsets of the same knowledge, out of the training data. 
+% Additionally, while there is a small but statistically significant difference between the best system of the open condition and the best system of the closed condition, 
+
+
+
+
+
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{figs/system_pairwise_clusters_cropped.pdf}
+	\caption{System clusters. Each cell compares the predictions of two systems $i$ and $j$ with respect to a gold standard. The value in the $i$,$j$-th cell is the number of predictions that $i$ got right but $j$ did not.}
+	\label{fig:system-clusters}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Conclusion}
+This task featured a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
+The semantic tagset strikes a balance between the extremely difficult fine-grained distinctions in classical WSD, 
+and the restrictiveness of the NER task. To guard against domain bias, we provided training data 
+from two different genres, namely online reviews and tweets, as well as a test-only data set with TED talk transcripts. 
+The training and test data sets are publicly available at \url{https://github.com/dimsum16/dimsum-data}.
+
+The best scoring system obtained 57\% $F_1$ on a composite measure over the two subtasks of MWE and supersense tagging, 
+averaged over the three test domains. This level of performance suggests that the task is not yet resolved. 
+Furthermore, our error analysis suggested that the submitted systems to a large degree 
+extracted the same knowledge from the training data. 
+Substantial improvements of performance would thus seem to require novel approaches. 
+
+\section*{Acknowledgments}
+
+We are grateful to Sam Gibbon for the lexical semantic annotation,
+which was generously supported by Carlsberg infrastructure grant No.~CF14-0694.
+
+
 
 
 \bibliographystyle{style/aclnat}
